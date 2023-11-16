@@ -1,0 +1,14 @@
+from sqlalchemy import Column, Integer, TIMESTAMP, Text
+from src.domain.entities import Base
+
+
+class AlternativeNameSchema:
+    __table_args = {"schema": "alternative_name"}
+
+class AlternativeName(Base, AlternativeNameSchema):
+    __tablename__ = 'alternative_name'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(Text, nullable=False)
+    created_at = Column(TIMESTAMP, nullable=False)
+    updated_at = Column(TIMESTAMP)

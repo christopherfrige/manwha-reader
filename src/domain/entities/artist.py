@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, TIMESTAMP, Text
 from src.domain.entities import Base
 
 class ArtistSchema:
-    __table_args = {"schema": "artist"}
+    __table_args__ = {"schema": "artist"}
 
 class Artist(Base, ArtistSchema):
     __tablename__ = 'artist'

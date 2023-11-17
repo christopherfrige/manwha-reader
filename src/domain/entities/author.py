@@ -3,7 +3,7 @@ from src.domain.entities import Base
 
 
 class AuthorSchema:
-    __table_args = {"schema": "author"}
+    __table_args__ = {"schema": "author"}
 
 class Author(Base, AuthorSchema):
     __tablename__ = 'author'

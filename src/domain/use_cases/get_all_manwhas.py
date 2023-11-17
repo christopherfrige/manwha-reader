@@ -4,7 +4,14 @@ from sqlalchemy import select
 
 
 class GetAllManwhasUseCase:
-    def execute(self, db: UnitOfWork):
+    @staticmethod
+    def execute(db: UnitOfWork, page: int, per_page:int):
         with db.get_session() as session:
-            statement = select(Manwha)
-            return session.execute(statement).mappings().all()
+            return (
+                session
+                .query(Manwha)
+                .order_by(Manwha.id.desc())
+                .limit()
+            )
+        
+    

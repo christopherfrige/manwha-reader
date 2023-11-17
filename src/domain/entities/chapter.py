@@ -3,7 +3,7 @@ from src.domain.entities import Base
 from sqlalchemy.orm import relationship
 
 class ChapterSchema:
-    __table_args = {"schema": "chapter"}
+    __table_args__ = {"schema": "chapter"}
 
 class Chapter(Base, ChapterSchema):
     __tablename__ = 'chapter'

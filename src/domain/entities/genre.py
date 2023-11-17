@@ -3,7 +3,7 @@ from src.domain.entities import Base
 
 
 class GenreSchema:
-    __table_args = {"schema": "genre"}
+    __table_args__ = {"schema": "genre"}
 
 
 class Genre(Base, GenreSchema):

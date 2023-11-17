@@ -9,7 +9,7 @@ from src.infrastructure.config import SETTINGS
 class UnitOfWork:
     def __init__(self):
         self.engine = sqlalchemy.create_engine(
-            f"{SETTINGS.db_driver}://{SETTINGS.db_user}:{SETTINGS.db_password}@{SETTINGS.db_host}:{SETTINGS.db_port}"
+            f"{SETTINGS.db_driver}://{SETTINGS.db_user}:{SETTINGS.db_password}@{SETTINGS.db_host}:{SETTINGS.db_port}/{SETTINGS.db_name}"
         )
         self.session = sessionmaker(bind=self.engine, autoflush=True, autocommit=False)
 

@@ -3,7 +3,7 @@ from src.domain.entities import Base
 
 
 class AlternativeNameSchema:
-    __table_args = {"schema": "alternative_name"}
+    __table_args__ = {"schema": "alternative_name"}
 
 class AlternativeName(Base, AlternativeNameSchema):
     __tablename__ = 'alternative_name'

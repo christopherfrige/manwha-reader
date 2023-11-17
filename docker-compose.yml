@@ -1,25 +1,27 @@
 version: "3"
 services:
-  api:
-    container_name: manwha-reader-api
-    build:
-      context: .
-    command: poetry run python -m src.presentation.api.main
-    restart: on-failure
-    volumes:
-      - ./src:/var/www/manwha-reader/src
-    environment:
-      DB_HOST: postgres
-    ports:
-      - "8000:8000"
-    depends_on: postgres
+  # api:
+  #   container_name: manwha-reader-api
+  #   build:
+  #     context: .
+  #   command: poetry run python -m src.presentation.api.main
+  #   restart: on-failure
+  #   volumes:
+  #     - ./src:/var/www/manwha-reader/src
+  #   environment:
+  #     DB_HOST: postgres
+  #   ports:
+  #     - "8000:8000"
+  #   depends_on: 
+  #     - postgres
 
   postgres:
     image: postgres:16.1
     container_name: manwha-reader-postgres
     ports:
-      - "5433:5433"
+      - "5432:5432"
     volumes:
-      - ./.docker/postgres/initdb.sql:docker-entrypoint-initdb.d/initdb.sql
+      - ./.docker/postgres/initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
     environment:
       POSTGRES_PASSWORD: "password"
+      POSTGRES_DB: "manwha_reader"

@@ -3,7 +3,7 @@ from src.domain.entities import Base
 
 
 class ManwhaSchema:
-    __table_args = {"schema": "manwha"}
+    __table_args__ = {"schema": "manwha"}
 
 
 class Manwha(Base, ManwhaSchema):
@@ -11,6 +11,7 @@ class Manwha(Base, ManwhaSchema):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(Text, nullable=False)
+    thumbnail = Column(Text)
     created_at = Column(TIMESTAMP, nullable=False)
     updated_at = Column(TIMESTAMP)
 

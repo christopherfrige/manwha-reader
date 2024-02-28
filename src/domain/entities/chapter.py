@@ -9,7 +9,7 @@ class Chapter(Base, ChapterSchema):
     __tablename__ = 'chapter'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    manwha_id = Column(Integer, ForeignKey('manwha.id'), nullable=False)
+    manwha_id = Column(Integer, ForeignKey('manwha.manwha.id'), nullable=False)
     chapter_number = Column(Float, nullable=False)
     pages = Column(Integer, nullable=False)
     created_at = Column(TIMESTAMP, nullable=False)

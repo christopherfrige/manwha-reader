@@ -1,1 +1,0 @@
-# manwha-reader

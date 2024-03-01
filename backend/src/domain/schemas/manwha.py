@@ -8,6 +8,7 @@ from src.domain.schemas.chapter import ChapterSchema
 
 
 class ManwhaPresentationData(BaseModel):
+    manwha_id: int
     manwha_name: str
     thumbnail: str | None
     last_chapter: float

@@ -28,8 +28,9 @@ class GetAllManwhasUseCase:
 
             query = (
                 session.query(
-                    func.max(Manwha.name),
-                    func.max(Manwha.thumbnail),
+                    func.max(Manwha.id).label('manwha_id'),
+                    func.max(Manwha.name).label('manwha_name'),
+                    func.max(Manwha.thumbnail).label('thumbnail'),
                     func.max(Chapter.chapter_number).label('last_chapter'),
                     func.max(cast(Chapter.created_at, String)).label('last_chapter_uploaded_at')
                 )

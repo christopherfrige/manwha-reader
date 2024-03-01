@@ -66,8 +66,8 @@ ITEM_PIPELINES = {
    'scraper.pipelines.customImagesPipeline': 100
 }
 
-AWS_ACCESS_KEY_ID = "AKIA2CKEVD2VATENYAFU"
-AWS_SECRET_ACCESS_KEY = "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"
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
 AWS_REGION_NAME = "sa-east-1"
 IMAGES_STORE = f'manwha-reader/'
 

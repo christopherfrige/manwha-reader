@@ -12,6 +12,7 @@ class Manwha(Base, ManwhaSchema):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(Text, nullable=False)
     thumbnail = Column(Text)
+    summary = Column(Text)
     created_at = Column(TIMESTAMP, nullable=False)
     updated_at = Column(TIMESTAMP)
 

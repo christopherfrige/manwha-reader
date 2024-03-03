@@ -1,7 +1,7 @@
 <template>
   <div class="body">
     <v-container class="container">
-      <v-row>
+      <v-row class="justify-center">
         <v-col cols="12" md="7" class="content" >
           <v-row class="section-title">
             <v-col>
@@ -10,7 +10,7 @@
           </v-row>
           <v-row>
             <v-col v-for="manwha in manwhas" cols="6" lg="3" md="4">
-              <ManwhaListItem :manwha="manwha" />
+              <ManwhaUpdatesItem :manwha="manwha" />
             </v-col>
           </v-row>
         </v-col>
@@ -34,13 +34,78 @@ export default {
   name: "ManwhaDetails",
   data() {
     return {
-      manwhas: {},
+      manwhas: [],
     };
   },
   methods: {
     async getManwhaInfo() {
-      const response = await this.$request.get(`v1/manwhas`);
-      this.manwhas = response.data.records;
+      //const response = await this.$request.get(`v1/manwhas`);
+      //this.manwhas = response.data.records;
+      this.manwhas = [
+        {
+          manwha_name: "For My Abandoned Love",
+          thumbnail: "https://flowermanga.com/wp-content/uploads/for-my-abandoned-love-966-350x504.jpg",
+          last_chapter_number: 1.5,
+          last_chapter_id: 11,
+          last_chapter_updated_at: "2024-03-03 20:50:11"
+        },
+        {
+          manwha_name: "For My Abandoned Love",
+          thumbnail: "https://flowermanga.com/wp-content/uploads/for-my-abandoned-love-966-350x504.jpg",
+          last_chapter_number: 1.0,
+          last_chapter_id: 11,
+          last_chapter_updated_at: "2024-02-12 14:32:11"
+        },
+        {
+          manwha_name: "For My Abandoned Love",
+          thumbnail: "https://flowermanga.com/wp-content/uploads/for-my-abandoned-love-966-350x504.jpg",
+          last_chapter_number: 1.0,
+          last_chapter_id: 11,
+          last_chapter_updated_at: "2024-02-12 14:32:11"
+        },
+        {
+          manwha_name: "For My Abandoned Love",
+          thumbnail: "https://flowermanga.com/wp-content/uploads/for-my-abandoned-love-966-350x504.jpg",
+          last_chapter_number: 1.0,
+          last_chapter_id: 11,
+          last_chapter_updated_at: "2024-02-12 14:32:11"
+        },
+        {
+          manwha_name: "For My Abandoned Love",
+          thumbnail: "https://flowermanga.com/wp-content/uploads/for-my-abandoned-love-966-350x504.jpg",
+          last_chapter_number: 1.0,
+          last_chapter_id: 11,
+          last_chapter_updated_at: "2024-02-12 14:32:11"
+        },
+        {
+          manwha_name: "For My Abandoned Love",
+          thumbnail: "https://flowermanga.com/wp-content/uploads/for-my-abandoned-love-966-350x504.jpg",
+          last_chapter_number: 1.0,
+          last_chapter_id: 11,
+          last_chapter_updated_at: "2024-02-12 14:32:11"
+        },
+        {
+          manwha_name: "For My Abandoned Love",
+          thumbnail: "https://flowermanga.com/wp-content/uploads/for-my-abandoned-love-966-350x504.jpg",
+          last_chapter_number: 1.0,
+          last_chapter_id: 11,
+          last_chapter_updated_at: "2024-02-12 14:32:11"
+        },
+        {
+          manwha_name: "For My Abandoned Love",
+          thumbnail: "https://flowermanga.com/wp-content/uploads/for-my-abandoned-love-966-350x504.jpg",
+          last_chapter_number: 1.0,
+          last_chapter_id: 11,
+          last_chapter_updated_at: "2024-02-12 14:32:11"
+        },
+        {
+          manwha_name: "For My Abandoned Love",
+          thumbnail: "https://flowermanga.com/wp-content/uploads/for-my-abandoned-love-966-350x504.jpg",
+          last_chapter_number: 1.0,
+          last_chapter_id: 11,
+          last_chapter_updated_at: "2024-02-12 14:32:11"
+        },
+      ]
     },
   },
   mounted() {
@@ -53,7 +118,8 @@ export default {
 .body {
   background-color: rgb(20, 20, 20);
   min-height: 100vh;
-  font-family: poppins, sans-serif;
+  font-family: poppins;
+  -webkit-font-smoothing: antialiased !important;
 }
 
 .container {
@@ -61,6 +127,12 @@ export default {
   width: 100%;
   margin-right: auto;
   margin-left: auto;
+}
+
+@media (max-width: 1200px) {
+  .container {
+    max-width: 1200px;
+  }
 }
 
 @media (max-width: 1440px) {
@@ -76,11 +148,6 @@ export default {
   }
 }
 
-@media (max-width: 1200px) {
-  .container {
-    max-width: 1200px;
-  }
-}
 
 .content {
   background-color: rgb(40, 40, 40);

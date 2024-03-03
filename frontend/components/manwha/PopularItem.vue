@@ -16,8 +16,6 @@
 </template>
 
 <script>
-import normalizeString from "~/composables/utils";
-
 export default {
   name: "ManwhaCard",
   props: {
@@ -30,7 +28,7 @@ export default {
   },
   methods: {
     async navigateToManwha() {
-      const manwhaNameNormalized = normalizeString(this.manwha.manwha_name);
+      const manwhaNameNormalized = normalizeManwhaName(this.manwha.manwha_name);
       return navigateTo({
         path: `/manwha/${manwhaNameNormalized}/`,
         query: {

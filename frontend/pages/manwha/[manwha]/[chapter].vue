@@ -32,9 +32,6 @@
         this.manwha = response.data
       },
     },
-    mounted() {
-      this.getManwhaInfo();
-    },
   };
   </script>
   

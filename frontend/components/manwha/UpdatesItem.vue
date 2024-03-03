@@ -11,28 +11,25 @@
     </v-row>
     <v-row no-gutters>
       <v-col cols="12">
-        <h3>{{ manwha.manwha_name }}</h3>
-        <h4>Último capítulo: {{ manwha.last_chapter }}</h4>
+        <h3><a class="title" @click="navigateToManwha()">{{ manwha.manwha_name }}</a></h3>
+        <ChapterButton 
+            :id="manwha.last_chapter_id" 
+            :chapterNumber="manwha.last_chapter_number" 
+            :manwhaName="manwha.manwha_name"/>
+        <ChapterDatePostedLabel :postedAt="manwha.last_chapter_updated_at"/>
       </v-col>
     </v-row>
 </template>
 
 <script>
-import normalizeString from "~/composables/utils";
-
 export default {
-  name: "ManwhaCard",
+  name: "ManwhaUpdatesItem",
   props: {
     manwha: Object,
   },
-  data() {
-    return {
-      count: 0,
-    };
-  },
   methods: {
     async navigateToManwha() {
-      const manwhaNameNormalized = normalizeString(this.manwha.manwha_name);
+      const manwhaNameNormalized = normalizeManwhaName(this.manwha.manwha_name)
       return navigateTo({
         path: `/manwha/${manwhaNameNormalized}/`,
         query: {
@@ -45,11 +42,6 @@ export default {
 </script>
 
 <style scoped>
-.manwha-card-container {
-  background: rgb(20, 20, 20);
-  border: solid yellow 1px;
-}
-
 .thumbnail {
   max-width: 100%;
   height: auto;
@@ -60,23 +52,21 @@ export default {
 
 .thumbnail:hover {
   filter: brightness(60%);
+  cursor: pointer;
 }
 
-h3 {
-  font-size: 14px;
+.title {
+  font-size: 16px;
   overflow: hidden;
-  width: 100%;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  color: #ccc;
+  transition: color 0.3s ease;
 }
 
-h4 {
-  font-size: 12px;
-}
-
-h3,
-h4 {
-  color: white;
+.title:hover {
+  color: rgb(212, 186, 37);
+  cursor: pointer;
 }
 </style>

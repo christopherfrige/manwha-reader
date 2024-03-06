@@ -1,19 +1,19 @@
 version: "3"
 services:
-  # api:
-  #   container_name: manwha-reader-api
-  #   build:
-  #     context: .
-  #   command: poetry run python -m src.presentation.api.main
-  #   restart: on-failure
-  #   volumes:
-  #     - ./src:/var/www/manwha-reader/src
-  #   environment:
-  #     DB_HOST: postgres
-  #   ports:
-  #     - "8000:8000"
-  #   depends_on: 
-  #     - postgres
+  api:
+    container_name: manwha-reader-api
+    build:
+      context: .
+    command: poetry run python -m src.presentation.api.main
+    restart: on-failure
+    volumes:
+      - ./src:/var/www/manwha-reader/src
+    environment:
+      DB_HOST: postgres
+    ports:
+      - "8000:8000"
+    depends_on: 
+      - postgres
 
   postgres:
     image: postgres:16.1

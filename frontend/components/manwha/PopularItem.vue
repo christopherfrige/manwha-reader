@@ -21,11 +21,6 @@ export default {
   props: {
     manwha: Object,
   },
-  data() {
-    return {
-      count: 0,
-    };
-  },
   methods: {
     async navigateToManwha() {
       const manwhaNameNormalized = normalizeManwhaName(this.manwha.manwha_name);

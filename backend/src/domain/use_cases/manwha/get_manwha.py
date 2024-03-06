@@ -46,8 +46,11 @@ class GetManwhaUseCase:
         chapters = self.session.query(
             Chapter.id,
             Chapter.chapter_number,
+            Chapter.created_at,
         ).join(ManwhaChapter, ManwhaChapter.chapter_id == Chapter.id
-        ).filter(ManwhaChapter.manwha_id == self.manwha_id).all()
+        ).filter(ManwhaChapter.manwha_id == self.manwha_id
+        ).order_by(Chapter.id.desc()).all()
+        
             
         if not chapters:
             return []

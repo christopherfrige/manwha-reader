@@ -2,3 +2,9 @@
     font-family: Poppins;
     src: url('../fonts/Poppins.ttf');
 }
+
+.body {
+    background-color: #1f2129;
+    font-family: Poppins, sans-serif;
+    min-height:100vh;
+}

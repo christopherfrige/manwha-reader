@@ -11,7 +11,8 @@ class ManwhaPresentationData(BaseModel):
     manwha_id: int
     manwha_name: str
     thumbnail: str | None
-    last_chapter: float
+    last_chapter_id: int
+    last_chapter_number: float
     last_chapter_uploaded_at: str
 
 
@@ -28,5 +29,3 @@ class GetManwhaResponse(BaseModel):
     alternative_names: list[AlternativeNameSchema]
     authors: list[AuthorSchema]
     artists: list[ArtistSchema]
-
-

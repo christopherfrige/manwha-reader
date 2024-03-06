@@ -39,73 +39,8 @@ export default {
   },
   methods: {
     async getManwhaInfo() {
-      //const response = await this.$request.get(`v1/manwhas`);
-      //this.manwhas = response.data.records;
-      this.manwhas = [
-        {
-          manwha_name: "For My Abandoned Love",
-          thumbnail: "https://flowermanga.com/wp-content/uploads/for-my-abandoned-love-966-350x504.jpg",
-          last_chapter_number: 1.5,
-          last_chapter_id: 11,
-          last_chapter_updated_at: "2024-03-03 20:50:11"
-        },
-        {
-          manwha_name: "For My Abandoned Love",
-          thumbnail: "https://flowermanga.com/wp-content/uploads/for-my-abandoned-love-966-350x504.jpg",
-          last_chapter_number: 1.0,
-          last_chapter_id: 11,
-          last_chapter_updated_at: "2024-02-12 14:32:11"
-        },
-        {
-          manwha_name: "For My Abandoned Love",
-          thumbnail: "https://flowermanga.com/wp-content/uploads/for-my-abandoned-love-966-350x504.jpg",
-          last_chapter_number: 1.0,
-          last_chapter_id: 11,
-          last_chapter_updated_at: "2024-02-12 14:32:11"
-        },
-        {
-          manwha_name: "For My Abandoned Love",
-          thumbnail: "https://flowermanga.com/wp-content/uploads/for-my-abandoned-love-966-350x504.jpg",
-          last_chapter_number: 1.0,
-          last_chapter_id: 11,
-          last_chapter_updated_at: "2024-02-12 14:32:11"
-        },
-        {
-          manwha_name: "For My Abandoned Love",
-          thumbnail: "https://flowermanga.com/wp-content/uploads/for-my-abandoned-love-966-350x504.jpg",
-          last_chapter_number: 1.0,
-          last_chapter_id: 11,
-          last_chapter_updated_at: "2024-02-12 14:32:11"
-        },
-        {
-          manwha_name: "For My Abandoned Love",
-          thumbnail: "https://flowermanga.com/wp-content/uploads/for-my-abandoned-love-966-350x504.jpg",
-          last_chapter_number: 1.0,
-          last_chapter_id: 11,
-          last_chapter_updated_at: "2024-02-12 14:32:11"
-        },
-        {
-          manwha_name: "For My Abandoned Love",
-          thumbnail: "https://flowermanga.com/wp-content/uploads/for-my-abandoned-love-966-350x504.jpg",
-          last_chapter_number: 1.0,
-          last_chapter_id: 11,
-          last_chapter_updated_at: "2024-02-12 14:32:11"
-        },
-        {
-          manwha_name: "For My Abandoned Love",
-          thumbnail: "https://flowermanga.com/wp-content/uploads/for-my-abandoned-love-966-350x504.jpg",
-          last_chapter_number: 1.0,
-          last_chapter_id: 11,
-          last_chapter_updated_at: "2024-02-12 14:32:11"
-        },
-        {
-          manwha_name: "For My Abandoned Love",
-          thumbnail: "https://flowermanga.com/wp-content/uploads/for-my-abandoned-love-966-350x504.jpg",
-          last_chapter_number: 1.0,
-          last_chapter_id: 11,
-          last_chapter_updated_at: "2024-02-12 14:32:11"
-        },
-      ]
+      const response = await this.$request.get(`v1/manwhas`);
+      this.manwhas = response.data.records;
     },
   },
   mounted() {

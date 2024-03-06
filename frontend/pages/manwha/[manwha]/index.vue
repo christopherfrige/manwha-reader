@@ -1,20 +1,18 @@
 <template>
   <div class="body">
-    <div class="container">
-      <v-row class="home-card">
-        <v-col cols="12" class="py-0">
-          <v-row>
-            <v-col cols="12" md="3" style="border: 1px solid red;">
-              <img :src="manwha.thumbnail" />
-            </v-col>
-            <v-col cols="12" md="9" style="border: 1px solid red">
-              <h1>{{ manwha.name }}</h1>
-              <UiAppButtonList :items="manwha.genres" />
-            </v-col>
-          </v-row>
+    <v-container class="container">
+      <v-row>
+        <v-col>
+          <ManwhaCompleteSummary :manwha="manwha" v-if="manwha" />
         </v-col>
       </v-row>
-    </div>
+      <v-row>
+        <v-col class="text-center">
+          <h3>CAPÍTULOS LANÇADOS</h3>
+          <ManwhaChapterList :manwha="manwha" v-if="manwha" class="mt-1"/>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
@@ -23,13 +21,14 @@ export default {
   name: "ManwhaDetails",
   data() {
     return {
-      manwha: {},
+      manwha: null,
+      manwhaId: this.$route.query.id,
     };
   },
   methods: {
     async getManwhaInfo() {
-      const response = await this.$request.get(`v1/manwhas/${this.$route.query.id}`)
-      this.manwha = response.data
+      const response = await this.$request.get(`v1/manwhas/${this.manwhaId}`);
+      this.manwha = response.data;
     },
   },
   mounted() {
@@ -39,28 +38,32 @@ export default {
 </script>
 
 <style scoped>
-.body {
-  background-color: rgb(10, 10, 10);
-  min-height: 100vh;
-  font-family: Poppins, sans-serif;
-  display: block;
-}
-
 .container {
-  width: 70%;
-  padding-right: 15px;
-  padding-left: 15px;
+  width: 100%;
   margin-right: auto;
   margin-left: auto;
 }
 
-.home-card {
-  background-color: rgb(40, 40, 40);
+@media (max-width: 1200px) {
+  .container {
+    max-width: 1200px;
+  }
 }
 
-.home-card-text {
-  display: flex;
-  color: white;
-  padding: 10px 10px 0 10px;
+@media (max-width: 1440px) {
+  .container {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+}
+
+@media (min-width: 1440px) {
+  .container {
+    max-width: 1440px;
+  }
+}
+
+h3 {
+  color: #fff;
 }
 </style>

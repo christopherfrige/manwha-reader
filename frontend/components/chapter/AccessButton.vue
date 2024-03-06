@@ -1,11 +1,9 @@
 <template>
-  <v-row class="mt-1" no-gutters>
-    <v-col cols="12 mt-1">
-      <span class="chapter">
-        <a @click="navigateToManwhaChapter()">Capítulo {{ chapterNumber }}</a>
-      </span>
-    </v-col>
-  </v-row>
+  <div class="mt-1">
+    <span class="chapter">
+      <a @click="navigateToManwhaChapter()">Capítulo {{ chapterNumber }}</a>
+    </span>
+  </div>
 </template>
 
 <script>
@@ -14,19 +12,20 @@ export default {
   props: {
     id: Number,
     chapterNumber: Number,
-    manwhaName: String
+    manwhaName: String,
   },
   methods: {
     async navigateToManwhaChapter() {
-      const manwhaNameNormalized = normalizeManwhaName(this.manwhaName)
-      const chapterNumberNormalized = normalizeChapterNumber(this.chapterNumber)
+      const manwhaNameNormalized = normalizeManwhaName(this.manwhaName);
+      const chapterNumberNormalized = normalizeChapterNumber(
+        this.chapterNumber
+      );
       return navigateTo({
         path: `/manwha/${manwhaNameNormalized}/capitulo-${chapterNumberNormalized}`,
-      })
-    }
-  }
-
-}
+      });
+    },
+  },
+};
 </script>
 
 <style scoped>

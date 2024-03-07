@@ -1,6 +1,7 @@
 <template>
   <div class="body">
-    <v-container class="container">
+    <LayoutNavbarHeader/>
+    <div class="container">
       <v-row class="justify-center">
         <v-col cols="12" md="7" class="content" >
           <v-row class="section-title">
@@ -25,7 +26,7 @@
           </v-row>
         </v-col>
       </v-row>
-    </v-container>
+    </div>
   </div>
 </template>
 

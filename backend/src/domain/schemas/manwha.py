@@ -7,6 +7,12 @@ from src.domain.schemas.alternative_name import AlternativeNameSchema
 from src.domain.schemas.chapter import ChapterSchema
 
 
+class ManwhaSchema(BaseModel):
+    id: str
+    name: str
+    thumbnail: str | None
+
+
 class ManwhaPresentationData(BaseModel):
     manwha_id: int
     manwha_name: str
@@ -16,7 +22,7 @@ class ManwhaPresentationData(BaseModel):
     last_chapter_uploaded_at: str
 
 
-class GetAllManwhasResponse(BaseModel):
+class GetManwhasResponse(BaseModel):
     records: list[ManwhaPresentationData]
     pagination: Pagination
 
@@ -29,3 +35,8 @@ class GetManwhaResponse(BaseModel):
     alternative_names: list[AlternativeNameSchema]
     authors: list[AuthorSchema]
     artists: list[ArtistSchema]
+
+
+class SearchManwhasResponse(BaseModel):
+    records: list[ManwhaSchema]
+    pagination: Pagination

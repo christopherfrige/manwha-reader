@@ -1,10 +1,13 @@
 @font-face {
-    font-family: Poppins;
-    src: url('../fonts/Poppins.ttf');
+  font-family: Poppins;
+  src: url("../fonts/Poppins.ttf");
 }
 
 .body {
-    background-color: #1f2129;
-    font-family: Poppins, sans-serif;
-    min-height:100vh;
+  background-color: #1f2129;
+  color:white;
+  font-family: Poppins, sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased !important;
 }
+

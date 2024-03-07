@@ -30,7 +30,7 @@ class S3Service(AWS):
             print(f"Error listing objects in S3: {e}")
 
 if __name__ == '__main__':
-    s3 = S3Service('manwha-reader')
+    s3 = S3Service()
 
     #s3.upload_object('teste.txt', 'teste/teste.txt')
-    #s3.list_objects()
+    s3.list_objects()

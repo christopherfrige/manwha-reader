@@ -10,7 +10,7 @@
 export default {
   name: "ChapterButton",
   props: {
-    id: Number,
+    chapterId: Number,
     chapterNumber: Number,
     manwhaName: String,
   },
@@ -22,6 +22,9 @@ export default {
       );
       return navigateTo({
         path: `/manwha/${manwhaNameNormalized}/capitulo-${chapterNumberNormalized}`,
+        query: {
+          id: this.chapterId,
+        }
       });
     },
   },
@@ -36,7 +39,7 @@ export default {
   cursor: pointer;
   color: #000;
   font-size: 14px;
-  transition: background 0.5s ease, color 0.3s ease;
+  transition: background .25s ease;
 }
 
 .chapter:hover {

@@ -1,9 +1,9 @@
 <template>
-  <v-row class="chapters">
+  <v-row>
     <v-col v-for="chapter in manwha.chapters" cols="12" sm="6" md="4">
       <v-row class="chapter">
         <ChapterAccessButton
-          :id="chapter.id"
+          :chapterId="chapter.id"
           :chapterNumber="chapter.chapter_number"
           :manwhaName="manwha.name"
         />
@@ -27,7 +27,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .chapter {
   display: flex;
   background-color: #ffffff0a;
@@ -38,7 +38,5 @@ export default {
   margin: 1px;
 }
 
-.chapters {
-  justify-content: space-between;
-}
+
 </style>

@@ -50,15 +50,16 @@ export default {
 </script>
 
 <style scoped>
-.body {
-  background-color: rgb(20, 20, 20);
-  min-height: 100vh;
-  font-family: poppins;
-  -webkit-font-smoothing: antialiased !important;
+.content {
+  background-color: #ffffff0a;
+}
+
+.section-title {
+  font-size: 14px;
+  background-color: #ffffff0a;
 }
 
 .container {
-  display:flex;
   width: 100%;
   margin-right: auto;
   margin-left: auto;
@@ -81,16 +82,5 @@ export default {
   .container {
     max-width: 1440px;
   }
-}
-
-
-.content {
-  background-color: rgb(40, 40, 40);
-}
-
-.section-title {
-  color: #fff;
-  font-size: 14px;
-  background-color: rgb(30, 30, 30);
 }
 </style>

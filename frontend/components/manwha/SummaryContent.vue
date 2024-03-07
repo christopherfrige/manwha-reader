@@ -29,12 +29,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .content-title {
   font-size: 14px !important;
   font-weight: 600;
   max-width: 150px;
-  color: #fff;
   word-break: break-word;
 }
 

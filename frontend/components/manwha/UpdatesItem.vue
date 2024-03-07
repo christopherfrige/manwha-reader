@@ -17,7 +17,7 @@
         }}</a>
       </h3>
       <ChapterAccessButton
-        :id="manwha.last_chapter_id"
+        :chapterId="manwha.last_chapter_id"
         :chapterNumber="manwha.last_chapter_number"
         :manwhaName="manwha.manwha_name"
       />

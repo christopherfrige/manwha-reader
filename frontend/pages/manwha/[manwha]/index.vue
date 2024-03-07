@@ -62,8 +62,4 @@ export default {
     max-width: 1440px;
   }
 }
-
-h3 {
-  color: #fff;
-}
 </style>

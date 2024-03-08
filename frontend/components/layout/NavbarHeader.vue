@@ -1,20 +1,20 @@
 <template>
   <div class="navbar-bg">
     <div class="container">
-      <v-row class="mb-8 navbar justify-center
+      <v-row class="mb-8 navbar px-3
       ">
         <v-col cols="3" class="mt-2">
-          <h1>Manwha Reader</h1>
+            <h1 @click="navigateToHome()">Manwha Reader</h1>
         </v-col>
-        <v-col cols="4" class="mt-2">
-          <v-btn variant="text"> Início </v-btn>
+        <v-col cols="5" class="mt-2 d-none d-md-flex">
+          <v-btn variant="text" @click="navigateToHome()"> Início </v-btn>
           <v-btn variant="text"> Manwhas </v-btn>
         </v-col>
         <v-col cols="4" class="mt-2">
           <v-row>
-            <v-col class="right-nav">
-                <UiSearchBar/>
-                <span class="search-button">Buscar</span>
+            <v-col>
+                <UiSearchBar class="d-none d-md-flex"/>
+                <LayoutMobileMenu class="d-md-none"/>
               <v-app-bar-nav-icon v-if="false"></v-app-bar-nav-icon>
             </v-col>
           </v-row>
@@ -26,20 +26,25 @@
 
 <script>
 export default {
-  data() {
-    return {};
-  },
+  methods: {
+    async navigateToHome() {
+      return navigateTo({
+        path: `/`,
+      });
+    },
+  }
 };
 </script>
 
 <style scoped>
-.right-nav {
-  display: flex;
-  align-items: center;
+h1 {
+  cursor: pointer;
+  display: inline;
+  font-size: 36px;
 }
 
 .navbar-bg {
-  background-color: #ffffff1a;
+  background-color: #181828;
 }
 
 .navbar {

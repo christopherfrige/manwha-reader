@@ -1,5 +1,6 @@
 <template>
   <div class="body">
+    <LayoutNavbarHeader/>
     <v-container class="container">
       <v-row>
         <v-col>

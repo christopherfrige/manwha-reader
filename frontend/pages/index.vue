@@ -53,11 +53,13 @@ export default {
 <style scoped>
 .content {
   background-color: #ffffff0a;
+  border-radius: 15px;
 }
 
 .section-title {
   font-size: 14px;
   background-color: #ffffff0a;
+  border-radius: 15px 15px 0 0;
 }
 
 .container {

@@ -1,5 +1,6 @@
 <template>
   <div class="body">
+    <LayoutNavbarHeader/>
     <div class="container" v-if="chapterData && manwhaData">
       <v-row>
         <v-col>

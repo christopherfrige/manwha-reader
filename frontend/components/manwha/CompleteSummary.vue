@@ -1,11 +1,11 @@
 <template>
   <div>
     <v-row class="mt-2">
-      <v-col cols="12" md="12" class="content text-center py-2">
+      <v-col cols="12" md="12" class="content text-center">
         <h1>{{ manwha.name }}</h1>
       </v-col>
     </v-row>
-    <v-row class="pt-4 px-2 description">
+    <v-row class="pt-4 description">
       <v-col cols="12" md="3">
         <img :title="manwha.name" :src="manwha.thumbnail" class="thumbnail" />
       </v-col>

@@ -11,7 +11,7 @@ env:
   PYTHON_VERSION: '3.11'
 
 jobs:
-  backend-ci:
+  lint-backend:
     runs-on: ubuntu-latest
     defaults:
       run:

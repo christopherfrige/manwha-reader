@@ -11,7 +11,7 @@ env:
   PYTHON_VERSION: '3.11'
 
 jobs:
-  lint-backend:
+  test-backend:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -25,12 +25,12 @@ jobs:
         id: cached-poetry
         uses: actions/cache@v3
         with:
-          path: ~/.local/bin
+          path: ~/.local
           key: poetry-installation-cache
 
-      - name: Install Poetry
+      - name: Install poetry
         if: steps.cached-poetry.outputs.cache-hit != 'true'
-        run: pipx install poetry
+        uses: snok/install-poetry@v1
 
       - name: Setup Python ${{ env.PYTHON_VERSION }}
         uses: actions/setup-python@v5

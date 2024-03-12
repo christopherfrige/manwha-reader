@@ -1,11 +1,13 @@
 from sqlalchemy import Column, Integer, TIMESTAMP, Text
 from src.domain.entities import Base
 
+
 class ArtistSchema:
     __table_args__ = {"schema": "artist"}
 
+
 class Artist(Base, ArtistSchema):
-    __tablename__ = 'artist'
+    __tablename__ = "artist"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(Text, nullable=False)

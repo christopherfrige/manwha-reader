@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 class Pagination(BaseModel):
     next: str | None
     prev: str | None

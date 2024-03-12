@@ -24,4 +24,9 @@ app.include_router(v1_manwhas)
 app.include_router(v1_chapters)
 
 if __name__ == "__main__":
-    uvicorn.run("src.presentation.api.main:app", host="0.0.0.0", reload=SETTINGS.app_environment=="development", port=8000)
+    uvicorn.run(
+        "src.presentation.api.main:app",
+        host="0.0.0.0",
+        reload=SETTINGS.app_environment == "development",
+        port=8000,
+    )

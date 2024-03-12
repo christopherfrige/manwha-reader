@@ -9,13 +9,15 @@ from itemadapter import ItemAdapter
 from scrapy.http import Request
 from scrapy.pipelines.images import ImagesPipeline
 
+
 class customImagesPipeline(ImagesPipeline):
     def get_media_requests(self, item, info):
-        for image in item['image_urls']:
+        for image in item["image_urls"]:
             yield Request(image)
 
     def file_path(self, request, response=None, info=None) -> str:
         return f"images/{request.url.split('/')[-1]}"
+
 
 class ScraperPipeline:
     def process_item(self, item, spider):

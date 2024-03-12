@@ -29,33 +29,37 @@ class GetManwhasUseCase:
 
             query = (
                 session.query(
-                    func.max(Manwha.id).label('manwha_id'),
-                    func.max(Manwha.name).label('manwha_name'),
-                    func.max(Manwha.thumbnail).label('thumbnail'),
-                    func.max(Chapter.id).label('last_chapter_id'),
-                    func.max(Chapter.chapter_number).label('last_chapter_number'),
-                    func.max(cast(Chapter.created_at, String)).label('last_chapter_uploaded_at')
+                    func.max(Manwha.id).label("manwha_id"),
+                    func.max(Manwha.name).label("manwha_name"),
+                    func.max(Manwha.thumbnail).label("thumbnail"),
+                    func.max(Chapter.id).label("last_chapter_id"),
+                    func.max(Chapter.chapter_number).label("last_chapter_number"),
+                    func.max(cast(Chapter.created_at, String)).label(
+                        "last_chapter_uploaded_at"
+                    ),
                 )
                 .join(ManwhaChapter, Manwha.id == ManwhaChapter.manwha_id)
                 .join(Chapter, Chapter.id == ManwhaChapter.chapter_id)
                 .filter(Chapter.id == subquery.scalar_subquery())
-            ) 
+            )
 
             if search:
-                search_terms = search.split(' ')
+                search_terms = search.split(" ")
                 conditions = []
                 for term in search_terms:
-                    conditions.append(Manwha.name.ilike(f'%{term}%'))
+                    conditions.append(Manwha.name.ilike(f"%{term}%"))
                 query = query.filter(or_(*conditions))
 
-            query =  query.group_by(Manwha.id).order_by(func.max(Chapter.created_at).desc())
+            query = query.group_by(Manwha.id).order_by(
+                func.max(Chapter.created_at).desc()
+            )
             result = query.limit(limit).offset(offset)
 
             manwhas = [ManwhaPresentationData(**dict(row._mapping)) for row in result]
-            
+
             return GetManwhasResponse(
                 records=manwhas,
-                pagination=self.prepare_pagination("/v1/manwhas", query, page, per_page)
+                pagination=self.prepare_pagination(
+                    "/v1/manwhas", query, page, per_page
+                ),
             )
-
-

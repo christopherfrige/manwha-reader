@@ -1,4 +1,11 @@
-from src.domain.entities.manwha import Manwha, ManwhaChapter, ManwhaAlternativeName, ManwhaArtist, ManwhaAuthor, ManwhaGenre
+from src.domain.entities.manwha import (
+    Manwha,
+    ManwhaChapter,
+    ManwhaAlternativeName,
+    ManwhaArtist,
+    ManwhaAuthor,
+    ManwhaGenre,
+)
 from src.domain.entities.chapter import Chapter
 from src.domain.entities.author import Author
 from src.domain.entities.artist import Artist
@@ -24,46 +31,68 @@ class GetManwhaUseCase:
                 name=manwha.name,
                 thumbnail=manwha.thumbnail,
                 chapters=self._chapters(),
-                authors=self._additional_data(Author, ManwhaAuthor, ManwhaAuthor.author_id, AuthorSchema),
-                artists=self._additional_data(Artist, ManwhaArtist, ManwhaArtist.artist_id, ArtistSchema),
-                genres=self._additional_data(Genre, ManwhaGenre, ManwhaGenre.genre_id, GenreSchema),
-                alternative_names=self._additional_data(AlternativeName, ManwhaAlternativeName, ManwhaAlternativeName.alternative_name_id, AlternativeNameSchema)
+                authors=self._additional_data(
+                    Author, ManwhaAuthor, ManwhaAuthor.author_id, AuthorSchema
+                ),
+                artists=self._additional_data(
+                    Artist, ManwhaArtist, ManwhaArtist.artist_id, ArtistSchema
+                ),
+                genres=self._additional_data(
+                    Genre, ManwhaGenre, ManwhaGenre.genre_id, GenreSchema
+                ),
+                alternative_names=self._additional_data(
+                    AlternativeName,
+                    ManwhaAlternativeName,
+                    ManwhaAlternativeName.alternative_name_id,
+                    AlternativeNameSchema,
+                ),
             )
-            
+
     def _manwha(self):
-        manwha = self.session.query(
-            Manwha.id,
-            Manwha.name,
-            Manwha.thumbnail,
-        ).filter(Manwha.id == self.manwha_id).first()
-            
+        manwha = (
+            self.session.query(
+                Manwha.id,
+                Manwha.name,
+                Manwha.thumbnail,
+            )
+            .filter(Manwha.id == self.manwha_id)
+            .first()
+        )
+
         if not manwha:
             return
 
         return manwha._mapping
 
     def _chapters(self):
-        chapters = self.session.query(
-            Chapter.id,
-            Chapter.chapter_number,
-            Chapter.created_at,
-        ).join(ManwhaChapter, ManwhaChapter.chapter_id == Chapter.id
-        ).filter(ManwhaChapter.manwha_id == self.manwha_id
-        ).order_by(Chapter.id.desc()).all()
-        
-            
+        chapters = (
+            self.session.query(
+                Chapter.id,
+                Chapter.chapter_number,
+                Chapter.created_at,
+            )
+            .join(ManwhaChapter, ManwhaChapter.chapter_id == Chapter.id)
+            .filter(ManwhaChapter.manwha_id == self.manwha_id)
+            .order_by(Chapter.id.desc())
+            .all()
+        )
+
         if not chapters:
             return []
 
         return [ChapterSchema(**chapter._mapping) for chapter in chapters]
 
     def _additional_data(self, entity, join_entity, join_key, schema):
-        entries = self.session.query(
-            entity.id,
-            entity.name,
-        ).join(join_entity, join_key == entity.id
-        ).filter(join_entity.manwha_id == self.manwha_id).all()
-            
+        entries = (
+            self.session.query(
+                entity.id,
+                entity.name,
+            )
+            .join(join_entity, join_key == entity.id)
+            .filter(join_entity.manwha_id == self.manwha_id)
+            .all()
+        )
+
         if not entries:
             return []
 

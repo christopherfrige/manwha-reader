@@ -7,7 +7,7 @@ class GenreSchema:
 
 
 class Genre(Base, GenreSchema):
-    __tablename__ = 'genre'
+    __tablename__ = "genre"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(Text, nullable=False)

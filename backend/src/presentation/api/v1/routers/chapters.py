@@ -8,5 +8,5 @@ router = APIRouter(prefix="/v1/chapters", tags=["v1"])
 
 
 @router.get("/{chapter_id}", response_model=GetChapterPagesResponse, status_code=200)
-def get_chapter_pages(chapter_id: int, db = Depends(UnitOfWork)):
+def get_chapter_pages(chapter_id: int, db=Depends(UnitOfWork)):
     return GetChapterPagesUseCase(db).execute(chapter_id)

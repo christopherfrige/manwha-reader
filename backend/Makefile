@@ -1,5 +1,5 @@
 run-tests:
-	poetry run python -m pytest tests/
+	poetry run python -m pytest tests/ --color=yes -v
 
 run-lint:
 	poetry run flake8 --ignore E501 \

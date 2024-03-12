@@ -35,5 +35,5 @@ jobs:
 
       - name: Run linter and formatter
         run: |
-        poetry run black .
-        poetry run flake8
+          poetry run black .
+          poetry run flake8

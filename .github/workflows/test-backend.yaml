@@ -49,17 +49,13 @@ jobs:
         id: cached-poetry-dependencies
         uses: actions/cache@v3
         with:
-          path: .venv
+          path: ${{ env.pythonLocation }}
           key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
       
 
       - name: Install dependencies
         run: poetry install --no-interaction --no-root
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-
-
-      - name: Install library
-        run: poetry install --no-interaction
 
 
       - name: Run unit tests

@@ -6,7 +6,6 @@ from src.domain.use_cases.manwha.get_manwha import GetManwhaUseCase
 from src.domain.schemas.manwha import (
     GetManwhasResponse,
     GetManwhaResponse,
-    SearchManwhasResponse,
 )
 
 router = APIRouter(prefix="/v1/manwhas", tags=["v1"])

@@ -18,7 +18,7 @@ class UnitOfWork:
         try:
             session = self.session()
             yield session
-        except Exception as error:
+        except Exception:
             session.rollback()
             raise
         finally:

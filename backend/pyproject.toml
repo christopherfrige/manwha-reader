@@ -17,11 +17,15 @@ boto3 = "^1.33.4"
 scrapy = "^2.11.0"
 pillow = "^10.1.0"
 
-
 [tool.poetry.group.dev.dependencies]
 black = "^23.11.0"
 flake8 = "^6.1.0"
+pytest = "^8.1.1"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 99
+target-version = ['py37']

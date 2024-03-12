@@ -57,6 +57,10 @@ jobs:
         run: poetry install --no-interaction --no-root
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
 
+        
+      - name: Install library
+        run: poetry install --no-interaction
+
 
       - name: Run linter
         run: make run-lint

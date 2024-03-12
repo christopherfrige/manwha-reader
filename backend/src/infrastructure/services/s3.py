@@ -11,18 +11,14 @@ class S3Service(AWS):
     def upload_object(self, local_file_path: str, s3_key: str):
         try:
             self.s3.Bucket(self.bucket_name).upload_file(local_file_path, s3_key)
-            print(
-                f"Object uploaded successfully to S3: s3://{self.bucket_name}/{s3_key}"
-            )
+            print(f"Object uploaded successfully to S3: s3://{self.bucket_name}/{s3_key}")
         except Exception as e:
             print(f"Error uploading object to S3: {e}")
 
     def download_object(self, local_file_path: str, s3_key: str):
         try:
             self.s3.Bucket(self.bucket_name).download_file(s3_key, local_file_path)
-            print(
-                f"Object downloaded successfully from S3: s3://{self.bucket_name}/{s3_key}"
-            )
+            print(f"Object downloaded successfully from S3: s3://{self.bucket_name}/{s3_key}")
         except Exception as e:
             print(f"Error downloading object from S3: {e}")
 

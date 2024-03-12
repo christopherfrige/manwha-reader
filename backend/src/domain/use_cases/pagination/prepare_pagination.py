@@ -7,7 +7,10 @@ from sqlalchemy.orm.query import RowReturningQuery
 class PreparePaginationUseCase:
     @staticmethod
     def execute(
-        endpoint: str, query: RowReturningQuery, current_page: int, per_page: int
+        endpoint: str,
+        query: RowReturningQuery,
+        current_page: int,
+        per_page: int,
     ) -> Pagination:
         entries_quantity = query.count()
 
@@ -18,12 +21,8 @@ class PreparePaginationUseCase:
 
         first_url = f"{endpoint}?page={first_page}&per_page={per_page}"
         last_url = f"{endpoint}?page={last_page}&per_page={per_page}"
-        next_url = (
-            f"{endpoint}?page={next_page}&per_page={per_page}" if next_page else None
-        )
-        prev_url = (
-            f"{endpoint}?page={prev_page}&per_page={per_page}" if prev_page else None
-        )
+        next_url = f"{endpoint}?page={next_page}&per_page={per_page}" if next_page else None
+        prev_url = f"{endpoint}?page={prev_page}&per_page={per_page}" if prev_page else None
 
         return Pagination(
             next=next_url,

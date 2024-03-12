@@ -33,9 +33,7 @@ class GetChapterPagesUseCase:
                 pages=self.prepare_chapter_pages(chapter_id, result.chapter_pages),
             )
 
-    def prepare_chapter_pages(
-        self, chapter_id: int, chapter_pages: int
-    ) -> list[ChapterPage]:
+    def prepare_chapter_pages(self, chapter_id: int, chapter_pages: int) -> list[ChapterPage]:
         all_pages = range(1, chapter_pages + 1)
         return [
             ChapterPage(

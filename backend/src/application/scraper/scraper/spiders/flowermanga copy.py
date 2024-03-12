@@ -9,9 +9,7 @@ class CustomImagesItem(scrapy.Item):
 class VisorTMOSpider(scrapy.Spider):
     name = "visortmo"
     allowed_domains = ["https://visortmo.com"]
-    start_urls = [
-        "https://visortmo.com/viewer/00cb7d705654f129d000d4eff64a4ab7/cascade"
-    ]
+    start_urls = ["https://visortmo.com/viewer/00cb7d705654f129d000d4eff64a4ab7/cascade"]
 
     def parse(self, response):
         images = CustomImagesItem()

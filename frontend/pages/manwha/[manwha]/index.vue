@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <LayoutNavbarHeader/>
+    <LayoutNavbarHeader />
     <v-container class="container">
       <v-row>
         <v-col>
@@ -10,7 +10,7 @@
       <v-row>
         <v-col class="text-center">
           <h3>CAPÍTULOS LANÇADOS</h3>
-          <ManwhaChapterList :manwha="manwha" v-if="manwha" class="mt-1"/>
+          <ManwhaChapterList :manwha="manwha" v-if="manwha" class="mt-1" />
         </v-col>
       </v-row>
     </v-container>
@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  name: "ManwhaDetails",
+  name: 'ManwhaDetails',
   data() {
     return {
       manwha: null,

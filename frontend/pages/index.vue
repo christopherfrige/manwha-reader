@@ -1,9 +1,9 @@
 <template>
   <div class="body">
-    <LayoutNavbarHeader/>
+    <LayoutNavbarHeader />
     <div class="container">
       <v-row class="justify-center">
-        <v-col cols="12" md="7" class="content" >
+        <v-col cols="12" md="7" class="content">
           <v-row class="section-title">
             <v-col>
               <h2><v-icon icon="mdi-fire"></v-icon>Atualizações</h2>
@@ -32,7 +32,7 @@
 
 <script>
 export default {
-  name: "ManwhaDetails",
+  name: 'ManwhaDetails',
   data() {
     return {
       manwhas: [],

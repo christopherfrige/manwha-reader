@@ -9,15 +9,11 @@
     <v-navigation-drawer v-model="drawer" class="menu">
       <v-list>
         <v-list-item @click="this.navigateToHome()">
-          <v-list-item-title>
-            <v-icon icon="mdi-home"></v-icon> Início
-          </v-list-item-title>
+          <v-list-item-title> <v-icon icon="mdi-home"></v-icon> Início </v-list-item-title>
         </v-list-item>
         <v-divider />
         <v-list-item>
-          <v-list-item-title>
-            <v-icon icon="mdi-book"></v-icon> Manwhas
-          </v-list-item-title>
+          <v-list-item-title> <v-icon icon="mdi-book"></v-icon> Manwhas </v-list-item-title>
         </v-list-item>
         <v-divider />
       </v-list>

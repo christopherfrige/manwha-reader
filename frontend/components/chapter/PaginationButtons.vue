@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  name: "ChapterPaginationButtons",
+  name: 'ChapterPaginationButtons',
   props: {
     chapters: Array,
     currentChapterId: Number,
@@ -36,7 +36,7 @@ export default {
 
       const chaptersQuantity = chapters.length;
       const currentChapterIndex = chapters.findIndex(
-        (chapter) => chapter.id == this.currentChapterId
+        (chapter) => chapter.id == this.currentChapterId,
       );
 
       const hasPreviousChapters = currentChapterIndex > 0;
@@ -64,11 +64,9 @@ export default {
     async navigateToManwhaChapter(isNext) {
       const chapter = isNext ? this.nextChapter : this.previousChapter;
 
-      console.log(chapter)
+      console.log(chapter);
 
-      const chapterNumberNormalized = normalizeChapterNumber(
-        chapter.chapter_number
-      );
+      const chapterNumberNormalized = normalizeChapterNumber(chapter.chapter_number);
       return navigateTo({
         path: `/manwha/${this.manwhaNameNormalized}/capitulo-${chapterNumberNormalized}`,
         query: {

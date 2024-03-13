@@ -7,25 +7,25 @@
 
 <script>
 export default {
-  name: "DatePostedLabel",
+  name: 'DatePostedLabel',
   props: {
     postedAt: String,
   },
   methods: {
     getPostedLabel(datetimeString) {
       const months = [
-        "Janeiro",
-        "Fevereiro",
-        "Março",
-        "Abril",
-        "Maio",
-        "Junho",
-        "Julho",
-        "Agosto",
-        "Setembro",
-        "Outubro",
-        "Novembro",
-        "Dezembro",
+        'Janeiro',
+        'Fevereiro',
+        'Março',
+        'Abril',
+        'Maio',
+        'Junho',
+        'Julho',
+        'Agosto',
+        'Setembro',
+        'Outubro',
+        'Novembro',
+        'Dezembro',
       ];
       const postedDatetime = new Date(datetimeString);
 
@@ -53,15 +53,14 @@ export default {
       const showYesterdayLabel = !showHoursLabel && postedYesterday;
 
       const singleValueLabelAdditional =
-        differenceInMinutes === 1 || differenceInHours === 1 ? "" : "s";
+        differenceInMinutes === 1 || differenceInHours === 1 ? '' : 's';
 
-      if (showNowLabel) return "Agora";
+      if (showNowLabel) return 'Agora';
       if (showMinutesLabel)
         return `${differenceInMinutes} minuto${singleValueLabelAdditional} atrás`;
-      if (showHoursLabel)
-        return `${differenceInHours} hora${singleValueLabelAdditional} atrás`;
-      if (showYesterdayLabel) return "Ontem";
-      return "";
+      if (showHoursLabel) return `${differenceInHours} hora${singleValueLabelAdditional} atrás`;
+      if (showYesterdayLabel) return 'Ontem';
+      return '';
     },
   },
 };

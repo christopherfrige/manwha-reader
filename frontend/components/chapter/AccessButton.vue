@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: "ChapterButton",
+  name: 'ChapterButton',
   props: {
     chapterId: Number,
     chapterNumber: Number,
@@ -17,14 +17,12 @@ export default {
   methods: {
     async navigateToManwhaChapter() {
       const manwhaNameNormalized = normalizeManwhaName(this.manwhaName);
-      const chapterNumberNormalized = normalizeChapterNumber(
-        this.chapterNumber
-      );
+      const chapterNumberNormalized = normalizeChapterNumber(this.chapterNumber);
       return navigateTo({
         path: `/manwha/${manwhaNameNormalized}/capitulo-${chapterNumberNormalized}`,
         query: {
           id: this.chapterId,
-        }
+        },
       });
     },
   },
@@ -39,7 +37,7 @@ export default {
   cursor: pointer;
   color: #000;
   font-size: 14px;
-  transition: background .25s ease;
+  transition: background 0.25s ease;
 }
 
 .chapter:hover {

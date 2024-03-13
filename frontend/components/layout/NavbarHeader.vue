@@ -1,10 +1,9 @@
 <template>
   <div class="navbar-bg">
     <div class="container">
-      <v-row class="mb-8 navbar px-3
-      ">
+      <v-row class="mb-8 navbar px-3">
         <v-col cols="3" class="mt-2">
-            <h1 @click="navigateToHome()">Manwha Reader</h1>
+          <h1 @click="navigateToHome()">Manwha Reader</h1>
         </v-col>
         <v-col cols="5" class="mt-2 d-none d-md-flex">
           <v-btn variant="text" @click="navigateToHome()"> Início </v-btn>
@@ -13,8 +12,8 @@
         <v-col cols="4" class="mt-2">
           <v-row>
             <v-col>
-                <UiSearchBar class="d-none d-md-flex"/>
-                <LayoutMobileMenu class="d-md-none"/>
+              <UiSearchBar class="d-none d-md-flex" />
+              <LayoutMobileMenu class="d-md-none" />
               <v-app-bar-nav-icon v-if="false"></v-app-bar-nav-icon>
             </v-col>
           </v-row>
@@ -32,7 +31,7 @@ export default {
         path: `/`,
       });
     },
-  }
+  },
 };
 </script>
 

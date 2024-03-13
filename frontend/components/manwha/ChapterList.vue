@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: "ManwhaChapterList",
+  name: 'ManwhaChapterList',
   props: {
     manwha: Object,
   },
@@ -37,6 +37,4 @@ export default {
   padding: 15px;
   margin: 1px;
 }
-
-
 </style>

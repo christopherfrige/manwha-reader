@@ -12,9 +12,7 @@
   <v-row no-gutters>
     <v-col cols="12">
       <h3>
-        <a class="title" @click="navigateToManwha()">{{
-          manwha.manwha_name
-        }}</a>
+        <a class="title" @click="navigateToManwha()">{{ manwha.manwha_name }}</a>
       </h3>
       <ChapterAccessButton
         :chapterId="manwha.last_chapter_id"
@@ -28,7 +26,7 @@
 
 <script>
 export default {
-  name: "ManwhaUpdatesItem",
+  name: 'ManwhaUpdatesItem',
   props: {
     manwha: Object,
   },

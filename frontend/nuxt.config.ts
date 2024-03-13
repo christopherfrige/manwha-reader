@@ -2,16 +2,20 @@
 export default defineNuxtConfig({
   components: {
     global: true,
-    dirs: ['~/components']
+    dirs: ['~/components'],
   },
-  css: ['vuetify/lib/styles/main.sass', '@mdi/font/css/materialdesignicons.min.css', 'assets/css/global.css'],
+  css: [
+    'vuetify/lib/styles/main.sass',
+    '@mdi/font/css/materialdesignicons.min.css',
+    'assets/css/global.css',
+  ],
   build: {
     transpile: ['vuetify'],
   },
   devtools: { enabled: true },
-  vue: {  
+  vue: {
     compilerOptions: {
-      isCustomElement: (tag: string) => tag.startsWith('v-')
+      isCustomElement: (tag: string) => tag.startsWith('v-'),
     },
-  }
-})
+  },
+});

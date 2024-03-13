@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       manwhas: null,
-      inputSearch: "",
+      inputSearch: '',
       searchLoading: false,
     };
   },
@@ -51,7 +51,7 @@ export default {
 
       this.searchLoading = false;
     }, 500),
-  
+
     clearManwhas: debounce(function () {
       this.manwhas = null;
     }, 100),
@@ -72,12 +72,12 @@ export default {
 
       const manwhas = [...this.manwhas];
       return manwhas.map((manwha) => {
-        const inputtedWords = this.inputSearch.split(" ");
+        const inputtedWords = this.inputSearch.split(' ');
         manwha.highlighted_name = manwha.manwha_name;
         inputtedWords.forEach((word) => {
           manwha.highlighted_name = manwha.highlighted_name.replace(
-            new RegExp(word, "gi"),
-            "<b>$&</b>"
+            new RegExp(word, 'gi'),
+            '<b>$&</b>',
           );
         });
         return manwha;

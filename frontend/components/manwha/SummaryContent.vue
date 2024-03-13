@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: "ManwhaSummaryContent",
+  name: 'ManwhaSummaryContent',
   props: {
     contentTitle: String,
     contentDescription: Array,
@@ -23,7 +23,7 @@ export default {
       const contentNames = this.contentDescription.map((item) => {
         return item.name;
       });
-      return contentNames.join(", ");
+      return contentNames.join(', ');
     },
   },
 };

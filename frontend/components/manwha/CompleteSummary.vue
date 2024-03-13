@@ -23,15 +23,15 @@
 
 <script>
 export default {
-  name: "ManwhaCompleteSummary",
-  props: ["manwha"],
+  name: 'ManwhaCompleteSummary',
+  props: ['manwha'],
   data() {
     return {
       contents: [
-        { title: "Alternativos", description: "alternative_names" },
-        { title: "Autor(es)", description: "authors" },
-        { title: "Artista(s)", description: "artists" },
-        { title: "Gênero(s)", description: "genres" },
+        { title: 'Alternativos', description: 'alternative_names' },
+        { title: 'Autor(es)', description: 'authors' },
+        { title: 'Artista(s)', description: 'artists' },
+        { title: 'Gênero(s)', description: 'genres' },
       ],
     };
   },
@@ -61,7 +61,7 @@ export default {
 
 .content {
   background-color: #ffffff0a;
-  border-radius: 15px
+  border-radius: 15px;
 }
 
 h1 {

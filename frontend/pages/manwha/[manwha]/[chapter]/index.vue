@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <LayoutNavbarHeader/>
+    <LayoutNavbarHeader />
     <div class="container" v-if="chapterData && manwhaData">
       <v-row>
         <v-col>
@@ -20,7 +20,7 @@
             }"
           />
         </v-col>
-        <v-col  cols="12" md="6" class="text-end">
+        <v-col cols="12" md="6" class="text-end">
           <ChapterPaginationButtons
             :chapters="manwhaData.chapters"
             :currentChapterId="Number(this.chapterId)"
@@ -28,7 +28,7 @@
           />
         </v-col>
       </v-row>
-      <v-row v-for="page in chapterData.pages" no-gutters class="reading-content  text-center">
+      <v-row v-for="page in chapterData.pages" no-gutters class="reading-content text-center">
         <v-col>
           <img :src="page.url" />
         </v-col>
@@ -39,7 +39,7 @@
 
 <script>
 export default {
-  name: "ChapterPages",
+  name: 'ChapterPages',
   data() {
     return {
       chapterId: this.$route.query.id,
@@ -58,9 +58,7 @@ export default {
       this.chapterData = response.data;
     },
     async getManwhaInfo() {
-      const response = await this.$request.get(
-        `v1/manwhas/${this.chapterData.manwha_id}`
-      );
+      const response = await this.$request.get(`v1/manwhas/${this.chapterData.manwha_id}`);
       this.manwhaData = response.data;
     },
   },
@@ -94,6 +92,4 @@ img {
     max-width: 1140px;
   }
 }
-
-
 </style>

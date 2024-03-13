@@ -13,10 +13,10 @@
 
 <script>
 export default {
-  name: "ChapterSelectButton",
+  name: 'ChapterSelectButton',
   props: {
     chapters: Array,
-    initialSelectedChapter: Object
+    initialSelectedChapter: Object,
   },
   data() {
     return {
@@ -25,9 +25,7 @@ export default {
   },
   methods: {
     async navigateToManwhaChapter() {
-      const chapterNumberNormalized = normalizeChapterNumber(
-        this.selectedChapter.number
-      );
+      const chapterNumberNormalized = normalizeChapterNumber(this.selectedChapter.number);
       return navigateTo({
         path: `/manwha/${this.$route.params.manwha}/capitulo-${chapterNumberNormalized}`,
         query: {
@@ -67,7 +65,7 @@ option {
 
 /* Arrow */
 .select::after {
-  content: "\2B83";
+  content: '\2B83';
   position: absolute;
   top: 0;
   right: 0;

@@ -4,6 +4,7 @@
       <option
         v-for="chapter in chapters"
         :value="{ id: chapter.id, number: chapter.chapter_number }"
+        :key="chapter.id"
       >
         Capítulo <span>{{ chapter.chapter_number }}</span>
       </option>

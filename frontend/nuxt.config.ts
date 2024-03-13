@@ -8,5 +8,10 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify'],
   },
-  devtools: { enabled: true }
+  devtools: { enabled: true },
+  vue: {  
+    compilerOptions: {
+      isCustomElement: (tag: string) => tag.startsWith('v-')
+    },
+  }
 })

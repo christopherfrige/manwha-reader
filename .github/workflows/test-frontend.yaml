@@ -1,20 +1,18 @@
-name: Backend CI
+name: Test Frontend
 
 on:
-  pull_request_target:
-    types: [opened, edited, closed]
+  pull_request:
+    types: [opened, edited, reopened]
+    branches: [main, develop]
+  push:
     branches: [main, develop]
 
 jobs:
-  build:
+  test-frontend:
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./frontend
-    strategy:
-      matrix:
-        node-version: [20.11.x]
-        architecture: [x64]
     steps:
       - name: Checkout to git repository
         uses: actions/checkout@v2
@@ -22,10 +20,12 @@ jobs:
       - name: Setup node.js
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20.11.x
           cache: "npm"
           cache-dependency-path: ./backend/package-lock.json
 
       - name: Install project dependencies
         run: npm install
       
+      - name: Run unit tests
+        run: npm run tests

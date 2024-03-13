@@ -5,3 +5,6 @@ run-lint:
 	poetry run flake8 --ignore E501 \
 		--exclude .git,.venv,__pycache__,.pytest_cache,src/application/scraper \
 		--max-complexity 10
+
+run-formatter:
+	poetry run black .

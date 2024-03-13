@@ -10,7 +10,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col v-for="manwha in manwhas" cols="6" lg="3" md="4">
+            <v-col v-for="manwha in manwhas" :key="manwha.manwha_id" cols="6" lg="3" md="4">
               <ManwhaUpdatesItem :manwha="manwha" />
             </v-col>
           </v-row>
@@ -21,7 +21,7 @@
               <h2><v-icon icon="mdi-fire"></v-icon>Em Alta</h2>
             </v-col>
           </v-row>
-          <v-row v-for="manwha in manwhas">
+          <v-row v-for="manwha in manwhas" :key="manwha.manwha_id">
             <ManwhaPopularItem :manwha="manwha" />
           </v-row>
         </v-col>

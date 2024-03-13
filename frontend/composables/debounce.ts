@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 export function debounce(fn: Function, wait: number): (...args: any[]) => void {
   let timer: NodeJS.Timeout;
 

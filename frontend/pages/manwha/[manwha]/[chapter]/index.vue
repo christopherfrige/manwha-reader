@@ -28,7 +28,12 @@
           />
         </v-col>
       </v-row>
-      <v-row v-for="page in chapterData.pages" no-gutters class="reading-content text-center">
+      <v-row
+        v-for="page in chapterData.pages"
+        :key="page.url"
+        no-gutters
+        class="reading-content text-center"
+      >
         <v-col>
           <img :src="page.url" />
         </v-col>

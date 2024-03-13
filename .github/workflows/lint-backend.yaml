@@ -1,6 +1,9 @@
 name: Lint Backend
 
-on: pull_request
+on:
+  pull_request:
+    paths:
+      - "backend/**"
 
 env:
   PYTHON_VERSION: "3.11"

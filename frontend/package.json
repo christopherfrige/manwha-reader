@@ -8,8 +8,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "tests": "jest tests/ --silent --coverage --colors",
-    "lint": "eslint . --color",
+    "tests": "jest tests/ --silent --colors",
+    "lint": "eslint . --ext .js,.ts,.vue,.cjs",
     "prettier": "prettier --write ."
   },
   "dependencies": {

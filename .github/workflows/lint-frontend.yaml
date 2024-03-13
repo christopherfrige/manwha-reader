@@ -1,11 +1,6 @@
 name: Lint Frontend
 
-on:
-  pull_request:
-    types: [opened, edited, reopened]
-    branches: [main, develop]
-  push:
-    branches: [main, develop]
+on: pull_request
 
 jobs:
   lint-frontend:

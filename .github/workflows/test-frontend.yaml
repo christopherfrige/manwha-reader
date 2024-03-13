@@ -1,11 +1,6 @@
 name: Test Frontend
 
-on:
-  pull_request:
-    types: [opened, edited, reopened]
-    branches: [main, develop]
-  push:
-    branches: [main, develop]
+on: pull_request
 
 jobs:
   test-frontend:
@@ -26,6 +21,6 @@ jobs:
 
       - name: Install project dependencies
         run: npm install
-      
+
       - name: Run unit tests
         run: npm run tests

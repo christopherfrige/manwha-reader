@@ -1,14 +1,9 @@
 name: Test Backend
 
-on:
-  pull_request:
-    types: [opened, edited, reopened]
-    branches: [main, develop]
-  push:
-    branches: [main, develop]
+on: pull_request
 
 env:
-  PYTHON_VERSION: '3.11'
+  PYTHON_VERSION: "3.11"
 
 jobs:
   test-backend:
@@ -36,7 +31,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-          cache: 'poetry'
+          cache: "poetry"
 
       - name: Install dependencies
         run: poetry install --no-interaction --no-root

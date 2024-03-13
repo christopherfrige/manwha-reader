@@ -19,6 +19,7 @@
       <li
         class="suggestion"
         v-for="manwha in highlightedResults"
+        :key="manwha.manwha_id"
         @click="navigateToManwha(manwha.manwha_id, manwha.manwha_name)"
       >
         <div class="pl-3 py-1">

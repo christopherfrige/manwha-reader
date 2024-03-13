@@ -10,7 +10,7 @@
         <img :title="manwha.name" :src="manwha.thumbnail" class="thumbnail" />
       </v-col>
       <v-col cols="12" md="8" class="content">
-        <div v-for="content in contents">
+        <div v-for="content in contents" :key="content['description']">
           <ManwhaSummaryContent
             :contentTitle="content['title']"
             :contentDescription="manwha[content['description']]"

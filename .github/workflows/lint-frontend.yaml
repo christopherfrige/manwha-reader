@@ -1,0 +1,31 @@
+name: Lint Frontend
+
+on:
+  pull_request:
+    types: [opened, edited, reopened]
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
+
+jobs:
+  test-frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+      - name: Checkout to git repository
+        uses: actions/checkout@v2
+
+      - name: Setup node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20.11.x
+          cache: "npm"
+          cache-dependency-path: ./frontend/package-lock.json
+
+      - name: Install project dependencies
+        run: npm install
+
+      - name: Run unit tests
+        run: npm run lint

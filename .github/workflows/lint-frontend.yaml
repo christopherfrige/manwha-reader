@@ -8,7 +8,7 @@ on:
     branches: [main, develop]
 
 jobs:
-  test-frontend:
+  lint-frontend:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -27,5 +27,5 @@ jobs:
       - name: Install project dependencies
         run: npm install
 
-      - name: Run unit tests
+      - name: Run linter
         run: npm run lint

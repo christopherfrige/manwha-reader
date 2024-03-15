@@ -25,3 +25,10 @@ services:
     environment:
       POSTGRES_PASSWORD: "password"
       POSTGRES_DB: "manwha_reader"
+
+  frontend:
+   build:
+      context: ../frontend
+    container_name: manwha-reader-frontend
+    ports:
+      - 3000:443

@@ -1,0 +1,35 @@
+name: Deploy
+
+on:
+  push:
+    paths:
+      - "frontend/**"
+    branches: [main]
+
+jobs:
+  deploy-frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Copy repository contents via scp
+        uses: appleboy/scp-action@v0.1.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          port: ${{ secrets.VPS_PORT }}
+          key: ${{ secrets.VPS_SSHKEY }}
+          source: "frontend/*, .docker/*, !tests/*"
+          target: "/var/www/manwha-reader"
+
+      - name: Executing remote command
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          port: ${{ secrets.VPS_PORT }}
+          key: ${{ secrets.VPS_SSHKEY }}
+          script: |
+            cd /var/www/manwha-reader
+            docker compose -f ./.docker/compose.yaml up -d

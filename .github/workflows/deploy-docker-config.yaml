@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - ".docker/compose.yaml"
+      - ".github/workflows/deploy-docker-config.yaml"
     branches: [main]
 
 jobs:

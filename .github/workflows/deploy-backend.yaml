@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "backend/**"
+      - ".github/workflows/deploy-backend.yaml"
     branches: [main]
 
 jobs:
@@ -38,5 +39,5 @@ jobs:
               FRONTEND_URL=${{ secrets.BACKEND__FRONTEND_URL }}
             " >> ../backend/.env
 
-            docker compose build backend
-            docker compose up backend -d
+            docker compose build api
+            docker compose up api -d

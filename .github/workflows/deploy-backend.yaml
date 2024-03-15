@@ -34,7 +34,9 @@ jobs:
           script: |
             cd /var/www/manwha-reader/.docker
             truncate -s 0 ../backend/.env
-            printf 'NUXT_API_URL=${{ secrets.NUXT_API_URL }}' >> ../backend/.env
+            echo "
+              test=value
+            " >> ../backend/.env
 
             docker compose build backend
             docker compose up backend -d

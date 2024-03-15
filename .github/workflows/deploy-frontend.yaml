@@ -35,8 +35,7 @@ jobs:
             cd /var/www/manwha-reader/.docker
             truncate -s 0 ../frontend/.env
             echo "
-              NUXT_API_URL=${{ secrets.NUXT_API_URL }}
-              TEST_ENV=TEST_VALUE
+              API_BACKEND_BASE_URL=${{ secrets.FRONTEND__API_BACKEND_BASE_URL }}
             " >> ../frontend/.env
               
             docker compose build frontend

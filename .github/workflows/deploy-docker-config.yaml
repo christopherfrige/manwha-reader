@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy Docker Config
 
 on:
   push:
@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Sync repository with VPS
+      - name: Sync docker config with VPS
         uses: burnett01/rsync-deployments@7.0.0
         with:
           switches: -avzr --delete

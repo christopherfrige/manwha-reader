@@ -28,6 +28,7 @@ services:
 
   frontend:
     build:
+      network: host
       context: ../frontend
     container_name: manwha-reader-frontend
     ports:

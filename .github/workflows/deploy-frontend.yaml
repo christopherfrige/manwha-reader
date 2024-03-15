@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy Frontend
 
 on:
   push:
@@ -13,12 +13,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Sync repository with VPS
+      - name: Sync frontend repository with VPS
         uses: burnett01/rsync-deployments@7.0.0
         with:
           switches: -avzr --delete
-          path: backend/
-          remote_path: /var/www/manwha-reader/backend/
+          path: frontend/
+          remote_path: /var/www/manwha-reader/frontend/
           remote_host: ${{ secrets.VPS_HOST }}
           remote_port: ${{ secrets.VPS_PORT }}
           remote_user: ${{ secrets.VPS_USERNAME }}

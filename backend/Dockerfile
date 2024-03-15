@@ -13,6 +13,7 @@ COPY poetry.lock $DEPLOY_PATH/poetry.lock
 RUN pip install -U pip && pip install -U setuptools && pip install poetry
 RUN poetry install --no-interaction --without dev
 
+COPY .env $DEPLOY_PATH/.env
 COPY ./src $DEPLOY_PATH/src
 
 EXPOSE 8000

@@ -13,11 +13,15 @@ class _Settings(BaseSettings):
     db_name: str = "manwha_reader"
     db_driver: str = "postgresql+psycopg2"
 
-    aws_access_key: str = "AKIA2CKEVD2VPYDFKXNE"
-    aws_secret_key: str = "fBUPdrTnJagod7CSV3iw7H93AhR6kubbqqabKWUJ"
-    aws_region: str = "sa-east-1"
-    aws_bucket_name: str = "manwha-reader"
+    aws_access_key: str = "your_aws_access_key"
+    aws_secret_key: str = "your_aws_secret_key"
+    aws_region: str = "your_aws_region"
+    aws_bucket_name: str = "your_bucket_name"
     aws_bucket_url: str = f"http://{aws_bucket_name}.s3.amazonaws.com"
+
+    frontend_url: str = "http://localhost:3000"
+
+    model_config = SettingsConfigDict(env_file=".env")
 
 
 SETTINGS = _Settings()

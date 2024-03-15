@@ -9,8 +9,7 @@ from src.infrastructure.config import SETTINGS
 app = FastAPI()
 
 origins = [
-    "http://localhost",
-    "http://localhost:3000",
+    SETTINGS.frontend_url
 ]
 app.add_middleware(
     CORSMiddleware,

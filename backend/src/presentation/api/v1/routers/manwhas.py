@@ -13,14 +13,12 @@ router = APIRouter(prefix="/v1/manwhas", tags=["v1"])
 
 @router.get("/", response_model=GetManwhasResponse, status_code=200)
 def get_manwhas(
-    order_by: str = "",
-    order: str = "desc",
     search: str = "",
     page: int = 1,
     per_page: int = 20,
     db=Depends(UnitOfWork),
 ):
-    return GetManwhasUseCase(db).execute(order_by, order, search, page, per_page)
+    return GetManwhasUseCase(db).execute(search, page, per_page)
 
 
 @router.get("/{manwha_id}", response_model=GetManwhaResponse, status_code=200)

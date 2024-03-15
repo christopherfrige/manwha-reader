@@ -6,7 +6,7 @@ class _Settings(BaseSettings):
 
     app_environment: str = "development"
 
-    db_host: str = "localhost"
+    db_host: str = "postgres"
     db_user: str = "postgres"
     db_password: str = "password"
     db_port: str = "5432"

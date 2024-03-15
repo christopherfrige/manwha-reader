@@ -45,6 +45,8 @@ export default {
     },
   },
   mounted() {
+    console.log(useRuntimeConfig().public.apiUrl);
+    console.log(useRuntimeConfig().public.testEnv);
     this.getManwhaInfo();
   },
 };

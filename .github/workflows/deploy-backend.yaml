@@ -33,8 +33,8 @@ jobs:
           key: ${{ secrets.VPS_SSHKEY }}
           script: |
             cd /var/www/manwha-reader/.docker
-            truncate -s 0 .env
-            printf 'NUXT_API_URL=${{ secrets.NUXT_API_URL }}' >> .env
+            truncate -s 0 ../backend/.env
+            printf 'NUXT_API_URL=${{ secrets.NUXT_API_URL }}' >> ../backend/.env
 
             docker compose build backend
             docker compose up backend -d

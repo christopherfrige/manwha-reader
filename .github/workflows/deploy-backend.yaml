@@ -22,7 +22,7 @@ jobs:
           remote_host: ${{ secrets.VPS_HOST }}
           remote_port: ${{ secrets.VPS_PORT }}
           remote_user: ${{ secrets.VPS_USERNAME }}
-          remote_key: ${{ secrets.DEPLOY_KEY }}
+          remote_key: ${{ secrets.VPS_SSHKEY }}
 
       - name: Executing remote command
         uses: appleboy/ssh-action@master

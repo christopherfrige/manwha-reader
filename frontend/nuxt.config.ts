@@ -14,6 +14,8 @@ export default defineNuxtConfig({
   },
   devtools: { enabled: true },
   runtimeConfig: {
-    apiUrl: process.env.API_URL || 'http://localhost:8000',
+    public: {
+      apiUrl: process.env.API_URL || 'http://localhost:8000',
+    },
   },
 });

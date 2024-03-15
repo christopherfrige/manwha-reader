@@ -13,4 +13,7 @@ export default defineNuxtConfig({
     transpile: ['vuetify'],
   },
   devtools: { enabled: true },
+  runtimeConfig: {
+    apiUrl: process.env.API_URL || 'http://localhost:8000',
+  },
 });

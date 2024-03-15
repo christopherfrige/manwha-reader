@@ -32,5 +32,7 @@ jobs:
           port: ${{ secrets.VPS_PORT }}
           key: ${{ secrets.VPS_SSHKEY }}
           script: |
+            cd /var/www/manwha-reader/.docker
+            echo 'API_URL=${{ secrets.API_URL }}'
             cd /var/www/manwha-reader
             docker compose -f ./.docker/compose.yaml up -d

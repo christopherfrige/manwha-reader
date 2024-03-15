@@ -37,4 +37,5 @@ jobs:
             printf 'API_URL=${{ secrets.API_URL }}' >> .env
 
             cd /var/www/manwha-reader
-            docker compose -f ./.docker/compose.yaml up -d
+            docker compose build backend
+            docker compose -f ./.docker/compose.yaml up backend -d

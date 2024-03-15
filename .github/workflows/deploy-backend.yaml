@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  deploy-backend:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,8 +20,8 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           port: ${{ secrets.VPS_PORT }}
           key: ${{ secrets.VPS_SSHKEY }}
-          source: "backend/*, !tests/*"
-          target: "/var/www/mywebsite"
+          source: "backend/*, .docker/*, !tests/*"
+          target: "/var/www/manwha-reader"
 
       - name: Executing remote command
         uses: appleboy/ssh-action@master
@@ -30,4 +30,6 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           port: ${{ secrets.VPS_PORT }}
           key: ${{ secrets.VPS_SSHKEY }}
-          script: ls
+          script: |
+            cd /var/www/manwha-reader
+            docker compose -f ./.docker/compose.yaml up -d

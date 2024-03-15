@@ -32,4 +32,4 @@ services:
       context: ../frontend
     container_name: manwha-reader-frontend
     ports:
-      - 3000:443
+      - 3000:3000

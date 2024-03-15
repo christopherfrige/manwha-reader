@@ -3,11 +3,11 @@ name: Deploy
 on:
   push:
     paths:
-      - "frontend/**"
+      - ".docker/compose.yaml"
     branches: [main]
 
 jobs:
-  deploy-frontend:
+  deploy-docker-config:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,8 +17,8 @@ jobs:
         uses: burnett01/rsync-deployments@7.0.0
         with:
           switches: -avzr --delete
-          path: backend/
-          remote_path: /var/www/manwha-reader/backend/
+          path: .docker/
+          remote_path: /var/www/manwha-reader/.docker/
           remote_host: ${{ secrets.VPS_HOST }}
           remote_port: ${{ secrets.VPS_PORT }}
           remote_user: ${{ secrets.VPS_USERNAME }}

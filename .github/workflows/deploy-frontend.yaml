@@ -36,6 +36,5 @@ jobs:
             truncate -s 0 .env
             printf 'API_URL=${{ secrets.API_URL }}' >> .env
 
-            cd /var/www/manwha-reader
             docker compose build frontend
-            docker compose -f ./.docker/compose.yaml up frontend -d
+            docker compose up frontend -d

@@ -8,9 +8,6 @@ services:
     restart: on-failure
     volumes:
       - ./../backend/src:/var/www/manwha-reader/src
-    env_file:
-      - .env.dev
-      - .env
     environment:
       DB_HOST: postgres
     ports:
@@ -25,9 +22,6 @@ services:
       - "5432:5432"
     volumes:
       - ./postgres/initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
-    env_file:
-      - .env.dev
-      - .env
     environment:
       POSTGRES_PASSWORD: "password"
       POSTGRES_DB: "manwha_reader"
@@ -37,8 +31,5 @@ services:
       network: host
       context: ../frontend
     container_name: manwha-reader-frontend
-    env_file:
-      - .env.dev
-      - .env
     ports:
       - 3000:3000

@@ -38,4 +38,4 @@ services:
 
 secrets:
   postgres_password:
-    file: ./postgres/pw.txt
+    file: ./postgres/secret.txt

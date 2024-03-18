@@ -6,7 +6,7 @@ from src.domain.use_cases.chapter.get_chapter_pages import (
     GetChapterPagesUseCase,
 )
 
-router = APIRouter(prefix="/v1/chapters", tags=["v1"])
+router = APIRouter(prefix="/api/v1/chapters", tags=["v1"])
 
 
 @router.get("/{chapter_id}", response_model=GetChapterPagesResponse, status_code=200)

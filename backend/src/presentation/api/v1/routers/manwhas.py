@@ -8,7 +8,7 @@ from src.domain.schemas.manwha import (
     GetManwhaResponse,
 )
 
-router = APIRouter(prefix="/v1/manwhas", tags=["v1"])
+router = APIRouter(prefix="/api/v1/manwhas", tags=["v1"])
 
 
 @router.get("/", response_model=GetManwhasResponse, status_code=200)

@@ -19,8 +19,6 @@ class _Settings(BaseSettings):
     aws_bucket_name: str = "your_bucket_name"
     aws_bucket_url: str = f"http://{aws_bucket_name}.s3.amazonaws.com"
 
-    frontend_url: str = "http://localhost:3000"
-
     model_config = SettingsConfigDict(env_file=".env")
 
 

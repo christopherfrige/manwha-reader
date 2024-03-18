@@ -23,19 +23,5 @@ services:
     volumes:
       - ./postgres/initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
     environment:
+      POSTGRES_PASSWORD: "password"
       POSTGRES_DB: "manwha_reader"
-      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
-
-  frontend:
-    build:
-      network: host
-      context: ../frontend
-    container_name: manwha-reader-frontend
-    ports:
-      - 3000:3000
-    depends_on:
-      - api
-
-secrets:
-  postgres_password:
-    file: ./postgres/pw.txt

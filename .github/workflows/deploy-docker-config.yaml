@@ -34,8 +34,8 @@ jobs:
           key: ${{ secrets.VPS_SSHKEY }}
           script: |
             cd /var/www/manwha-reader/.docker
-            truncate -s 0 ./postgres/pw.txt
-            echo "${{ secrets.POSTGRES_PASSWORD }}" >> ./postgres/pw.txt
+            truncate -s 0 ./postgres/secret.txt
+            echo "${{ secrets.POSTGRES_PASSWORD }}" >> ./postgres/secret.txt
 
             docker compose build
             docker compose up -d

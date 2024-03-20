@@ -19,8 +19,10 @@ export default {
     contentDescription: Array,
   },
   methods: {
-    formatContentDescription() {
-      const contentNames = this.contentDescription.map((item) => {
+    formatContentDescription(contentDescription) {
+      if (!Array.isArray(contentDescription)) return contentDescription;
+
+      const contentNames = contentDescription.map((item) => {
         return item.name;
       });
       return contentNames.join(', ');

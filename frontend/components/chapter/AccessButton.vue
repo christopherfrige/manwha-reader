@@ -31,16 +31,17 @@ export default {
 
 <style scoped>
 .chapter {
-  background: rgb(212, 186, 37);
-  padding: 4px 10px;
+  background-color: var(--button-bg-color);
+  padding: 5px 10px;
   border-radius: 10px 0 10px 0;
   cursor: pointer;
   color: #000;
   font-size: 14px;
   transition: background 0.25s ease;
+  white-space: nowrap;
 }
 
 .chapter:hover {
-  background: rgb(231, 212, 105);
+  background-color: var(--button-hover-bg-color);
 }
 </style>

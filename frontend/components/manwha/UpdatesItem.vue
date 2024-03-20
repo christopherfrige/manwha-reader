@@ -14,12 +14,16 @@
       <h3>
         <a class="title" @click="navigateToManwha()">{{ manwha.manwha_name }}</a>
       </h3>
-      <ChapterAccessButton
-        :chapterId="manwha.last_chapter_id"
-        :chapterNumber="manwha.last_chapter_number"
-        :manwhaName="manwha.manwha_name"
-      />
-      <ChapterDatePostedLabel :postedAt="manwha.last_chapter_uploaded_at" />
+      <v-row no-gutters>
+        <v-col class="d-flex align-center">
+          <ChapterAccessButton
+            :chapterId="manwha.last_chapter_id"
+            :chapterNumber="manwha.last_chapter_number"
+            :manwhaName="manwha.manwha_name"
+          />
+          <ChapterDatePostedLabel :postedAt="manwha.last_chapter_uploaded_at" class="ml-2" />
+        </v-col>
+      </v-row>
     </v-col>
   </v-row>
 </template>
@@ -50,7 +54,7 @@ export default {
   height: auto;
   object-fit: cover;
   transition: filter 0.3s ease;
-  border-radius: 15px;
+  border-radius: 10px;
 }
 
 .thumbnail:hover {
@@ -69,7 +73,7 @@ export default {
 }
 
 .title:hover {
-  color: rgb(212, 186, 37);
+  color: var(--button-hover-bg-color);
   cursor: pointer;
 }
 </style>

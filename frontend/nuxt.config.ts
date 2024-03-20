@@ -14,7 +14,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   runtimeConfig: {
     public: {
-      apiBackendBaseUrl: process.env.API_BACKEND_BASE_URL || 'http://localhost:8000',
+      apiBackendBaseUrl: process.env.API_BACKEND_BASE_URL || 'http://localhost:8000/api',
     },
   },
 });

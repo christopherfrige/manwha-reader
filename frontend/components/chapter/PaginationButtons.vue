@@ -83,8 +83,8 @@ export default {
 
 <style scoped>
 a {
-  background: rgb(212, 186, 37);
-  color: #000;
+  background: var(--button-bg-color);
+  color: #fff;
   padding: 10px;
   border-radius: 5px;
   transition: background 0.25s ease;
@@ -93,8 +93,7 @@ a {
 
 a:hover {
   cursor: pointer;
-
-  background: rgb(231, 212, 105);
+  background: var(--button-hover-bg-color);
 }
 
 .pagination-buttons {

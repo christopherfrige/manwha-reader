@@ -1,5 +1,5 @@
 <template>
-  <v-layout class="justify-end">
+  <v-layout>
     <v-app-bar-nav-icon
       variant="text"
       class="expand-button"
@@ -42,7 +42,7 @@ export default {
 </script>
 <style scoped>
 .expand-button {
-  font-size: 40px;
+  font-size: 2rem;
 }
 .menu {
   background-color: #181828;

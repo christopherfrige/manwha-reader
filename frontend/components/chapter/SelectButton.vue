@@ -77,6 +77,6 @@ option {
 }
 
 .select:hover::after {
-  color: rgb(231, 212, 105);
+  color: var(--button-hover-bg-color);
 }
 </style>

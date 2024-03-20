@@ -1,20 +1,21 @@
 <template>
   <div class="navbar-bg">
     <div class="container">
-      <v-row class="mb-8 navbar px-3">
-        <v-col cols="3" class="mt-2">
+      <v-row class="mb-8 navbar">
+        <v-col cols="10" md="3" class="my-4">
           <h1 @click="navigateToHome()">Manwha Reader</h1>
         </v-col>
-        <v-col cols="5" class="mt-2 d-none d-md-flex">
-          <v-btn variant="text" @click="navigateToHome()"> Início </v-btn>
-          <v-btn variant="text"> Manwhas </v-btn>
+        <v-col cols="0" md="5" class="mt-2 d-none d-md-flex">
+          <ul>
+            <li @click="navigateToHome()">INÍCIO</li>
+            <li>MANWHAS</li>
+          </ul>
         </v-col>
-        <v-col cols="4" class="mt-2">
+        <v-col cols="2" md="4" class="mt-2">
           <v-row>
             <v-col>
               <UiSearchBar class="d-none d-md-flex" />
               <LayoutMobileMenu class="d-md-none" />
-              <v-app-bar-nav-icon v-if="false"></v-app-bar-nav-icon>
             </v-col>
           </v-row>
         </v-col>
@@ -39,11 +40,15 @@ export default {
 h1 {
   cursor: pointer;
   display: inline;
-  font-size: 36px;
+  font-size: 34px;
+}
+
+h1:hover {
+  transform: scale(2);
 }
 
 .navbar-bg {
-  background-color: #181828;
+  background: var(--nav-bg-color);
 }
 
 .navbar {
@@ -74,5 +79,39 @@ h1 {
   .container {
     max-width: 1440px;
   }
+}
+
+.v-row {
+  margin: 0;
+}
+
+.v-col {
+  padding: 0;
+}
+
+li {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  margin: 0 35px 0 0;
+  font-size: 15px;
+  transition: color 0.3s ease-in-out;
+}
+li:after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 0%;
+  height: 3px;
+  background-color: rgb(212, 186, 37);
+  transition: all 0.3s ease-in-out;
+  transform: translateX(-50%);
+}
+li:hover:after {
+  width: 100%;
+}
+li:hover {
+  color: rgb(212, 186, 37);
 }
 </style>

@@ -1,7 +1,10 @@
 <template>
   <div class="body">
+    <Head>
+      <Title>Manwha Reader - {{ manwhaName }} - Capítulo {{ chapterNumber }}</Title>
+    </Head>
     <LayoutNavbarHeader />
-    <div class="container" v-if="chapterData && manwhaData">
+    <div class="container mt-4" v-if="chapterData && manwhaData">
       <v-row>
         <v-col>
           <h2>
@@ -50,6 +53,8 @@ export default {
       chapterId: this.$route.query.id,
       chapterData: null,
       manwhaData: null,
+      manwhaName: '',
+      chapterNumber: '',
     };
   },
   methods: {
@@ -61,10 +66,12 @@ export default {
     async getChapter() {
       const response = await this.$request.get(`v1/chapters/${this.chapterId}`);
       this.chapterData = response.data;
+      this.chapterNumber = this.chapterData.chapter_number;
     },
     async getManwhaInfo() {
       const response = await this.$request.get(`v1/manwhas/${this.chapterData.manwha_id}`);
       this.manwhaData = response.data;
+      this.manwhaName = this.manwhaData.name;
     },
   },
   mounted() {

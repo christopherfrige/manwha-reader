@@ -6,9 +6,8 @@
       </v-col>
     </v-row>
     <v-row class="pt-4 description">
-      <v-col cols="12" md="3">
-        <img :title="manwha.name" :src="manwha.thumbnail" class="thumbnail" />
-      </v-col>
+      <img :title="manwha.name" :src="manwha.thumbnail" class="thumbnail" />
+
       <v-col cols="12" md="8" class="content">
         <div v-for="content in contents" :key="content['description']">
           <ManwhaSummaryContent
@@ -44,7 +43,7 @@ export default {
 }
 
 .thumbnail {
-  max-width: 100%;
+  max-width: 250px;
   height: auto;
   border-radius: 25px;
   padding: 15px;
@@ -55,7 +54,7 @@ export default {
   .thumbnail {
     margin: 0 auto 16px auto;
     display: inherit;
-    width: 270px;
+    max-width: 270px;
   }
 }
 

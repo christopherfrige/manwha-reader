@@ -1,7 +1,7 @@
 <template>
-  <v-row>
+  <v-row no-gutters>
     <v-col v-for="chapter in manwha.chapters" :key="chapter.id" cols="12" sm="6" md="4">
-      <v-row class="chapter">
+      <v-row class="chapter" no-gutters>
         <ChapterAccessButton
           :chapterId="chapter.id"
           :chapterNumber="chapter.chapter_number"

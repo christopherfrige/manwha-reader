@@ -1,5 +1,8 @@
 <template>
   <div class="body">
+    <Head>
+      <Title>Manwha Reader - {{ manwhaName }}</Title>
+    </Head>
     <LayoutNavbarHeader />
     <v-container class="container">
       <v-row>
@@ -8,9 +11,9 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col class="text-center">
+        <v-col class="text-center mt-3 chapters">
           <h3>CAPÍTULOS LANÇADOS</h3>
-          <ManwhaChapterList :manwha="manwha" v-if="manwha" class="mt-1" />
+          <ManwhaChapterList :manwha="manwha" v-if="manwha" />
         </v-col>
       </v-row>
     </v-container>
@@ -24,12 +27,14 @@ export default {
     return {
       manwha: null,
       manwhaId: this.$route.query.id,
+      manwhaName: '',
     };
   },
   methods: {
     async getManwhaInfo() {
       const response = await this.$request.get(`v1/manwhas/${this.manwhaId}`);
       this.manwha = response.data;
+      this.manwhaName = this.manwha.name;
     },
   },
   mounted() {
@@ -62,5 +67,10 @@ export default {
   .container {
     max-width: 1440px;
   }
+}
+
+.chapters {
+  padding-left: 0px;
+  padding-right: 0px;
 }
 </style>

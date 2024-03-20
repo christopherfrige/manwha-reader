@@ -1,5 +1,17 @@
 <template>
   <v-layout>
+    <ul class="manwhas-suggestion">
+      <li
+        class="suggestion"
+        v-for="manwha in highlightedResults"
+        :key="manwha.manwha_id"
+        @click="navigateToManwha(manwha.manwha_id, manwha.manwha_name)"
+      >
+        <div class="px-4 py-1">
+          <span v-html="manwha.highlighted_name"></span>
+        </div>
+      </li>
+    </ul>
     <div class="search-bar">
       <v-text-field
         :loading="searchLoading"
@@ -10,23 +22,11 @@
         hide-details
         v-model="inputSearch"
         @input="searchManwhas()"
-        @blur="clearManwhas()"
+        @focus="searchManwhas()"
       >
       </v-text-field>
       <span class="search-button">Buscar</span>
     </div>
-    <ul class="manwhas-suggestion">
-      <li
-        class="suggestion"
-        v-for="manwha in highlightedResults"
-        :key="manwha.manwha_id"
-        @click="navigateToManwha(manwha.manwha_id, manwha.manwha_name)"
-      >
-        <div class="pl-3 py-1">
-          <span v-html="manwha.highlighted_name"></span>
-        </div>
-      </li>
-    </ul>
   </v-layout>
 </template>
 <script>
@@ -94,15 +94,15 @@ export default {
   min-width: 250px;
   max-width: 400px;
   position: absolute;
-  z-index: 99;
+  z-index: 10000;
   background-color: #1f2129;
   border-radius: 0 0 10px 10px;
   font-size: 16px;
-  margin-top: 40px;
+  margin-top: 41px;
 }
 
 .suggestion:hover {
-  background-color: rgb(212, 186, 37);
+  background-color: var(--button-bg-color);
   color: #000;
 }
 
@@ -124,15 +124,16 @@ export default {
 
 .search-button {
   font-size: 16px;
-  background-color: rgb(212, 186, 37);
+  background-color: var(--button-bg-color);
   padding: 8px;
-  color: #000;
+  color: #fff;
   border-radius: 0 10px 10px 0;
   transition: background 0.3s ease;
+  border: 1px solid #000;
 }
 
 .search-button:hover {
-  background: rgb(231, 212, 105);
+  background: var(--button-hover-bg-color);
   cursor: pointer;
 }
 </style>

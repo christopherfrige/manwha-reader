@@ -16,6 +16,9 @@ psycopg2-binary = "^2.9.9"
 boto3 = "^1.33.4"
 scrapy = "^2.11.0"
 pillow = "^10.1.0"
+selenium = "^4.18.1"
+webdriver-manager = "^4.0.1"
+requests = "^2.31.0"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.11.0"

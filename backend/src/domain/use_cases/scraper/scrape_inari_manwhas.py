@@ -1,19 +1,18 @@
+from src.domain.use_cases.scraper import BaseScraperUseCase
 from selenium.webdriver.common.by import By
 
 import requests
 
-from src.application.scraper import BaseScraper
 
-
-class InariScraper(BaseScraper):
-    def scrape_data(self, scraper):
+class ScrapeInariManwhasUseCase(BaseScraperUseCase):
+    def scrape_manwha_data(self, scraper):
         scraper.get("")
 
-        raw_manwha_data = scraper.find_elements(By.CLASS_NAME, "imptdt")
+        manwha_attributes = scraper.find_elements(By.CLASS_NAME, "imptdt")
         manwha_data = {}
-        for data in raw_manwha_data:
-            data = data.text.splitlines()
-            manwha_data.update({data[0]: data[1]})
+        for attribute in manwha_attributes:
+            attribute = attribute.text.splitlines()
+            manwha_data.update({attribute[0]: attribute[1]})
 
         return {
             "manwha_name": scraper.find_element(By.CLASS_NAME, "entry-title").text,
@@ -25,10 +24,10 @@ class InariScraper(BaseScraper):
             "artists": manwha_data.get("Artista", "").split(","),
             "status": manwha_data.get("Estado"),
             "release": manwha_data.get("Lanzado"),
-            "chapters": self.get_chapters(),
+            "chapters": self._get_chapters_numbers_and_urls(),
         }
 
-    def get_chapters(self):
+    def _get_chapters_numbers_and_urls(self):
         chapters_raw = self.scraper.find_elements(By.CLASS_NAME, "eph-num")
         chapters = []
         for position, chapter in enumerate(chapters_raw):
@@ -37,12 +36,12 @@ class InariScraper(BaseScraper):
 
             chapter_link = chapter.find_element(By.TAG_NAME, "a").get_attribute("href")
             chapter_number = chapter.find_element(By.CLASS_NAME, "chapternum").text
-            formatted_chapter_number = chapter_number[-3:].replace(" ", "").replace("o", "")
+            formatted_chapter_number = float(chapter_number[8:].replace(" ", "").replace("o", ""))
 
             chapters.append({"url": chapter_link, "number": formatted_chapter_number})
         return chapters
 
-    def get_chapter_images(self, chapter_url):
+    def scrape_manwha_chapter_images(self, chapter_url):
         self.scraper.get(chapter_url)
         elements = self.scraper.find_elements(By.CLASS_NAME, "ts-main-image")
 
@@ -53,7 +52,3 @@ class InariScraper(BaseScraper):
 
             with open(f"{image_name}.{image_type}", "wb") as image:
                 image.write(requests.get(image_url).content)
-
-
-if __name__ == "__main__":
-    InariScraper().run()

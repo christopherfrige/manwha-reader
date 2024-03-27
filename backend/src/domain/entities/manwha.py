@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, Text, TIMESTAMP, ForeignKey
+from sqlalchemy.sql.functions import now
 from src.domain.entities import Base
 
 
@@ -13,8 +14,8 @@ class Manwha(Base, ManwhaSchema):
     name = Column(Text, nullable=False)
     thumbnail = Column(Text)
     summary = Column(Text)
-    created_at = Column(TIMESTAMP, nullable=False)
-    updated_at = Column(TIMESTAMP)
+    created_at = Column(TIMESTAMP, nullable=False, default=now())
+    updated_at = Column(TIMESTAMP, default=now())
 
 
 class ManwhaChapter(Base, ManwhaSchema):

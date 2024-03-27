@@ -15,7 +15,7 @@ class _Settings(BaseSettings):
 
     aws_access_key: str = "your_aws_access_key"
     aws_secret_key: str = "your_aws_secret_key"
-    aws_region: str = "your_aws_region"
+    aws_region: str = "sa-east-1"
     aws_bucket_name: str = "your_bucket_name"
     aws_bucket_url: str = f"http://{aws_bucket_name}.s3.amazonaws.com"
 

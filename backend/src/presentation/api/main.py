@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from src.presentation.api.v1.routers.manwhas import router as v1_manwhas
 from src.presentation.api.v1.routers.chapters import router as v1_chapters
+from src.presentation.api.v1.routers.scrapers import router as v1_scrapers
 from src.infrastructure.config import SETTINGS
 
 app = FastAPI()
@@ -18,6 +19,7 @@ app.add_middleware(
 
 app.include_router(v1_manwhas)
 app.include_router(v1_chapters)
+app.include_router(v1_scrapers)
 
 if __name__ == "__main__":
     uvicorn.run(

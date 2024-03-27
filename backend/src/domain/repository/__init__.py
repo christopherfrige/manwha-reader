@@ -1,32 +1,30 @@
 from abc import ABC
 from sqlalchemy.ext.declarative import DeclarativeMeta
-from src.infrastructure.persistence.unit_of_work import UnitOfWork
+from sqlalchemy.orm import Session
 
 
 class BaseRepository(ABC):
-    def __init__(self, model: DeclarativeMeta):
-        self.db = UnitOfWork()
+    def __init__(self, session: Session, model: DeclarativeMeta):
+        self.session = session
         self.model = model
 
-    def _get(self, id: int) -> object:
-        with self.db.get_session() as session:
-            return session.query(self.model).filter_by(id=id).first()
+    def get(self, field: str, value: str | int | float | bool) -> list:
+        field = getattr(self.model, field)
+        if type(value) is not list:
+            value = [value]
+        return self.session.query(self.model).where(field.in_(value)).all()
 
-    def _get_all(self) -> list:
-        with self.db.get_session() as session:
-            return session.query(self.model).all()
+    def get_all(self) -> list:
+        return self.session.query(self.model).all()
 
-    def _add(self, obj: object) -> None:
-        with self.db.get_session() as session:
-            session.add(obj)
-            session.commit()
+    def add(self, obj: object) -> None:
+        self.session.add(obj)
+        self.session.flush()
+        if hasattr(obj, "id"):
+            return obj.id
 
-    def _update(self, obj: object) -> None:
-        with self.db.get_session() as session:
-            session.merge(obj)
-            session.commit()
+    def update(self, obj: object) -> None:
+        self.session.merge(obj)
 
-    def _delete(self, obj: object) -> None:
-        with self.db.get_session() as session:
-            session.delete(obj)
-            session.commit()
+    def delete(self, obj: object) -> None:
+        self.session.delete(obj)

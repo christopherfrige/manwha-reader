@@ -25,5 +25,6 @@ module.exports = {
         allowBinding: false,
       },
     ],
+    'vue-scoped-css/no-unused-selector': 'off',
   },
 };

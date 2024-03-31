@@ -41,6 +41,15 @@
           <img :src="page.url" />
         </v-col>
       </v-row>
+      <v-row>
+        <v-col class="text-end my-5">
+          <ChapterPaginationButtons
+            :chapters="manwhaData.chapters"
+            :currentChapterId="Number(this.chapterId)"
+            :manwhaId="this.chapterData.manwha_id"
+          />
+        </v-col>
+      </v-row>
     </div>
   </div>
 </template>

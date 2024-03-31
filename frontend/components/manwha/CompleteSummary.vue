@@ -31,6 +31,7 @@ export default {
         { title: 'Autor(es)', description: 'authors' },
         { title: 'Artista(s)', description: 'artists' },
         { title: 'Gênero(s)', description: 'genres' },
+        { title: 'Ano de Lançamento', description: 'release' },
       ],
     };
   },

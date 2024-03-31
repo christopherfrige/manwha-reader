@@ -27,7 +27,7 @@ export default {
         'Novembro',
         'Dezembro',
       ];
-      const postedDatetime = new Date(datetimeString);
+      const postedDatetime = new Date(`${datetimeString} UTC`);
 
       const postedRecentlyLabel = this.postedRecentlyLabel(postedDatetime);
       if (postedRecentlyLabel) return postedRecentlyLabel;

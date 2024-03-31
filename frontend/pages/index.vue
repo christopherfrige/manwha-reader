@@ -61,7 +61,7 @@ export default {
         page: this.pageCount,
         per_page: 8,
       };
-      const response = await this.$request.get(`v1/manwhas`, { params });
+      const response = await this.$request.get(`v1/manwhas/`, { params });
       const manwhas = response.data.records;
 
       if (showMore) {

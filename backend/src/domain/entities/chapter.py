@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, ForeignKey, TIMESTAMP, Float
 from src.domain.entities import Base
-from sqlalchemy.orm import relationship
+from sqlalchemy.sql.functions import now
 
 
 class ChapterSchema:
@@ -14,6 +14,5 @@ class Chapter(Base, ChapterSchema):
     manwha_id = Column(Integer, ForeignKey("manwha.manwha.id"), nullable=False)
     chapter_number = Column(Float, nullable=False)
     pages = Column(Integer, nullable=False)
-    created_at = Column(TIMESTAMP, nullable=False)
-    updated_at = Column(TIMESTAMP)
-    manwha = relationship("Manwha")
+    created_at = Column(TIMESTAMP, nullable=False, default=now())
+    updated_at = Column(TIMESTAMP, default=now())

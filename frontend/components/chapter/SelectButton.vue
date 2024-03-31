@@ -66,7 +66,7 @@ option {
 
 /* Arrow */
 .select::after {
-  content: '\2B83';
+  content: '\21D3';
   position: absolute;
   top: 0;
   right: 0;

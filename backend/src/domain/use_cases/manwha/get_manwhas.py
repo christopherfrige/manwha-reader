@@ -1,4 +1,4 @@
-from src.domain.entities.manwha import Manwha, ManwhaChapter
+from src.domain.entities.manwha import Manwha
 from src.domain.entities.chapter import Chapter
 from src.domain.schemas.manwha import (
     ManwhaPresentationData,
@@ -27,8 +27,7 @@ class GetManwhasUseCase:
 
             subquery = (
                 session.query(Chapter.id)
-                .filter(Manwha.id == ManwhaChapter.manwha_id)
-                .filter(Chapter.id == ManwhaChapter.chapter_id)
+                .filter(Manwha.id == Chapter.manwha_id)
                 .order_by(Chapter.id.desc())
                 .limit(1)
                 .correlate(Manwha)
@@ -43,8 +42,7 @@ class GetManwhasUseCase:
                     func.max(Chapter.chapter_number).label("last_chapter_number"),
                     func.max(cast(Chapter.created_at, String)).label("last_chapter_uploaded_at"),
                 )
-                .join(ManwhaChapter, Manwha.id == ManwhaChapter.manwha_id)
-                .join(Chapter, Chapter.id == ManwhaChapter.chapter_id)
+                .join(Chapter, Chapter.manwha_id == Manwha.id)
                 .filter(Chapter.id == subquery.scalar_subquery())
             )
 

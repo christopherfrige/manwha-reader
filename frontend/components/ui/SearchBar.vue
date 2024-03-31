@@ -47,7 +47,7 @@ export default {
         search: this.inputSearch,
         per_page: 5,
       };
-      const response = await this.$request.get(`v1/manwhas`, { params });
+      const response = await this.$request.get(`v1/manwhas/`, { params });
       this.manwhas = response.data.records;
 
       this.searchLoading = false;

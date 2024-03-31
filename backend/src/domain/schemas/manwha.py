@@ -35,6 +35,7 @@ class GetManwhaResponse(BaseModel):
     alternative_names: list[AlternativeNameSchema]
     authors: list[AuthorSchema]
     artists: list[ArtistSchema]
+    release: str
 
 
 class SearchManwhasResponse(BaseModel):

@@ -18,6 +18,8 @@ from src.domain.schemas.alternative_name import AlternativeNameSchema
 from src.domain.schemas.chapter import ChapterSchema
 from src.infrastructure.persistence.unit_of_work import UnitOfWork
 
+from sqlalchemy import cast, String
+
 
 class GetManwhaUseCase:
     def execute(self, db: UnitOfWork, manwha_id: int) -> GetManwhaResponse:
@@ -65,7 +67,7 @@ class GetManwhaUseCase:
             self.session.query(
                 Chapter.id,
                 Chapter.chapter_number,
-                Chapter.created_at,
+                cast(Chapter.created_at, String),
             )
             .filter(Chapter.manwha_id == self.manwha_id)
             .order_by(Chapter.chapter_number.desc())

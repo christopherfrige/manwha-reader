@@ -65,7 +65,6 @@ class BaseScraperUseCase(ABC):
                                 manwha_id, chapter["number"], chapter_pages
                             )
                             self.session.commit()
-                            break
                         except Exception as error:
                             self.session.rollback()
                             logger.exception(error)

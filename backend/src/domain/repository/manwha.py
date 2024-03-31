@@ -5,7 +5,6 @@ from src.domain.entities.manwha import (
     ManwhaArtist,
     ManwhaGenre,
     ManwhaAlternativeName,
-    ManwhaChapter,
 )
 from sqlalchemy.orm import Session
 
@@ -13,11 +12,6 @@ from sqlalchemy.orm import Session
 class ManwhaRepository(BaseRepository):
     def __init__(self, session: Session) -> None:
         super().__init__(session, Manwha)
-
-
-class ManwhaChapterRepository(BaseRepository):
-    def __init__(self, session: Session) -> None:
-        super().__init__(session, ManwhaChapter)
 
 
 class ManwhaAuthorRepository(BaseRepository):

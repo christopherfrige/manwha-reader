@@ -19,6 +19,9 @@ class _Settings(BaseSettings):
     aws_bucket_name: str = "your_bucket_name"
     aws_bucket_url: str = f"http://{aws_bucket_name}.s3.amazonaws.com"
 
+    chapter_images_local_folder: str = "/tmp/chapter_images"
+    thumbnail_local_folder: str = "/tmp/thumbnail"
+
     model_config = SettingsConfigDict(env_file=".env")
 
 

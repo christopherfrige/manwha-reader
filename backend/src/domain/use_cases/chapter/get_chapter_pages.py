@@ -1,13 +1,15 @@
-from src.domain.entities.manwha import Manwha, ManwhaChapter
+from src.domain.entities.manwha import Manwha
 from src.domain.entities.chapter import Chapter
 from src.domain.schemas.chapter import GetChapterPagesResponse, ChapterPage
 from src.infrastructure.persistence.unit_of_work import UnitOfWork
 from src.infrastructure.config import SETTINGS
+from src.infrastructure.services.s3 import S3Service
 
 
 class GetChapterPagesUseCase:
     def __init__(self, db: UnitOfWork):
         self.db = db
+        self.storage = S3Service()
 
     def execute(self, chapter_id: int) -> GetChapterPagesResponse:
         with self.db.get_session() as session:
@@ -18,8 +20,7 @@ class GetChapterPagesUseCase:
                     Chapter.chapter_number.label("chapter_number"),
                     Chapter.pages.label("chapter_pages"),
                 )
-                .join(ManwhaChapter, Manwha.id == ManwhaChapter.manwha_id)
-                .join(Chapter, Chapter.id == ManwhaChapter.chapter_id)
+                .join(Chapter, Chapter.manwha_id == Manwha.id)
                 .filter(Chapter.id == chapter_id)
             ).first()
 
@@ -30,14 +31,9 @@ class GetChapterPagesUseCase:
                 manwha_id=result.manwha_id,
                 manwha_name=result.manwha_name,
                 chapter_number=result.chapter_number,
-                pages=self.prepare_chapter_pages(chapter_id, result.chapter_pages),
+                pages=self.prepare_chapter_pages(result.manwha_id, chapter_id),
             )
 
-    def prepare_chapter_pages(self, chapter_id: int, chapter_pages: int) -> list[ChapterPage]:
-        all_pages = range(1, chapter_pages + 1)
-        return [
-            ChapterPage(
-                url=f"{SETTINGS.aws_bucket_url}/{chapter_id}/{page}.jpg",
-            )
-            for page in all_pages
-        ]
+    def prepare_chapter_pages(self, manwha_id: int, chapter_id: int) -> list[ChapterPage]:
+        chapter_pages = self.storage.list_objects(path=f"manwha/{manwha_id}/chapters/{chapter_id}")
+        return [ChapterPage(url=f"{SETTINGS.aws_bucket_url}/{page}") for page in chapter_pages]

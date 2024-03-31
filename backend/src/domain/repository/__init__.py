@@ -1,6 +1,7 @@
 from abc import ABC
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from sqlalchemy.orm import Session
+from sqlalchemy import update
 
 
 class BaseRepository(ABC):
@@ -23,8 +24,12 @@ class BaseRepository(ABC):
         if hasattr(obj, "id"):
             return obj.id
 
-    def update(self, obj: object) -> None:
-        self.session.merge(obj)
+    def update(
+        self, where_field: str, where_value: str | int | float | bool, values_to_update: dict
+    ) -> None:
+        where_field = getattr(self.model, where_field)
+        query = update(self.model).where(where_field == where_value).values(**values_to_update)
+        self.session.execute(query)
 
     def delete(self, obj: object) -> None:
         self.session.delete(obj)

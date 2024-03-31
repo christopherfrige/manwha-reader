@@ -1,30 +1,95 @@
-from src.domain.use_cases.scraper import BaseScraperUseCase
+from sqlalchemy.orm import Session
+from src.domain.use_cases.scraper.base_scraper import BaseScraperUseCase
 from selenium.webdriver.common.by import By
-
-import requests
+from src.infrastructure.config import SETTINGS
+from src.infrastructure.services.s3 import S3Service
 
 
 class ScrapeInariManwhasUseCase(BaseScraperUseCase):
-    def scrape_manwha_data(self, scraper):
-        scraper.get("")
+    def __init__(self, session: Session, storage: S3Service):
+        self.reader_id = 1
+        super().__init__(session, storage)
 
-        manwha_attributes = scraper.find_elements(By.CLASS_NAME, "imptdt")
-        manwha_data = {}
-        for attribute in manwha_attributes:
-            attribute = attribute.text.splitlines()
-            manwha_data.update({attribute[0]: attribute[1]})
+    def scrape_manwha_data(self, manwha_url: str):
+        self.scraper.get(manwha_url)
+
+        manwha_attributes = self._get_manwha_attributes()
 
         return {
-            "manwha_name": scraper.find_element(By.CLASS_NAME, "entry-title").text,
-            "alternative_names": scraper.find_element(By.CLASS_NAME, "alternative").text.split(
-                ","
-            ),
-            "thumbnail": scraper.find_element(By.CLASS_NAME, "attachment-").get_attribute("src"),
-            "authors": manwha_data.get("Autor", "").split(","),
-            "artists": manwha_data.get("Artista", "").split(","),
-            "status": manwha_data.get("Estado"),
-            "release": manwha_data.get("Lanzado"),
+            "manwha_name": self._get_manwha_name(),
+            "alternative_names": self._get_alternative_names(),
+            "summary": self._get_summary(),
+            "thumbnail": self._get_thumbnail(),
+            "genres": self._get_genres(),
+            "authors": manwha_attributes["authors"],
+            "artists": manwha_attributes["artists"],
+            "release": manwha_attributes["release"],
             "chapters": self._get_chapters_numbers_and_urls(),
+        }
+
+    def scrape_manwha_chapter_images(self, chapter_url):
+        self.scraper.get(chapter_url)
+
+        elements = self.scraper.find_elements(By.CLASS_NAME, "ts-main-image")
+
+        chapter_pages = 0
+        for image_position, html_tag in enumerate(elements):
+            image_url = html_tag.get_attribute("src")
+            image_name = str(image_position).rjust(3, "0")
+            image_type = image_url.split(".")[-1]
+
+            self.download_image.execute(
+                local_dir=SETTINGS.chapter_images_local_folder,
+                image_name=image_name,
+                image_type=image_type,
+                image_url=image_url,
+            )
+            chapter_pages += 1
+
+        return chapter_pages
+
+    def _get_manwha_name(self) -> str:
+        manwha_name = self.scraper.find_element(By.CLASS_NAME, "entry-title").text
+        return self._remove_leading_trailing_whitespaces(manwha_name)
+
+    def _get_thumbnail(self) -> str:
+        thumbnail = self.scraper.find_element(By.CLASS_NAME, "attachment-").get_attribute("src")
+        return thumbnail
+
+    def _get_summary(self) -> str:
+        summary = (
+            self.scraper.find_element(By.CLASS_NAME, "entry-content")
+            .find_element(By.TAG_NAME, "p")
+            .text
+        )
+        return summary
+
+    def _get_alternative_names(self) -> list[str]:
+        alternative_names = self.scraper.find_element(By.CLASS_NAME, "alternative").text.split(",")
+        return self._remove_leading_trailing_whitespaces(alternative_names)
+
+    def _get_genres(self) -> list[str]:
+        genres = [
+            genre.text
+            for genre in self.scraper.find_element(By.CLASS_NAME, "mgen").find_elements(
+                By.TAG_NAME, "a"
+            )
+        ]
+        return self._remove_leading_trailing_whitespaces(genres)
+
+    def _get_manwha_attributes(self) -> dict:
+        manwha_attributes = self.scraper.find_elements(By.CLASS_NAME, "imptdt")
+        manwha_prepared_attributes = {}
+        for attribute in manwha_attributes:
+            attribute = attribute.text.splitlines()
+            attribute_name = attribute[0]
+            attribute_value = self._remove_leading_trailing_whitespaces(attribute[1].split(","))
+            manwha_prepared_attributes.update({attribute_name: attribute_value})
+
+        return {
+            "authors": manwha_prepared_attributes.get("Autor", []),
+            "artists": manwha_prepared_attributes.get("Artista", []),
+            "release": manwha_prepared_attributes.get("Lanzado", []),
         }
 
     def _get_chapters_numbers_and_urls(self):
@@ -40,15 +105,3 @@ class ScrapeInariManwhasUseCase(BaseScraperUseCase):
 
             chapters.append({"url": chapter_link, "number": formatted_chapter_number})
         return chapters
-
-    def scrape_manwha_chapter_images(self, chapter_url):
-        self.scraper.get(chapter_url)
-        elements = self.scraper.find_elements(By.CLASS_NAME, "ts-main-image")
-
-        for image_position, html_tag in enumerate(elements):
-            image_name = str(image_position).rjust(3, "0")
-            image_url = html_tag.get_attribute("src")
-            image_type = image_url.split(".")[-1]
-
-            with open(f"{image_name}.{image_type}", "wb") as image:
-                image.write(requests.get(image_url).content)

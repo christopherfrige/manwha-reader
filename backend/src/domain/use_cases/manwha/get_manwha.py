@@ -1,6 +1,5 @@
 from src.domain.entities.manwha import (
     Manwha,
-    ManwhaChapter,
     ManwhaAlternativeName,
     ManwhaArtist,
     ManwhaAuthor,
@@ -30,6 +29,7 @@ class GetManwhaUseCase:
             return GetManwhaResponse(
                 name=manwha.name,
                 thumbnail=manwha.thumbnail,
+                release=manwha.release,
                 chapters=self._chapters(),
                 authors=self._additional_data(
                     Author, ManwhaAuthor, ManwhaAuthor.author_id, AuthorSchema
@@ -50,11 +50,7 @@ class GetManwhaUseCase:
 
     def _manwha(self):
         manwha = (
-            self.session.query(
-                Manwha.id,
-                Manwha.name,
-                Manwha.thumbnail,
-            )
+            self.session.query(Manwha.id, Manwha.name, Manwha.thumbnail, Manwha.release)
             .filter(Manwha.id == self.manwha_id)
             .first()
         )
@@ -71,9 +67,8 @@ class GetManwhaUseCase:
                 Chapter.chapter_number,
                 Chapter.created_at,
             )
-            .join(ManwhaChapter, ManwhaChapter.chapter_id == Chapter.id)
-            .filter(ManwhaChapter.manwha_id == self.manwha_id)
-            .order_by(Chapter.id.desc())
+            .filter(Chapter.manwha_id == self.manwha_id)
+            .order_by(Chapter.chapter_number.desc())
             .all()
         )
 

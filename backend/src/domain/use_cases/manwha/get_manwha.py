@@ -67,7 +67,7 @@ class GetManwhaUseCase:
             self.session.query(
                 Chapter.id,
                 Chapter.chapter_number,
-                cast(Chapter.created_at, String),
+                cast(Chapter.created_at, String).label("created_at"),
             )
             .filter(Chapter.manwha_id == self.manwha_id)
             .order_by(Chapter.chapter_number.desc())

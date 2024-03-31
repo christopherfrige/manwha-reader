@@ -6,6 +6,7 @@ class S3Service(AWS):
     def __init__(self):
         super().__init__()
         self.bucket_name = SETTINGS.aws_bucket_name
+        self.bucket_url = f"https://{SETTINGS.aws_bucket_name}.s3.amazonaws.com"
         self.s3 = self.create_session().resource("s3")
 
     def upload_object(self, local_path: str, storage_path: str):

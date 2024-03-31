@@ -36,4 +36,4 @@ class GetChapterPagesUseCase:
 
     def prepare_chapter_pages(self, manwha_id: int, chapter_id: int) -> list[ChapterPage]:
         chapter_pages = self.storage.list_objects(path=f"manwha/{manwha_id}/chapters/{chapter_id}")
-        return [ChapterPage(url=f"{SETTINGS.aws_bucket_url}/{page}") for page in chapter_pages]
+        return [ChapterPage(url=f"{self.storage.bucket_url}/{page}") for page in chapter_pages]

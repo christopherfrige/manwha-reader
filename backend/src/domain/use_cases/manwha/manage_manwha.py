@@ -92,7 +92,7 @@ class ManageManwhaUseCase:
         )
 
         self.manwha_repository.update(
-            "id", self.manwha_id, {"thumbnail": f"{SETTINGS.aws_bucket_url}/{storage_path}"}
+            "id", self.manwha_id, {"thumbnail": f"{self.storage.bucket_url}/{storage_path}"}
         )
 
         shutil.rmtree(SETTINGS.thumbnail_local_folder)

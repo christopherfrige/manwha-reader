@@ -16,7 +16,7 @@ class _Settings(BaseSettings):
     aws_access_key: str = "your_aws_access_key"
     aws_secret_key: str = "your_aws_secret_key"
     aws_bucket_name: str = "your_bucket_name"
-    aws_region: str = "your_bucket_region"
+    aws_region: str = "sa-east-1"
 
     chapter_images_local_folder: str = "/tmp/chapter_images"
     thumbnail_local_folder: str = "/tmp/thumbnail"

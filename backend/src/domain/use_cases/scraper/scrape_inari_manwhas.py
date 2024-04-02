@@ -3,6 +3,7 @@ from src.domain.use_cases.scraper.base_scraper import BaseScraperUseCase
 from selenium.webdriver.common.by import By
 from src.infrastructure.config import SETTINGS
 from src.infrastructure.services.s3 import S3Service
+from selenium.common.exceptions import NoSuchElementException
 
 
 class ScrapeInariManwhasUseCase(BaseScraperUseCase):
@@ -65,8 +66,13 @@ class ScrapeInariManwhasUseCase(BaseScraperUseCase):
         return summary
 
     def _get_alternative_names(self) -> list[str]:
-        alternative_names = self.scraper.find_element(By.CLASS_NAME, "alternative").text.split(",")
-        return self._remove_leading_trailing_whitespaces(alternative_names)
+        try:
+            alternative_names = self.scraper.find_element(By.CLASS_NAME, "alternative").text.split(
+                ","
+            )
+            return self._remove_leading_trailing_whitespaces(alternative_names)
+        except NoSuchElementException:
+            return []
 
     def _get_genres(self) -> list[str]:
         genres = [

@@ -83,6 +83,7 @@ class BaseScraperUseCase(ABC):
                 except Exception:
                     self.session.rollback()
                     logger.exception(f"Error when scraping manwha")
+        logger.info(f"End of scraping from reader_id {self.reader_id}")
 
     def _remove_leading_trailing_whitespaces(self, data: str | list[str]) -> str | list[str]:
         if type(data) is str:

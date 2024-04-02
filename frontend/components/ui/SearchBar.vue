@@ -126,7 +126,7 @@ export default {
   font-size: 16px;
   background-color: var(--button-bg-color);
   padding: 8px;
-  color: #fff;
+  color: #000;
   border-radius: 0 10px 10px 0;
   transition: background 0.3s ease;
   border: 1px solid #000;

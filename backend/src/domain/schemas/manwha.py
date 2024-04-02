@@ -29,13 +29,13 @@ class GetManwhasResponse(BaseModel):
 
 class GetManwhaResponse(BaseModel):
     name: str
-    thumbnail: str
+    thumbnail: str | None
     chapters: list[ChapterSchema]
     genres: list[GenreSchema]
     alternative_names: list[AlternativeNameSchema]
     authors: list[AuthorSchema]
     artists: list[ArtistSchema]
-    release: str
+    release: str | None
 
 
 class SearchManwhasResponse(BaseModel):

@@ -4,10 +4,10 @@
       ><v-icon icon="mdi-arrow-left"></v-icon> Anterior</a
     >
     <a v-if="showNext" @click="navigateToManwhaChapter(true)"
-      ><v-icon icon="mdi-arrow-right"></v-icon>Próximo</a
-    >
+      >Próximo <v-icon icon="mdi-arrow-right"></v-icon
+    ></a>
     <a v-if="showManwhaInfo" @click="navigateToManwha()"
-      ><v-icon icon="mdi-information"></v-icon>Informações do Manwha</a
+      ><v-icon icon="mdi-information"></v-icon> Ver Manwha</a
     >
   </div>
 </template>
@@ -84,11 +84,10 @@ export default {
 <style scoped>
 a {
   background: var(--button-bg-color);
-  color: #fff;
+  color: #000;
   padding: 10px;
   border-radius: 5px;
   transition: background 0.25s ease;
-  margin-left: 5px;
 }
 
 a:hover {
@@ -96,6 +95,21 @@ a:hover {
   background: var(--button-hover-bg-color);
 }
 
-.pagination-buttons {
+@media (max-width: 576px) {
+  a {
+    display: inline-block;
+    width: 48%;
+  }
+  .pagination-buttons {
+    text-align: center;
+  }
+}
+
+a:last-of-type {
+  margin-left: 7px;
+}
+
+.v-icon {
+  padding-bottom: 2px;
 }
 </style>

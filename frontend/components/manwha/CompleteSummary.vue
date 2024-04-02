@@ -13,6 +13,7 @@
           <ManwhaSummaryContent
             :contentTitle="content['title']"
             :contentDescription="manwha[content['description']]"
+            v-if="manwha[content['description']]"
           />
         </div>
       </v-col>

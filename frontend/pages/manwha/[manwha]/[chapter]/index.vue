@@ -42,7 +42,7 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col class="text-end my-5">
+        <v-col class="my-5 text-end">
           <ChapterPaginationButtons
             :chapters="manwhaData.chapters"
             :currentChapterId="Number(this.chapterId)"
@@ -101,6 +101,7 @@ export default {
   margin-left: -16px;
   margin-right: -16px;
   margin-bottom: -7px;
+  -webkit-overflow-scrolling: touch;
 }
 
 img {

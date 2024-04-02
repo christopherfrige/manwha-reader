@@ -12,14 +12,6 @@ from src.infrastructure.log import logger
 
 class BaseScraperUseCase(ABC):
     def __init__(self, session, storage: S3Service):
-        options = webdriver.ChromeOptions()
-        options.add_argument("--headless=new")
-        options.add_argument("--no-sandbox")
-        options.add_argument("--disable-dev-shm-usage")
-        self.scraper = webdriver.Chrome(
-            service=Service(executable_path="/var/www/manwha-reader/chromedriver"), options=options
-        )
-
         self.session = session
 
         self.scraper_manwha_repository = ScraperManwhaRepository(session)
@@ -29,11 +21,29 @@ class BaseScraperUseCase(ABC):
         self.check_new_chapters = CheckNewChaptersUseCase(session)
         self.download_image = DownloadImageUseCase()
 
+    def _scraper_options(self):
+        options = webdriver.ChromeOptions()
+        options.add_argument("--headless=new")
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+        return options
+
+    def _init_scraper(self):
+        self.scraper = webdriver.Chrome(
+            service=Service(executable_path="/var/www/manwha-reader/chromedriver"),
+            options=self._scraper_options(),
+        )
+        self.scraper.set_page_load_timeout(30)
+
     def execute(self):
+        self._init_scraper()
+
+        logger.info(f"Starting scraping from reader_id {self.reader_id}")
+
         with self.scraper as scraper:
             self.scraper = scraper
 
-            manwhas_to_scrape = self.scraper_manwha_repository.get("id", self.reader_id)
+            manwhas_to_scrape = self.scraper_manwha_repository.get("reader_id", self.reader_id)
             for scrape_manwha in manwhas_to_scrape:
                 try:
                     logger.info(f"Scraping manwha from URL: {scrape_manwha.url}")
@@ -52,6 +62,7 @@ class BaseScraperUseCase(ABC):
                         manwha_id, manwha_data["chapters"]
                     )
                     if not new_chapters:
+                        logger.info("No new chapters")
                         continue
 
                     for chapter in new_chapters:
@@ -65,14 +76,13 @@ class BaseScraperUseCase(ABC):
                                 manwha_id, chapter["number"], chapter_pages
                             )
                             self.session.commit()
-                        except Exception as error:
+                        except Exception:
                             self.session.rollback()
-                            logger.exception(error)
+                            logger.exception(f"Error when scraping chapter {chapter['number']}")
                             continue
-                except Exception as error:
+                except Exception:
                     self.session.rollback()
-                    logger.exception(error)
-                    continue
+                    logger.exception(f"Error when scraping manwha")
 
     def _remove_leading_trailing_whitespaces(self, data: str | list[str]) -> str | list[str]:
         if type(data) is str:

@@ -28,7 +28,7 @@ class GetManwhasUseCase:
             subquery = (
                 session.query(Chapter.id)
                 .filter(Manwha.id == Chapter.manwha_id)
-                .order_by(Chapter.id.desc())
+                .order_by(Chapter.chapter_number.desc())
                 .limit(1)
                 .correlate(Manwha)
             )

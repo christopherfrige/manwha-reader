@@ -2,7 +2,6 @@ from src.domain.entities.manwha import Manwha
 from src.domain.entities.chapter import Chapter
 from src.domain.schemas.chapter import GetChapterPagesResponse, ChapterPage
 from src.infrastructure.persistence.unit_of_work import UnitOfWork
-from src.infrastructure.config import SETTINGS
 from src.infrastructure.services.s3 import S3Service
 
 

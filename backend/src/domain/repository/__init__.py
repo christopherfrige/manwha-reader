@@ -25,7 +25,10 @@ class BaseRepository(ABC):
             return obj.id
 
     def update(
-        self, where_field: str, where_value: str | int | float | bool, values_to_update: dict
+        self,
+        where_field: str,
+        where_value: str | int | float | bool,
+        values_to_update: dict,
     ) -> None:
         where_field = getattr(self.model, where_field)
         query = update(self.model).where(where_field == where_value).values(**values_to_update)

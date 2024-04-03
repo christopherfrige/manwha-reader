@@ -4,7 +4,6 @@ from selenium.webdriver.common.by import By
 from src.infrastructure.config import SETTINGS
 from src.infrastructure.services.s3 import S3Service
 from selenium.common.exceptions import NoSuchElementException
-from src.infrastructure.log import logger
 
 
 class ScrapeFlowerManwhasUseCase(BaseScraperUseCase):

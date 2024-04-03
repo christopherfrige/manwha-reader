@@ -91,7 +91,9 @@ class ManageManwhaUseCase:
         )
 
         self.manwha_repository.update(
-            "id", self.manwha_id, {"thumbnail": f"{self.storage.bucket_url}/{storage_path}"}
+            "id",
+            self.manwha_id,
+            {"thumbnail": f"{self.storage.bucket_url}/{storage_path}"},
         )
 
         shutil.rmtree(SETTINGS.thumbnail_local_folder)
@@ -147,7 +149,8 @@ class ManageManwhaUseCase:
             if alternative_name_db:
                 self.manwha_alternative_name_repository.add(
                     ManwhaAlternativeName(
-                        manwha_id=self.manwha_id, alternative_name_id=alternative_name_db[0].id
+                        manwha_id=self.manwha_id,
+                        alternative_name_id=alternative_name_db[0].id,
                     )
                 )
                 continue

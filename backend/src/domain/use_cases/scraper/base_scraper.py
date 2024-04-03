@@ -87,10 +87,10 @@ class BaseScraperUseCase(ABC):
                             self.session.rollback()
                             logger.exception(f"Error when scraping chapter {chapter['number']}")
                 except TimeoutException:
-                    logger.error(f"Timeout when trying to scrape manwha")
+                    logger.error("Timeout when trying to scrape manwha")
                 except Exception:
                     self.session.rollback()
-                    logger.exception(f"Error when scraping manwha")
+                    logger.exception("Error when scraping manwha")
         logger.info(f"End of scraping from reader_id {self.reader_id}")
 
     def _remove_leading_trailing_whitespaces(self, data: str | list[str]) -> str | list[str]:

@@ -63,12 +63,11 @@ class ManageManwhaUseCase:
             return manwha[0].id
 
     def create_manwha(self) -> int:
-        release = self.manwha_data["release"]
         return self.manwha_repository.add(
             Manwha(
                 name=self.manwha_data["manwha_name"],
                 summary=self.manwha_data["summary"],
-                release=release[0] if release else None,
+                release=self.manwha_data["release"],
             )
         )
 
@@ -92,7 +91,9 @@ class ManageManwhaUseCase:
         )
 
         self.manwha_repository.update(
-            "id", self.manwha_id, {"thumbnail": f"{self.storage.bucket_url}/{storage_path}"}
+            "id",
+            self.manwha_id,
+            {"thumbnail": f"{self.storage.bucket_url}/{storage_path}"},
         )
 
         shutil.rmtree(SETTINGS.thumbnail_local_folder)
@@ -148,7 +149,8 @@ class ManageManwhaUseCase:
             if alternative_name_db:
                 self.manwha_alternative_name_repository.add(
                     ManwhaAlternativeName(
-                        manwha_id=self.manwha_id, alternative_name_id=alternative_name_db[0].id
+                        manwha_id=self.manwha_id,
+                        alternative_name_id=alternative_name_db[0].id,
                     )
                 )
                 continue

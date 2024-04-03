@@ -9,6 +9,7 @@ from selenium.common.exceptions import NoSuchElementException
 class ScrapeInariManwhasUseCase(BaseScraperUseCase):
     def __init__(self, session: Session, storage: S3Service):
         self.reader_id = 1
+        self.referer = None
         super().__init__(session, storage)
 
     def scrape_manwha_data(self, manwha_url: str):
@@ -95,7 +96,7 @@ class ScrapeInariManwhasUseCase(BaseScraperUseCase):
         return {
             "authors": manwha_prepared_attributes.get("Autor", []),
             "artists": manwha_prepared_attributes.get("Artista", []),
-            "release": manwha_prepared_attributes.get("Lanzado", []),
+            "release": manwha_prepared_attributes.get("Lanzado", None),
         }
 
     def _get_chapters_numbers_and_urls(self):

@@ -63,12 +63,11 @@ class ManageManwhaUseCase:
             return manwha[0].id
 
     def create_manwha(self) -> int:
-        release = self.manwha_data["release"]
         return self.manwha_repository.add(
             Manwha(
                 name=self.manwha_data["manwha_name"],
                 summary=self.manwha_data["summary"],
-                release=release[0] if release else None,
+                release=self.manwha_data["release"],
             )
         )
 

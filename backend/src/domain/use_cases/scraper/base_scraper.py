@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+from selenium.common.exceptions import TimeoutException
 from src.domain.use_cases.manwha.manage_manwha import ManageManwhaUseCase
 from src.domain.use_cases.chapter.check_new_chapters import CheckNewChaptersUseCase
 from src.domain.use_cases.chapter.manage_chapters import ManageChaptersUseCase
@@ -19,7 +20,7 @@ class BaseScraperUseCase(ABC):
         self.manage_manwha = ManageManwhaUseCase(session, storage)
         self.manage_chapters = ManageChaptersUseCase(session, storage)
         self.check_new_chapters = CheckNewChaptersUseCase(session)
-        self.download_image = DownloadImageUseCase()
+        self.download_image = DownloadImageUseCase(self.referer)
 
     def _scraper_options(self):
         options = webdriver.ChromeOptions()
@@ -33,7 +34,7 @@ class BaseScraperUseCase(ABC):
             service=Service(executable_path="/var/www/manwha-reader/chromedriver"),
             options=self._scraper_options(),
         )
-        self.scraper.set_page_load_timeout(30)
+        self.scraper.set_page_load_timeout(10)
 
     def execute(self):
         self._init_scraper()
@@ -49,6 +50,7 @@ class BaseScraperUseCase(ABC):
                     logger.info(f"Scraping manwha from URL: {scrape_manwha.url}")
 
                     manwha_data = self.scrape_manwha_data(scrape_manwha.url)
+
                     manwha_id = self.manage_manwha.execute(manwha_data)
 
                     if not scrape_manwha.manwha_id:
@@ -72,14 +74,20 @@ class BaseScraperUseCase(ABC):
                             )
 
                             chapter_pages = self.scrape_manwha_chapter_images(chapter["url"])
+
                             self.manage_chapters.execute(
                                 manwha_id, chapter["number"], chapter_pages
                             )
                             self.session.commit()
+                        except TimeoutException:
+                            logger.error(
+                                f"Timeout when trying to scrape chapter {chapter['number']}"
+                            )
                         except Exception:
                             self.session.rollback()
                             logger.exception(f"Error when scraping chapter {chapter['number']}")
-                            continue
+                except TimeoutException:
+                    logger.error(f"Timeout when trying to scrape manwha")
                 except Exception:
                     self.session.rollback()
                     logger.exception(f"Error when scraping manwha")

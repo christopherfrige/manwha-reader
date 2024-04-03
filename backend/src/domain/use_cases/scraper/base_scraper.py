@@ -34,7 +34,7 @@ class BaseScraperUseCase(ABC):
             service=Service(executable_path="/var/www/manwha-reader/chromedriver"),
             options=self._scraper_options(),
         )
-        self.scraper.set_page_load_timeout(10)
+        self.scraper.set_page_load_timeout(30)
 
     def execute(self):
         self._init_scraper()

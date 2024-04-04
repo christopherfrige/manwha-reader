@@ -51,7 +51,9 @@ class ScrapeInariManwhasUseCase(BaseScraperUseCase):
         return chapter_pages
 
     def _get_manwha_name(self) -> str:
-        manwha_name = self.scraper.find_element(By.CLASS_NAME, "entry-title").text
+        manwha_name = self.scraper.find_element(By.CLASS_NAME, "entry-title").get_attribute(
+            "innerText"
+        )
         return self._remove_leading_trailing_whitespaces(manwha_name)
 
     def _get_thumbnail(self) -> str:
@@ -62,14 +64,16 @@ class ScrapeInariManwhasUseCase(BaseScraperUseCase):
         summary = (
             self.scraper.find_element(By.CLASS_NAME, "entry-content")
             .find_element(By.TAG_NAME, "p")
-            .text
+            .get_attribute("innerText")
         )
         return summary
 
     def _get_alternative_names(self) -> list[str]:
         try:
-            alternative_names = self.scraper.find_element(By.CLASS_NAME, "alternative").text.split(
-                ","
+            alternative_names = (
+                self.scraper.find_element(By.CLASS_NAME, "alternative")
+                .get_attribute("innerText")
+                .split(",")
             )
             return self._remove_leading_trailing_whitespaces(alternative_names)
         except NoSuchElementException:
@@ -77,7 +81,7 @@ class ScrapeInariManwhasUseCase(BaseScraperUseCase):
 
     def _get_genres(self) -> list[str]:
         genres = [
-            genre.text
+            genre.get_attribute("innerText")
             for genre in self.scraper.find_element(By.CLASS_NAME, "mgen").find_elements(
                 By.TAG_NAME, "a"
             )
@@ -88,7 +92,7 @@ class ScrapeInariManwhasUseCase(BaseScraperUseCase):
         manwha_attributes = self.scraper.find_elements(By.CLASS_NAME, "imptdt")
         manwha_prepared_attributes = {}
         for attribute in manwha_attributes:
-            attribute = attribute.text.splitlines()
+            attribute = attribute.get_attribute("innerText").splitlines()
             attribute_name = attribute[0]
             attribute_value = self._remove_leading_trailing_whitespaces(attribute[1].split(","))
             manwha_prepared_attributes.update({attribute_name: attribute_value})
@@ -107,7 +111,9 @@ class ScrapeInariManwhasUseCase(BaseScraperUseCase):
                 continue
 
             chapter_link = chapter.find_element(By.TAG_NAME, "a").get_attribute("href")
-            chapter_number = chapter.find_element(By.CLASS_NAME, "chapternum").text
+            chapter_number = chapter.find_element(By.CLASS_NAME, "chapternum").get_attribute(
+                "innerText"
+            )
             formatted_chapter_number = float(chapter_number[8:].replace(" ", "").replace("o", ""))
 
             chapters.append({"url": chapter_link, "number": formatted_chapter_number})

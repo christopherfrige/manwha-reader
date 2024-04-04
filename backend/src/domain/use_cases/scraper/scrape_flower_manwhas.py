@@ -59,9 +59,11 @@ class ScrapeFlowerManwhasUseCase(BaseScraperUseCase):
                 attribute_name = (
                     attribute.find_element(By.CLASS_NAME, "summary-heading")
                     .find_element(By.TAG_NAME, "h5")
-                    .text
+                    .get_attribute("innerText")
                 )
-                attribute_value = attribute.find_element(By.CLASS_NAME, "summary-content").text
+                attribute_value = attribute.find_element(
+                    By.CLASS_NAME, "summary-content"
+                ).get_attribute("innerText")
                 manwha_prepared_attributes.update({attribute_name: attribute_value})
             except NoSuchElementException:
                 continue
@@ -82,7 +84,7 @@ class ScrapeFlowerManwhasUseCase(BaseScraperUseCase):
         manwha_name = (
             self.scraper.find_element(By.CLASS_NAME, "post-title")
             .find_element(By.TAG_NAME, "h1")
-            .text
+            .get_attribute("innerText")
         )
         return self._remove_leading_trailing_whitespaces(manwha_name)
 
@@ -98,7 +100,7 @@ class ScrapeFlowerManwhasUseCase(BaseScraperUseCase):
         summary = (
             self.scraper.find_element(By.CLASS_NAME, "summary__content")
             .find_element(By.TAG_NAME, "p")
-            .text
+            .get_attribute("innerText")
         )
         return summary
 
@@ -107,7 +109,7 @@ class ScrapeFlowerManwhasUseCase(BaseScraperUseCase):
             artists = (
                 self.scraper.find_element(By.CLASS_NAME, "artist-content")
                 .find_element(By.TAG_NAME, "a")
-                .text
+                .get_attribute("innerText")
             )
             return [self._remove_leading_trailing_whitespaces(artists)]
         except NoSuchElementException:
@@ -118,7 +120,7 @@ class ScrapeFlowerManwhasUseCase(BaseScraperUseCase):
             authors = (
                 self.scraper.find_element(By.CLASS_NAME, "author-content")
                 .find_element(By.TAG_NAME, "a")
-                .text
+                .get_attribute("innerText")
             )
             return [self._remove_leading_trailing_whitespaces(authors)]
         except NoSuchElementException:
@@ -126,7 +128,7 @@ class ScrapeFlowerManwhasUseCase(BaseScraperUseCase):
 
     def _get_genres(self) -> list[str]:
         genres = [
-            genre.text
+            genre.get_attribute("innerText")
             for genre in self.scraper.find_element(By.CLASS_NAME, "genres-content").find_elements(
                 By.TAG_NAME, "a"
             )

@@ -54,7 +54,7 @@ class ScrapeInariManwhasUseCase(BaseScraperUseCase):
         manwha_name = self.scraper.find_element(By.CLASS_NAME, "entry-title").get_attribute(
             "innerText"
         )
-        return self._remove_leading_trailing_whitespaces(manwha_name)
+        return self._format_and_make_unique(manwha_name)
 
     def _get_thumbnail(self) -> str:
         thumbnail = self.scraper.find_element(By.CLASS_NAME, "attachment-").get_attribute("src")
@@ -75,7 +75,7 @@ class ScrapeInariManwhasUseCase(BaseScraperUseCase):
                 .get_attribute("innerText")
                 .split(",")
             )
-            return self._remove_leading_trailing_whitespaces(alternative_names)
+            return self._format_and_make_unique(alternative_names)
         except NoSuchElementException:
             return []
 
@@ -86,7 +86,7 @@ class ScrapeInariManwhasUseCase(BaseScraperUseCase):
                 By.TAG_NAME, "a"
             )
         ]
-        return self._remove_leading_trailing_whitespaces(genres)
+        return self._format_and_make_unique(genres)
 
     def _get_manwha_attributes(self) -> dict:
         manwha_attributes = self.scraper.find_elements(By.CLASS_NAME, "imptdt")
@@ -94,7 +94,7 @@ class ScrapeInariManwhasUseCase(BaseScraperUseCase):
         for attribute in manwha_attributes:
             attribute = attribute.get_attribute("innerText").splitlines()
             attribute_name = attribute[0]
-            attribute_value = self._remove_leading_trailing_whitespaces(attribute[1].split(","))
+            attribute_value = self._format_and_make_unique(attribute[1].split(","))
             manwha_prepared_attributes.update({attribute_name: attribute_value})
 
         return {

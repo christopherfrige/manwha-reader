@@ -93,10 +93,10 @@ class BaseScraperUseCase(ABC):
                     logger.exception("Error when scraping manwha")
         logger.info(f"End of scraping from reader_id {self.reader_id}")
 
-    def _remove_leading_trailing_whitespaces(self, data: str | list[str]) -> str | list[str]:
+    def _format_and_make_unique(self, data: str | list[str]) -> str | list[str]:
         if type(data) is str:
             return data.strip()
-        return [item.strip() for item in data]
+        return list(set([item.strip() for item in data]))
 
     @abstractmethod
     def scrape_manwha_data(self, manwha_url):

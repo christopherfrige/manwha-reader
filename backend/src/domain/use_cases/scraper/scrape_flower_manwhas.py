@@ -76,8 +76,8 @@ class ScrapeFlowerManwhasUseCase(BaseScraperUseCase):
         release = manwha_prepared_attributes.get("Liberar", None)
 
         return {
-            "alternative_names": self._remove_leading_trailing_whitespaces(alternative_names),
-            "release": self._remove_leading_trailing_whitespaces(release),
+            "alternative_names": self._format_and_make_unique(alternative_names),
+            "release": self._format_and_make_unique(release),
         }
 
     def _get_manwha_name(self) -> str:
@@ -86,7 +86,7 @@ class ScrapeFlowerManwhasUseCase(BaseScraperUseCase):
             .find_element(By.TAG_NAME, "h1")
             .get_attribute("innerText")
         )
-        return self._remove_leading_trailing_whitespaces(manwha_name)
+        return self._format_and_make_unique(manwha_name)
 
     def _get_thumbnail(self) -> str:
         thumbnail = (
@@ -111,7 +111,7 @@ class ScrapeFlowerManwhasUseCase(BaseScraperUseCase):
                 .find_element(By.TAG_NAME, "a")
                 .get_attribute("innerText")
             )
-            return [self._remove_leading_trailing_whitespaces(artists)]
+            return [self._format_and_make_unique(artists)]
         except NoSuchElementException:
             return []
 
@@ -122,7 +122,7 @@ class ScrapeFlowerManwhasUseCase(BaseScraperUseCase):
                 .find_element(By.TAG_NAME, "a")
                 .get_attribute("innerText")
             )
-            return [self._remove_leading_trailing_whitespaces(authors)]
+            return [self._format_and_make_unique(authors)]
         except NoSuchElementException:
             return []
 
@@ -133,7 +133,7 @@ class ScrapeFlowerManwhasUseCase(BaseScraperUseCase):
                 By.TAG_NAME, "a"
             )
         ]
-        return self._remove_leading_trailing_whitespaces(genres)
+        return self._format_and_make_unique(genres)
 
     def _get_chapters_numbers_and_urls(self):
         chapters_raw = self.scraper.find_elements(By.CLASS_NAME, "wp-manga-chapter")

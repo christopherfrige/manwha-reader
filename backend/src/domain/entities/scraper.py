@@ -33,5 +33,6 @@ class ScraperManwha(Base, ScraperSchema):
         nullable=True,
     )
     url = Column(Text, nullable=False)
+    chapter_start = Column(Integer, nullable=False, default=0)
     created_at = Column(TIMESTAMP, nullable=False, default=now())
     updated_at = Column(TIMESTAMP, default=now())

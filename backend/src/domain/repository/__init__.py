@@ -18,7 +18,7 @@ class BaseRepository(ABC):
     def get_all(self) -> list:
         return self.session.query(self.model).all()
 
-    def add(self, obj: object) -> None:
+    def add(self, obj: object) -> int | None:
         self.session.add(obj)
         self.session.flush()
         if hasattr(obj, "id"):

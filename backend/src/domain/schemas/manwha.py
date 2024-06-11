@@ -41,3 +41,8 @@ class GetManwhaResponse(BaseModel):
 class SearchManwhasResponse(BaseModel):
     records: list[ManwhaSchema]
     pagination: Pagination
+
+
+class CreateManwhaToScrapeRequest(BaseModel):
+    reader_id: int
+    url: str

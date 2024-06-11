@@ -8,11 +8,14 @@ class PreparePaginationUseCase:
     @staticmethod
     def execute(
         endpoint: str,
-        query: RowReturningQuery,
+        records: list | RowReturningQuery,
         current_page: int,
         per_page: int,
     ) -> Pagination:
-        entries_quantity = query.count()
+        if type(records) is list:
+            entries_quantity = len(records)
+        else:
+            entries_quantity = records.count()
 
         first_page = 1
         last_page = ceil(entries_quantity / per_page)

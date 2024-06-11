@@ -20,7 +20,7 @@ class GetChapterPagesUseCase:
                     Chapter.pages.label("chapter_pages"),
                 )
                 .join(Chapter, Chapter.manwha_id == Manwha.id)
-                .filter(Chapter.id == chapter_id)
+                .filter(Chapter.id == chapter_id, Chapter.downloaded)
             ).first()
 
             if not result:

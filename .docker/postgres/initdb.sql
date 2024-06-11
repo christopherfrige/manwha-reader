@@ -23,6 +23,8 @@ CREATE TABLE IF NOT EXISTS chapter.chapter (
     manwha_id INT NOT NULL,
     chapter_number FLOAT NOT NULL,
     pages INT NOT NULL,
+    origin_url TEXT,
+    downloaded BOOLEAN NOT NULL DEFAULT false,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (manwha_id)
@@ -69,6 +71,7 @@ CREATE TABLE IF NOT EXISTS scraper.manwha (
     reader_id INT NOT NULL,
     manwha_id INT,
     url TEXT NOT NULL,
+    chapter_start INT NOT NULL DEFAULT 0,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (reader_id)

@@ -11,13 +11,12 @@ class GetReadersUseCase:
             self.reader_repository = ReaderRepository(session)
             self.prepare_pagination = PreparePaginationUseCase().execute
 
-    def execute(self) -> GetReadersResponse:
+    def execute(self, page, per_page) -> GetReadersResponse:
         readers = self.reader_repository.get_all()
 
         records = [ReaderData(id=reader.id, name=reader.name) for reader in readers]
 
         return GetReadersResponse(
             records=records,
-            pagination=self.prepare_pagination("/v1/readers", query, page, per_page)
+            pagination=self.prepare_pagination("/v1/readers", readers, page, per_page),
         )
-

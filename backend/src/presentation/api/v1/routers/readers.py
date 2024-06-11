@@ -8,5 +8,5 @@ router = APIRouter(prefix="/api/v1/readers", tags=["v1"])
 
 
 @router.get("/", response_model=GetReadersResponse, status_code=200)
-def get_chapter_pages(db=Depends(UnitOfWork)):
-    return GetReadersUseCase(db).execute()
+def get_readers(page: int = 1, per_page: int = 20, db=Depends(UnitOfWork)):
+    return GetReadersUseCase(db).execute(page, per_page)

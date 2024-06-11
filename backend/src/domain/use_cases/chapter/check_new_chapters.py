@@ -11,9 +11,9 @@ class CheckNewChaptersUseCase:
 
     def execute(self, manwha_id: int, chapters_incoming: list):
         chapters_registered = self._get_chapters_registered(manwha_id)
-        
-        manwha = self.scraper_manwha_repository.get('manwha_id', manwha_id)
-        
+
+        manwha = self.scraper_manwha_repository.get("manwha_id", manwha_id)
+
         chapter_start = 0
         if manwha:
             chapter_start = manwha[0].chapter_start
@@ -40,6 +40,6 @@ class CheckNewChaptersUseCase:
             .order_by(Chapter.chapter_number.desc())
         )
         return self.session.execute(query).scalars().all()
-    
+
     def _chapter_sort_criteria(self, chapter):
         return chapter["number"]

@@ -76,7 +76,7 @@ class BaseScraperUseCase(ABC):
                             chapter_pages = self.scrape_manwha_chapter_images(chapter["url"])
 
                             self.manage_chapters.execute(
-                                manwha_id, chapter["number"], chapter_pages
+                                manwha_id, chapter["number"], chapter_pages, chapter["url"]
                             )
                             self.session.commit()
                         except TimeoutException:

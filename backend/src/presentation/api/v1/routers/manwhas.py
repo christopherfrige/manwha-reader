@@ -8,7 +8,6 @@ from src.domain.schemas.manwha import (
     GetManwhasResponse,
     GetManwhaResponse,
     CreateManwhaToScrapeRequest,
-    CreateManwhaToScrapeResponse
 )
 
 router = APIRouter(prefix="/api/v1/manwhas", tags=["v1"])
@@ -30,9 +29,6 @@ async def get_manwha(manwha_id: int, db=Depends(UnitOfWork)):
 
 
 @router.post("/", status_code=201)
-async def create_manwha_to_scrape(
-    payload: CreateManwhaToScrapeRequest,
-    db=Depends(UnitOfWork)
-):
+async def create_manwha_to_scrape(payload: CreateManwhaToScrapeRequest, db=Depends(UnitOfWork)):
     CreateManwhaToScrapeUseCase(db).execute(payload)
     return Response(status_code=201)

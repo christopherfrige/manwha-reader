@@ -13,19 +13,16 @@ class CreateManwhaToScrapeUseCase:
             self.scraper_manwha_repository = ScraperManwhaRepository(session)
 
     def execute(self, payload: CreateManwhaToScrapeRequest):
-        reader = self.reader_repository.get('id', payload.reader_id)
+        reader = self.reader_repository.get("id", payload.reader_id)
         if not reader:
             raise BadRequestException("The provided reader_id was not found in database")
-        
-        manwha = self.scraper_manwha_repository.get('url', payload.url)
+
+        manwha = self.scraper_manwha_repository.get("url", payload.url)
         if manwha:
             raise ConflictException("A manwha is already registered with the provided url")
-        
+
         self.scraper_manwha_repository.add(
-            ScraperManwha(
-                reader_id=payload.reader_id,
-                url=payload.url
-            )
+            ScraperManwha(reader_id=payload.reader_id, url=payload.url)
         )
 
         self.session.commit()

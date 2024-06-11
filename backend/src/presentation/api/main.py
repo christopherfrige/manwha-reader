@@ -1,9 +1,12 @@
-
 import uvicorn
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.presentation.api.exception_handlers import bad_request_exception_handler, conflict_exception_handler, general_exception_handler
+from src.presentation.api.exception_handlers import (
+    bad_request_exception_handler,
+    conflict_exception_handler,
+    general_exception_handler,
+)
 from src.domain.exceptions.client import BadRequestException, ConflictException
 from src.presentation.api.v1.routers.manwhas import router as v1_manwhas
 from src.presentation.api.v1.routers.chapters import router as v1_chapters

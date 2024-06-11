@@ -6,6 +6,8 @@ from src.domain.schemas.genre import GenreSchema
 from src.domain.schemas.alternative_name import AlternativeNameSchema
 from src.domain.schemas.chapter import ChapterSchema
 
+from datetime import datetime
+
 
 class ManwhaSchema(BaseModel):
     id: str
@@ -19,7 +21,7 @@ class ManwhaPresentationData(BaseModel):
     thumbnail: str | None
     last_chapter_id: int
     last_chapter_number: float
-    last_chapter_uploaded_at: str
+    last_chapter_uploaded_at: datetime
 
 
 class GetManwhasResponse(BaseModel):
@@ -46,3 +48,9 @@ class SearchManwhasResponse(BaseModel):
 class CreateManwhaToScrapeRequest(BaseModel):
     reader_id: int
     url: str
+    chapter_start: int
+
+
+class CreateManwhaToScrapeResponse(BaseModel):
+    message: str
+    scraper_manwha_id: int

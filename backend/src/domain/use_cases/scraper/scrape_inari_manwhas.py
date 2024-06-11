@@ -7,10 +7,10 @@ from selenium.common.exceptions import NoSuchElementException
 
 
 class ScrapeInariManwhasUseCase(BaseScraperUseCase):
-    def __init__(self, session: Session, storage: S3Service):
+    def __init__(self, session: Session, storage: S3Service, scraper_manwha_id: int | None):
         self.reader_id = 1
         self.referer = None
-        super().__init__(session, storage)
+        super().__init__(session, storage, scraper_manwha_id)
 
     def scrape_manwha_data(self, manwha_url: str):
         self.scraper.get(manwha_url)

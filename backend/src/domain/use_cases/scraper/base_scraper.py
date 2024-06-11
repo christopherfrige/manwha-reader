@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.common.exceptions import TimeoutException
+from sqlalchemy.orm import Session
 from src.domain.use_cases.manwha.manage_manwha import ManageManwhaUseCase
 from src.domain.use_cases.chapter.check_new_chapters import CheckNewChaptersUseCase
 from src.domain.use_cases.chapter.manage_chapters import ManageChaptersUseCase
@@ -12,8 +13,9 @@ from src.infrastructure.log import logger
 
 
 class BaseScraperUseCase(ABC):
-    def __init__(self, session, storage: S3Service):
+    def __init__(self, session: Session, storage: S3Service, scraper_manwha_id: int | None):
         self.session = session
+        self.scraper_manwha_id = scraper_manwha_id
 
         self.scraper_manwha_repository = ScraperManwhaRepository(session)
 
@@ -41,10 +43,13 @@ class BaseScraperUseCase(ABC):
 
         logger.info(f"Starting scraping from reader_id {self.reader_id}")
 
+        if self.scraper_manwha_id:
+            manwhas_to_scrape = self.scraper_manwha_repository.get("id", self.scraper_manwha_id)
+        else:
+            manwhas_to_scrape = self.scraper_manwha_repository.get("reader_id", self.reader_id)
+
         with self.scraper as scraper:
             self.scraper = scraper
-
-            manwhas_to_scrape = self.scraper_manwha_repository.get("reader_id", self.reader_id)
             for scrape_manwha in manwhas_to_scrape:
                 try:
                     logger.info(f"Scraping manwha from URL: {scrape_manwha.url}")

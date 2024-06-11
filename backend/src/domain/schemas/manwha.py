@@ -46,3 +46,9 @@ class SearchManwhasResponse(BaseModel):
 class CreateManwhaToScrapeRequest(BaseModel):
     reader_id: int
     url: str
+    chapter_start: int
+
+
+class CreateManwhaToScrapeResponse(BaseModel):
+    message: str
+    scraper_manwha_id: int

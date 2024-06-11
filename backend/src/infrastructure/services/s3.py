@@ -13,7 +13,6 @@ class S3Service(AWS):
     def upload_object(self, local_path: str, storage_path: str):
         try:
             self.s3.Bucket(self.bucket_name).upload_file(local_path, storage_path)
-            logger.info(f"Object uploaded to S3: s3://{self.bucket_name}/{storage_path}")
         except Exception as e:
             logger.exception(f"Error uploading object to S3: {e}")
 

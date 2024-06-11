@@ -1,5 +1,5 @@
 from src.infrastructure.persistence.unit_of_work import UnitOfWork
-from src.domain.schemas.manwha import CreateManwhaToScrapeRequest
+from src.domain.schemas.manwha import CreateManwhaToScrapeRequest, CreateManwhaToScrapeResponse
 from src.domain.repository.scraper import ReaderRepository, ScraperManwhaRepository
 from src.domain.entities.scraper import ScraperManwha
 from src.domain.exceptions.client import BadRequestException, ConflictException
@@ -21,8 +21,14 @@ class CreateManwhaToScrapeUseCase:
         if manwha:
             raise ConflictException("A manwha is already registered with the provided url")
 
-        self.scraper_manwha_repository.add(
-            ScraperManwha(reader_id=payload.reader_id, url=payload.url)
+        scraper_manwha_id = self.scraper_manwha_repository.add(
+            ScraperManwha(
+                reader_id=payload.reader_id, url=payload.url, chapter_start=payload.chapter_start
+            )
         )
 
         self.session.commit()
+
+        return CreateManwhaToScrapeResponse(
+            message="Manwha created and ready to be scraped", scraper_manwha_id=scraper_manwha_id
+        )

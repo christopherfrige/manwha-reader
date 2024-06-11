@@ -1,10 +1,11 @@
-from fastapi import APIRouter, Depends, Response
+from fastapi import APIRouter, Depends
 
 from src.infrastructure.persistence.unit_of_work import UnitOfWork
 from src.domain.use_cases.manwha.get_manwhas import GetManwhasUseCase
 from src.domain.use_cases.manwha.get_manwha import GetManwhaUseCase
 from src.domain.use_cases.manwha.create_manwha_to_scrape import CreateManwhaToScrapeUseCase
 from src.domain.schemas.manwha import (
+    CreateManwhaToScrapeResponse,
     GetManwhasResponse,
     GetManwhaResponse,
     CreateManwhaToScrapeRequest,
@@ -28,7 +29,6 @@ async def get_manwha(manwha_id: int, db=Depends(UnitOfWork)):
     return GetManwhaUseCase().execute(db, manwha_id)
 
 
-@router.post("/", status_code=201)
+@router.post("/", response_model=CreateManwhaToScrapeResponse, status_code=201)
 async def create_manwha_to_scrape(payload: CreateManwhaToScrapeRequest, db=Depends(UnitOfWork)):
-    CreateManwhaToScrapeUseCase(db).execute(payload)
-    return Response(status_code=201)
+    return CreateManwhaToScrapeUseCase(db).execute(payload)

@@ -11,3 +11,8 @@ class ReaderData(BaseModel):
 class GetReadersResponse(BaseModel):
     records: list[ReaderData]
     pagination: Pagination
+
+
+class ScrapeManwhaRequest(BaseModel):
+    reader_id: int
+    scraper_manwha_id: int | None = None

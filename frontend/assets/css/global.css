@@ -5,6 +5,11 @@
   --button-hover-bg-color: rgb(231, 212, 105);
   --container-bg-color: #2e2f35;
   --container-title-bg-color: #1b1b1d;
+  --v-theme-error: 209, 50, 50 !important;
+}
+
+.v-theme--light {
+  --v-theme-error: 209, 50, 50 !important;
 }
 
 @font-face {

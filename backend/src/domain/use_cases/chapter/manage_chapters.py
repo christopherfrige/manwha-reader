@@ -13,9 +13,15 @@ class ManageChaptersUseCase:
         self.storage = storage
         self.chapter_repository = ChapterRepository(session)
 
-    def execute(self, manwha_id: int, chapter_number: float, pages: int):
+    def execute(self, manwha_id: int, chapter_number: float, pages: int, origin_url: str):
         chapter_id = self.chapter_repository.add(
-            Chapter(manwha_id=manwha_id, chapter_number=chapter_number, pages=pages)
+            Chapter(
+                manwha_id=manwha_id, 
+                chapter_number=chapter_number, 
+                pages=pages, 
+                downloaded=True,
+                origin_url=origin_url                
+            )
         )
         self._upload_chapter_images(manwha_id, chapter_id)
 

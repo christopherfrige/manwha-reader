@@ -12,7 +12,7 @@ from src.domain.use_cases.pagination.get_limit_offset import (
     GetLimitOffsetUseCase,
 )
 from sqlalchemy.sql import func
-from sqlalchemy import cast, String, or_
+from sqlalchemy import or_
 
 
 class GetManwhasUseCase:

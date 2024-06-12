@@ -6,8 +6,6 @@ services:
       context: ../backend
     command: poetry run python -m src.presentation.api.main
     restart: on-failure
-    volumes:
-      - ./../backend/src:/var/www/manwha-reader/src
     environment:
       DB_HOST: postgres
     ports:

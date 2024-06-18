@@ -1,3 +1,4 @@
+from src.domain.entities.alternative_name import AlternativeName
 from src.domain.entities.manwha import Manwha
 from src.domain.entities.chapter import Chapter
 from src.domain.schemas.manwha import (
@@ -43,6 +44,7 @@ class GetManwhasUseCase:
                     func.max(Chapter.created_at).label("last_chapter_uploaded_at"),
                 )
                 .join(Chapter, Chapter.manwha_id == Manwha.id)
+                .join(AlternativeName, AlternativeName.manwha_id == Manwha.id)
                 .filter(Chapter.id == subquery.scalar_subquery())
             )
 
@@ -51,6 +53,7 @@ class GetManwhasUseCase:
                 conditions = []
                 for term in search_terms:
                     conditions.append(Manwha.name.ilike(f"%{term}%"))
+                    conditions.append(AlternativeName.name.ilike(f"%{term}%"))
                 query = query.filter(or_(*conditions))
 
             query = query.group_by(Manwha.id).order_by(func.max(Chapter.created_at).desc())

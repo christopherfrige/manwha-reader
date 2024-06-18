@@ -34,8 +34,11 @@ CREATE TABLE IF NOT EXISTS chapter.chapter (
 CREATE TABLE IF NOT EXISTS alternative_name.alternative_name (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
+    manwha_id INT NOT NULL,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (manwha_id)
+        REFERENCES manwha.manwha (id)
 );
 
 CREATE TABLE IF NOT EXISTS genre.genre (
@@ -81,16 +84,6 @@ CREATE TABLE IF NOT EXISTS scraper.manwha (
 );
 
 -- Junction tables
-
-CREATE TABLE IF NOT EXISTS manwha.manwha_alternative_name (
-    manwha_id INT NOT NULL,
-    alternative_name_id INT NOT NULL,
-    PRIMARY KEY (manwha_id, alternative_name_id),
-    FOREIGN KEY (manwha_id)
-        REFERENCES manwha.manwha (id),
-    FOREIGN KEY (alternative_name_id)
-        REFERENCES alternative_name.alternative_name (id)
-);
 
 CREATE TABLE IF NOT EXISTS manwha.manwha_genre (
     manwha_id INT NOT NULL,
@@ -162,3 +155,4 @@ FOR EACH ROW EXECUTE PROCEDURE set_updated_at();
 -- Inserts
 
 INSERT INTO scraper.reader (id, name) VALUES (1, 'Inari');
+INSERT INTO scraper.reader (id, name) VALUES (2, 'Flower');

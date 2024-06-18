@@ -19,23 +19,6 @@ class Manwha(Base, ManwhaSchema):
     updated_at = Column(TIMESTAMP, default=now())
 
 
-class ManwhaAlternativeName(Base, ManwhaSchema):
-    __tablename__ = "manwha_alternative_name"
-
-    manwha_id = Column(
-        Integer,
-        ForeignKey("manwha.manwha.id"),
-        primary_key=True,
-        nullable=False,
-    )
-    alternative_name_id = Column(
-        Integer,
-        ForeignKey("alternative_name.alternative_name.id"),
-        primary_key=True,
-        nullable=False,
-    )
-
-
 class ManwhaGenre(Base, ManwhaSchema):
     __tablename__ = "manwha_genre"
 

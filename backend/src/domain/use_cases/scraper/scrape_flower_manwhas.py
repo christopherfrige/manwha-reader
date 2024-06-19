@@ -143,7 +143,7 @@ class ScrapeFlowerManwhasUseCase(BaseScraperUseCase):
 
             chapter_link = chapter_content.get_attribute("href")
 
-            chapter_number = chapter_content.get_attribute("innerText")
+            chapter_number = chapter_content.get_attribute("innerText").split('-')[0]
 
             formatted_chapter_number = float(
                 chapter_number[8:].replace("l", "").replace("o", "").replace(" ", "")

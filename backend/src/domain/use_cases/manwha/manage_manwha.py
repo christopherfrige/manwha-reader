@@ -2,7 +2,6 @@ from src.domain.repository.manwha import (
     ManwhaRepository,
     ManwhaGenreRepository,
     ManwhaArtistRepository,
-    ManwhaAlternativeNameRepository,
     ManwhaAuthorRepository,
 )
 from src.domain.repository.genre import GenreRepository
@@ -13,7 +12,6 @@ from src.domain.entities.manwha import (
     Manwha,
     ManwhaGenre,
     ManwhaArtist,
-    ManwhaAlternativeName,
     ManwhaAuthor,
 )
 from src.domain.entities.genre import Genre
@@ -37,7 +35,6 @@ class ManageManwhaUseCase:
         self.manwha_genre_repository = ManwhaGenreRepository(session)
         self.manwha_artist_repository = ManwhaArtistRepository(session)
         self.manwha_author_repository = ManwhaAuthorRepository(session)
-        self.manwha_alternative_name_repository = ManwhaAlternativeNameRepository(session)
         self.download_image = DownloadImageUseCase()
         self.storage = storage
 
@@ -147,18 +144,8 @@ class ManageManwhaUseCase:
         for alternative_name in self.manwha_data["alternative_names"]:
             alternative_name_db = self.alternative_name_repository.get("name", alternative_name)
             if alternative_name_db:
-                self.manwha_alternative_name_repository.add(
-                    ManwhaAlternativeName(
-                        manwha_id=self.manwha_id,
-                        alternative_name_id=alternative_name_db[0].id,
-                    )
-                )
                 continue
 
-            artist_id = self.alternative_name_repository.add(
-                AlternativeName(name=alternative_name)
-            )
-
-            self.manwha_alternative_name_repository.add(
-                ManwhaAlternativeName(manwha_id=self.manwha_id, alternative_name_id=artist_id)
+            self.alternative_name_repository.add(
+                AlternativeName(name=alternative_name, manwha_id=self.manwha_id) 
             )

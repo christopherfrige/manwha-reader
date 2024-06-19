@@ -32,12 +32,12 @@
         <v-col cols="12" md="4" class="content">
           <v-row class="section-title">
             <v-col>
-              <h2><v-icon icon="mdi-trending-up"></v-icon> Em Alta</h2>
+              <h2><v-icon icon="mdi-trending-up"></v-icon> Em Alta [WIP]</h2>
             </v-col>
           </v-row>
-          <v-row v-for="manwha in trendingManwhas" :key="manwha.manwha_id">
+          <!-- <v-row v-for="manwha in trendingManwhas" :key="manwha.manwha_id">
             <ManwhaPopularItem :manwha="manwha" />
-          </v-row>
+          </v-row> -->
         </v-col>
       </v-row>
     </div>

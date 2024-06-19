@@ -1,6 +1,5 @@
 from src.domain.entities.manwha import (
     Manwha,
-    ManwhaAlternativeName,
     ManwhaArtist,
     ManwhaAuthor,
     ManwhaGenre,
@@ -42,12 +41,7 @@ class GetManwhaUseCase:
                 genres=self._additional_data(
                     Genre, ManwhaGenre, ManwhaGenre.genre_id, GenreSchema
                 ),
-                alternative_names=self._additional_data(
-                    AlternativeName,
-                    ManwhaAlternativeName,
-                    ManwhaAlternativeName.alternative_name_id,
-                    AlternativeNameSchema,
-                ),
+                alternative_names=self._alternative_names(),
             )
 
     def _manwha(self):
@@ -78,6 +72,21 @@ class GetManwhaUseCase:
             return []
 
         return [ChapterSchema(**chapter._mapping) for chapter in chapters]
+    
+    def _alternative_names(self):
+        alternative_names = (
+            self.session.query(
+                AlternativeName.id,
+                AlternativeName.name,
+            )
+            .filter(AlternativeName.manwha_id == self.manwha_id)
+            .all()
+        )
+
+        if not alternative_names:
+            return []
+
+        return [AlternativeNameSchema(**name._mapping) for name in alternative_names]
 
     def _additional_data(self, entity, join_entity, join_key, schema):
         entries = (

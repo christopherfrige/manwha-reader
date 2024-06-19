@@ -9,7 +9,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "tests": "jest tests/ --silent --colors",
+    "tests": "jest tests/ --colors",
     "lint": "eslint . --ext .js,.ts,.vue,.cjs",
     "prettier": "prettier --write ."
   },

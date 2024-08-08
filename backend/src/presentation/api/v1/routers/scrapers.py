@@ -6,6 +6,7 @@ from src.domain.use_cases.scraper.scrape_inari_manwhas import ScrapeInariManwhas
 from src.domain.use_cases.scraper.scrape_flower_manwhas import (
     ScrapeFlowerManwhasUseCase,
 )
+from src.domain.use_cases.scraper.scrape_kingofshojo_manwhas import ScrapeKingOfShojoManwhasUseCase
 from src.domain.use_cases.scraper.scrape_kun_manwhas import ScrapeKunManwhasUseCase
 
 
@@ -27,5 +28,7 @@ def scrape_manwha(
                 use_case = ScrapeFlowerManwhasUseCase(session, storage, payload.scraper_manwha_id)
             case 3:
                 use_case = ScrapeKunManwhasUseCase(session, storage, payload.scraper_manwha_id)
+            case 4:
+                use_case = ScrapeKingOfShojoManwhasUseCase(session, storage, payload.scraper_manwha_id)
         background_tasks.add_task(use_case.execute)
     return {"message": "Scraping request received"}

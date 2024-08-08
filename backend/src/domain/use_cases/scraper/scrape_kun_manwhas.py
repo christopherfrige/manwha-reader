@@ -17,7 +17,6 @@ class ScrapeKunManwhasUseCase(BaseScraperUseCase):
         self.scraper.get(manwha_url)
 
         manwha_attributes = self._get_manwha_attributes()
-        logger.info(f"\n\n\n>>>>>>>>> {manwha_attributes}")
 
         return {
             "manwha_name": self._get_manwha_name(),

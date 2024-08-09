@@ -1,0 +1,7 @@
+*/15 01 * * * curl --silent -X POST localhost:8000/api/v1/scrapers/scrape -d '{"reader_id": 1}' -H 'Content-Type: application/json' >/dev/null 2>&1
+
+*/15 02 * * * curl --silent -X POST localhost:8000/api/v1/scrapers/scrape -d '{"reader_id": 2}' -H 'Content-Type: application/json' >/dev/null 2>&1
+
+*/15 03 * * * curl --silent -X POST localhost:8000/api/v1/scrapers/scrape -d '{"reader_id": 3}' -H 'Content-Type: application/json' >/dev/null 2>&1
+
+*/15 04 * * * curl --silent -X POST localhost:8000/api/v1/scrapers/scrape -d '{"reader_id": 4}' -H 'Content-Type: application/json' >/dev/null 2>&1

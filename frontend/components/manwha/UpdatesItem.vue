@@ -55,7 +55,7 @@ export default {
 <style scoped>
 .thumbnail {
   max-width: 100%;
-  max-height: 200px;
+  max-height: 210px;
   height: auto;
   object-fit: cover;
   transition: filter 0.3s ease;
@@ -75,7 +75,6 @@ export default {
   -webkit-box-orient: vertical;
   color: #ccc;
   transition: color 0.3s ease;
-  height: 50px;
 }
 
 .title:hover {

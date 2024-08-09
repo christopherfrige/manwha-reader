@@ -6,7 +6,7 @@
     <LayoutNavbarHeader />
     <v-container class="container">
       <v-row>
-        <v-col>
+        <v-col class="summary">
           <ManwhaCompleteSummary :manwha="manwha" v-if="manwha" />
         </v-col>
       </v-row>
@@ -17,6 +17,7 @@
         </v-col>
       </v-row>
     </v-container>
+    <LayoutPageFooter/>
   </div>
 </template>
 
@@ -72,5 +73,13 @@ export default {
 .chapters {
   padding-left: 0px;
   padding-right: 0px;
+}
+
+.v-container {
+  padding-top: 0px!important;
+}
+
+.summary {
+  padding-top: 0px!important;
 }
 </style>

@@ -6,41 +6,31 @@
     <LayoutNavbarHeader />
     <div class="container mt-4 pb-8 px-6">
       <v-row class="justify-center">
-        <v-col cols="12" md="8" class="content">
+        <v-col class="content">
           <v-row class="section-title">
             <v-col>
-              <h2><v-icon icon="mdi-fire"></v-icon> Atualizações</h2>
+              <h2><v-icon icon="mdi-fire"></v-icon> Últimos lançamentos</h2>
             </v-col>
           </v-row>
-          <v-row class="mb-2">
-            <v-col v-for="manwha in manwhas" :key="manwha.manwha_id" cols="6" lg="3" md="4">
+          <v-row>
+            <v-col v-for="manwha in manwhas" :key="manwha.manwha_id" cols="6" lg="2" md="3">
               <ManwhaUpdatesItem :manwha="manwha" />
             </v-col>
           </v-row>
           <v-row
             class="justify-center py-4 more-updates"
             @click="getMoreManwhaInfo()"
-            v-if="pagination.next"
+            v-if="hasManwhasToLoad"
           >
             MAIS ATUALIZAÇÕES
           </v-row>
-          <v-row class="justify-center py-4 more-updates" v-if="pagination.next === null">
+          <v-row class="justify-center py-4 more-updates" v-if="!hasManwhasToLoad">
             VER TUDO
           </v-row>
         </v-col>
-        <v-divider vertical class="d-none d-md-flex" />
-        <v-col cols="12" md="4" class="content">
-          <v-row class="section-title">
-            <v-col>
-              <h2><v-icon icon="mdi-trending-up"></v-icon> Em Alta [WIP]</h2>
-            </v-col>
-          </v-row>
-          <!-- <v-row v-for="manwha in trendingManwhas" :key="manwha.manwha_id">
-            <ManwhaPopularItem :manwha="manwha" />
-          </v-row> -->
-        </v-col>
       </v-row>
     </div>
+    <LayoutPageFooter/>
   </div>
 </template>
 
@@ -59,7 +49,7 @@ export default {
     async getManwhaInfo(showMore = false) {
       const params = {
         page: this.pageCount,
-        per_page: 8,
+        per_page: 12,
       };
       const response = await this.$request.get(`v1/manwhas/`, { params });
       const manwhas = response.data.records;
@@ -78,6 +68,11 @@ export default {
       this.getManwhaInfo(true);
     },
   },
+  computed: {
+    hasManwhasToLoad() {
+      return this.pagination.next !== null
+    }
+  },
   mounted() {
     this.getManwhaInfo();
   },
@@ -87,7 +82,6 @@ export default {
 <style scoped>
 .content {
   background-color: var(--container-bg-color);
-  padding: -10px;
 }
 
 .section-title {
@@ -134,5 +128,9 @@ export default {
   .container {
     max-width: 1440px;
   }
+}
+
+.v-icon {
+  padding-bottom: 5px;
 }
 </style>

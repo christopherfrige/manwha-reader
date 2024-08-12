@@ -8,6 +8,7 @@ from src.domain.use_cases.scraper.scrape_flower_manwhas import (
 )
 from src.domain.use_cases.scraper.scrape_kingofshojo_manwhas import ScrapeKingOfShojoManwhasUseCase
 from src.domain.use_cases.scraper.scrape_kun_manwhas import ScrapeKunManwhasUseCase
+from src.domain.use_cases.scraper.scrape_miau_manwhas import ScrapeMiauManwhasUseCase
 
 
 router = APIRouter(prefix="/api/v1/scrapers", tags=["v1"])
@@ -30,5 +31,7 @@ def scrape_manwha(
                 use_case = ScrapeKunManwhasUseCase(session, storage, payload.scraper_manwha_id)
             case 4:
                 use_case = ScrapeKingOfShojoManwhasUseCase(session, storage, payload.scraper_manwha_id)
+            case 5:
+                use_case = ScrapeMiauManwhasUseCase(session, storage, payload.scraper_manwha_id)
         background_tasks.add_task(use_case.execute)
     return {"message": "Scraping request received"}

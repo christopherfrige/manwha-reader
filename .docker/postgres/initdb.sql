@@ -156,3 +156,6 @@ FOR EACH ROW EXECUTE PROCEDURE set_updated_at();
 
 INSERT INTO scraper.reader (id, name) VALUES (1, 'Inari');
 INSERT INTO scraper.reader (id, name) VALUES (2, 'Flower');
+INSERT INTO scraper.reader (id, name) VALUES (3, 'Kun');
+INSERT INTO scraper.reader (id, name) VALUES (4, 'King Of Shojo');
+INSERT INTO scraper.reader (id, name) VALUES (5, 'Miau');

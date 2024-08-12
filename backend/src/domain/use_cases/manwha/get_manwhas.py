@@ -43,8 +43,8 @@ class GetManwhasUseCase:
                     func.max(Chapter.chapter_number).label("last_chapter_number"),
                     func.max(Chapter.created_at).label("last_chapter_uploaded_at"),
                 )
-                .join(Chapter, Chapter.manwha_id == Manwha.id)
-                .join(AlternativeName, AlternativeName.manwha_id == Manwha.id)
+                .join(Chapter, Chapter.manwha_id == Manwha.id, isouter=True)
+                .join(AlternativeName, AlternativeName.manwha_id == Manwha.id, isouter=True)
                 .filter(Chapter.id == subquery.scalar_subquery())
             )
 

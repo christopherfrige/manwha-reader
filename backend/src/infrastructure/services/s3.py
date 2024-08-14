@@ -29,3 +29,21 @@ class S3Service(AWS):
             return [obj.key for obj in objects]
         except Exception as e:
             logger.exception(f"Error listing objects in S3: {e}")
+
+    def delete_objects(self, path: str) -> bool:
+        try:
+            objects = self.s3.Bucket(self.bucket_name).objects.filter(Prefix=path)
+            delete_keys = [{"Key": obj.key} for obj in objects]
+
+            if delete_keys:
+                resp = self.s3.Bucket(self.bucket_name).delete_objects(
+                    Delete={"Objects": delete_keys}, Bucket=self.bucket_name
+                )
+                logger.info(f"Deleted objects from S3 with prefix: {path}")
+                return True
+            else:
+                logger.info(f"No objects found with prefix: {path}")
+                return False
+        except Exception as e:
+            logger.exception(f"Error deleting objects from S3 with prefix '{path}': {e}")
+            return False

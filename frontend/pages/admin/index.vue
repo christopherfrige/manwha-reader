@@ -9,7 +9,7 @@
         <v-col cols="12" class="content">
           <v-row class="section-title">
             <v-col>
-              <h2><v-icon icon="mdi-cog"></v-icon> Painel Administrativo</h2>
+              <h2><v-icon icon="mdi-cog"></v-icon> Adicionar Manwha</h2>
             </v-col>
           </v-row>
           <v-form v-model="formValid">
@@ -53,6 +53,20 @@
         </v-col>
       </v-row>
     </div>
+    <div class="container mt-4 pb-8 px-6">
+      <v-row class="justify-center">
+        <v-col cols="12" class="content">
+          <v-row class="section-title">
+            <v-col>
+              <h2><v-icon icon="mdi-cog"></v-icon> Gerenciar Manwhas</h2>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col> <ManwhaAdminList :manwhas="manwhas" /> </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+    </div>
     <v-snackbar v-model="showSnackBar" :color="colorSnackBar">
       {{ descriptionSnackBar }}
     </v-snackbar>
@@ -63,6 +77,8 @@ export default {
   name: 'AdminPage',
   data() {
     return {
+      manwhas: [],
+      pagination: {},
       formValid: false,
       selectedReader: null,
       manwhaUrl: null,
@@ -91,7 +107,7 @@ export default {
         chapter_start: Number(this.chapterStart),
       };
       this.$request
-        .post(`v1/manwhas`, registerPayload)
+        .post(`v1/scrapers/manwha`, registerPayload)
         .then((response) => {
           const scraperManwhaId = response.data.scraper_manwha_id;
           const scrapePayload = {
@@ -114,6 +130,23 @@ export default {
           this.descriptionSnackBar = `Erro ao cadastrar o manwha: ${error.response.data.message}`;
         });
     },
+    async getManwhas(showMore = false) {
+      const params = {
+        page: this.pageCount,
+        per_page: 10,
+      };
+      const response = await this.$request.get(`v1/manwhas/`, { params });
+      const manwhas = response.data.records;
+
+      if (showMore) {
+        manwhas.map((manwha) => this.manwhas.push(manwha));
+      } else {
+        this.manwhas = manwhas;
+        this.trendingManwhas = manwhas;
+      }
+
+      this.pagination = response.data.pagination;
+    },
     isURL(str) {
       let url;
 
@@ -128,6 +161,7 @@ export default {
   },
   mounted() {
     this.getReaders();
+    this.getManwhas();
   },
 };
 </script>

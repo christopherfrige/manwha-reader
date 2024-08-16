@@ -15,3 +15,4 @@ class DeleteManwhaChaptersUseCase:
 
         if objects_deleted:
             self.chapter_repository.update("manwha_id", manwha_id, {"downloaded": False})
+            self.session.commit()

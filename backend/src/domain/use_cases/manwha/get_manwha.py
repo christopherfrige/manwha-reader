@@ -63,7 +63,7 @@ class GetManwhaUseCase:
                 Chapter.chapter_number,
                 cast(Chapter.created_at, String).label("created_at"),
             )
-            .filter(Chapter.manwha_id == self.manwha_id)
+            .filter(Chapter.manwha_id == self.manwha_id, Chapter.downloaded)
             .order_by(Chapter.chapter_number.desc())
             .all()
         )
@@ -72,7 +72,7 @@ class GetManwhaUseCase:
             return []
 
         return [ChapterSchema(**chapter._mapping) for chapter in chapters]
-    
+
     def _alternative_names(self):
         alternative_names = (
             self.session.query(

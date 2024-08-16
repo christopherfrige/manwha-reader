@@ -12,11 +12,11 @@ class CheckNewChaptersUseCase:
     def execute(self, manwha_id: int, chapters_incoming: list):
         chapters_registered = self._get_chapters_registered(manwha_id)
 
-        manwha = self.scraper_manwha_repository.get("manwha_id", manwha_id)
+        manwha = self.scraper_manwha_repository.get("manwha_id", manwha_id).first()
 
         chapter_start = 0
         if manwha:
-            chapter_start = manwha[0].chapter_start
+            chapter_start = manwha.chapter_start
 
         chapters_difference = len(chapters_incoming) - len(chapters_registered)
         if chapters_difference == 0:

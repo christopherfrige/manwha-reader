@@ -36,7 +36,7 @@ class S3Service(AWS):
             delete_keys = [{"Key": obj.key} for obj in objects]
 
             if delete_keys:
-                resp = self.s3.Bucket(self.bucket_name).delete_objects(
+                self.s3.Bucket(self.bucket_name).delete_objects(
                     Delete={"Objects": delete_keys}, Bucket=self.bucket_name
                 )
                 logger.info(f"Deleted objects from S3 with prefix: {path}")

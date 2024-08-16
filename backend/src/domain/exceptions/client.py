@@ -5,5 +5,9 @@ class BadRequestException(DefaultException):
     ...
 
 
+class NotFoundException(DefaultException):
+    ...
+
+
 class ConflictException(DefaultException):
     ...

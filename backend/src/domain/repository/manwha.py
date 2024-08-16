@@ -26,4 +26,3 @@ class ManwhaArtistRepository(BaseRepository):
 class ManwhaGenreRepository(BaseRepository):
     def __init__(self, session: Session) -> None:
         super().__init__(session, ManwhaGenre)
-

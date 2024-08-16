@@ -55,9 +55,9 @@ class ManageManwhaUseCase:
         return self.manwha_id
 
     def is_manwha_registered(self) -> int | None:
-        manwha = self.manwha_repository.get("name", self.manwha_data["manwha_name"])
+        manwha = self.manwha_repository.get("name", self.manwha_data["manwha_name"]).first()
         if manwha:
-            return manwha[0].id
+            return manwha.id
 
     def create_manwha(self) -> int:
         return self.manwha_repository.add(
@@ -97,10 +97,10 @@ class ManageManwhaUseCase:
 
     def manage_genres(self):
         for genre_name in self.manwha_data["genres"]:
-            genre = self.genre_repository.get("name", genre_name)
+            genre = self.genre_repository.get("name", genre_name).first()
             if genre:
                 self.manwha_genre_repository.add(
-                    ManwhaGenre(manwha_id=self.manwha_id, genre_id=genre[0].id)
+                    ManwhaGenre(manwha_id=self.manwha_id, genre_id=genre.id)
                 )
                 continue
 
@@ -112,10 +112,10 @@ class ManageManwhaUseCase:
 
     def manage_artists(self):
         for artist_name in self.manwha_data["artists"]:
-            artist = self.artist_repository.get("name", artist_name)
+            artist = self.artist_repository.get("name", artist_name).first()
             if artist:
                 self.manwha_artist_repository.add(
-                    ManwhaArtist(manwha_id=self.manwha_id, artist_id=artist[0].id)
+                    ManwhaArtist(manwha_id=self.manwha_id, artist_id=artist.id)
                 )
                 continue
 
@@ -127,10 +127,10 @@ class ManageManwhaUseCase:
 
     def manage_authors(self):
         for author_name in self.manwha_data["authors"]:
-            author = self.author_repository.get("name", author_name)
+            author = self.author_repository.get("name", author_name).first()
             if author:
                 self.manwha_author_repository.add(
-                    ManwhaAuthor(manwha_id=self.manwha_id, author_id=author[0].id)
+                    ManwhaAuthor(manwha_id=self.manwha_id, author_id=author.id)
                 )
                 continue
 
@@ -142,10 +142,12 @@ class ManageManwhaUseCase:
 
     def manage_alternative_names(self):
         for alternative_name in self.manwha_data["alternative_names"]:
-            alternative_name_db = self.alternative_name_repository.get("name", alternative_name)
+            alternative_name_db = self.alternative_name_repository.get(
+                "name", alternative_name
+            ).first()
             if alternative_name_db:
                 continue
 
             self.alternative_name_repository.add(
-                AlternativeName(name=alternative_name, manwha_id=self.manwha_id) 
+                AlternativeName(name=alternative_name, manwha_id=self.manwha_id)
             )

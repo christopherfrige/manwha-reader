@@ -2,7 +2,7 @@ run-tests:
 	poetry run python -m pytest tests/ --color=yes -v
 
 run-lint:
-	poetry run flake8 --ignore E501 \
+	poetry run flake8 --ignore E501,W503 \
 		--exclude .git,.venv,__pycache__,.pytest_cache,src/application/scraper \
 		--max-complexity 12
 

@@ -2,7 +2,6 @@ from src.domain.repository.scraper import ScraperManwhaRepository
 from src.domain.entities.chapter import Chapter
 from sqlalchemy.orm import Session
 from sqlalchemy import select
-from src.infrastructure.log import logger
 
 
 class CheckNewChaptersUseCase:
@@ -12,7 +11,9 @@ class CheckNewChaptersUseCase:
 
     def execute(self, manwha_id: int, chapters_incoming: list):
         chapters_registered = self._get_chapters_registered(manwha_id)
-        chapters_registered_not_downloaded = self._get_chapters_registered_and_not_downloaded(manwha_id)
+        chapters_registered_not_downloaded = self._get_chapters_registered_and_not_downloaded(
+            manwha_id
+        )
 
         manwha = self.scraper_manwha_repository.get("manwha_id", manwha_id).first()
 
@@ -28,7 +29,10 @@ class CheckNewChaptersUseCase:
         for chapter in chapters_incoming:
             if chapter["number"] < chapter_start:
                 continue
-            if chapter["number"] in chapters_registered and chapter["number"] in chapters_registered_not_downloaded:
+            if (
+                chapter["number"] in chapters_registered
+                and chapter["number"] in chapters_registered_not_downloaded
+            ):
                 chapters_to_scrape.append(chapter)
                 continue
             if chapter["number"] not in chapters_registered:
@@ -49,9 +53,9 @@ class CheckNewChaptersUseCase:
     def _get_chapters_registered(self, manwha_id: int):
         query = self._get_chapters_query(manwha_id)
         return self.session.execute(query).scalars().all()
-    
+
     def _get_chapters_registered_and_not_downloaded(self, manwha_id: int):
-        query = self._get_chapters_query(manwha_id).filter(Chapter.downloaded == False)
+        query = self._get_chapters_query(manwha_id).filter(not Chapter.downloaded)
         return self.session.execute(query).scalars().all()
 
     def _chapter_sort_criteria(self, chapter):

@@ -9,7 +9,7 @@
         <v-col cols="12" class="content">
           <v-row class="section-title">
             <v-col>
-              <h2><v-icon icon="mdi-cog"></v-icon> Adicionar Manwha</h2>
+              <h2><v-icon icon="mdi-plus"></v-icon> Adicionar Manwha</h2>
             </v-col>
           </v-row>
           <v-form v-model="formValid">
@@ -62,7 +62,26 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col> <ManwhaAdminList :manwhas="manwhas" /> </v-col>
+            <v-col>
+              <v-expansion-panels variant="accordion" flat>
+                <v-expansion-panel
+                  class="row-list"
+                  v-for="(manwha, index) in manwhas"
+                  :key="manwha.manwha_id"
+                  no-gutters
+                >
+                  <ManwhaManagementItem
+                    :manwha="manwha"
+                    :manwhaDetails="manwhasDetails[index]"
+                    :manwhaScraperDetails="manwhasScraperDetails[index]"
+                    @load-manwha-scraper-content="loadManwhaScraperContent(index)"
+                    @load-manwha-content="loadManwhaContent(index)"
+                    @delete-manwha-chapters="deleteManwhaChapters(index)"
+                    @send-manwha-scraping-request="sendManwhaScrapingRequest(index)"
+                  />
+                </v-expansion-panel>
+              </v-expansion-panels>
+            </v-col>
           </v-row>
         </v-col>
       </v-row>
@@ -78,6 +97,8 @@ export default {
   data() {
     return {
       manwhas: [],
+      manwhasDetails: {},
+      manwhasScraperDetails: {},
       pagination: {},
       formValid: false,
       selectedReader: null,
@@ -120,14 +141,12 @@ export default {
           this.manwhaUrl = null;
           this.chapterStart = 0;
 
-          this.showSnackBar = true;
-          this.colorSnackBar = 'green';
-          this.descriptionSnackBar = 'Manwha cadastrado com sucesso =)';
+          this.showSnackbar(
+            'Manwha cadastrado com sucesso, os capítulos devem aparecer em breve (◑‿◐)',
+          );
         })
         .catch((error) => {
-          this.showSnackBar = true;
-          this.colorSnackBar = 'red';
-          this.descriptionSnackBar = `Erro ao cadastrar o manwha: ${error.response.data.message}`;
+          this.showSnackbar(`Erro ao cadastrar o manwha: ${error.response.data.message}`, false);
         });
     },
     async getManwhas(showMore = false) {
@@ -146,6 +165,57 @@ export default {
       }
 
       this.pagination = response.data.pagination;
+    },
+    async loadManwhaScraperContent(index) {
+      if (this.manwhasScraperDetails[index]) {
+        return;
+      }
+      const response = await this.$request.get(
+        `v1/scrapers/manwha/${this.manwhas[index].manwha_id}`,
+      );
+      this.manwhasScraperDetails[index] = response.data;
+    },
+    async loadManwhaContent(index, force = false) {
+      if (this.manwhasDetails[index] && !force) {
+        return;
+      }
+      const response = await this.$request.get(`v1/manwhas/${this.manwhas[index].manwha_id}`);
+      this.manwhasDetails[index] = response.data;
+    },
+    async deleteManwhaChapters(index) {
+      this.$request
+        .delete(`v1/manwhas/${this.manwhas[index].manwha_id}/chapters`)
+        .then(() => {
+          this.loadManwhaContent(index, true);
+          this.showSnackbar('Capítulos deletados com sucesso (◕‿‿◕｡)');
+        })
+        .catch(() => {
+          this.showSnackbar(
+            'Ocorreu um problema ao deletar os capítulos desse manwha (╥﹏╥)',
+            false,
+          );
+        });
+    },
+    async sendManwhaScrapingRequest(index) {
+      const scrapePayload = {
+        reader_id: this.manwhasScraperDetails[index].reader_id,
+        scraper_manwha_id: this.manwhasScraperDetails[index].id,
+      };
+      this.$request
+        .post(`v1/scrapers/scrape`, scrapePayload)
+        .then(() => {
+          this.showSnackbar(
+            'Solicitação recebida com sucesso! Os capítulos devem aparecer em breve (◕‿‿◕｡)',
+          );
+        })
+        .catch(() => {
+          this.showSnackbar('Erro ao tentar baixar os capítulos do manwha (✖╭╮✖)', false);
+        });
+    },
+    showSnackbar(description, success = true) {
+      this.showSnackBar = true;
+      this.descriptionSnackBar = description;
+      this.colorSnackBar = success ? 'green' : 'red';
     },
     isURL(str) {
       let url;
@@ -210,22 +280,27 @@ export default {
   margin-left: auto;
 }
 
-@media (max-width: 960px) {
+/* @media (max-width: 960px) {
   .container {
     max-width: 960px;
   }
-}
+} */
 
-@media (max-width: 960px) {
+@media (max-width: 768px) {
   .container {
     max-width: 100% !important;
     width: 100% !important;
   }
 }
 
-@media (min-width: 960px) {
+@media (min-width: 768px) {
   .container {
-    max-width: 960px;
+    max-width: 768px;
   }
+}
+
+.row-list {
+  background-color: #44454d !important;
+  margin-bottom: 10px;
 }
 </style>

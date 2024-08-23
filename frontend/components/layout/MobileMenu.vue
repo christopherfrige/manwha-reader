@@ -12,7 +12,7 @@
           <v-list-item-title> <v-icon icon="mdi-home"></v-icon> Início </v-list-item-title>
         </v-list-item>
         <v-divider />
-        <v-list-item @click="navigateToAdmin()">
+        <v-list-item @click="navigateToManagement()">
           <v-list-item-title>
             <v-icon icon="mdi-cog"></v-icon> Gerenciar Manwhas
           </v-list-item-title>
@@ -39,9 +39,9 @@ export default {
         path: `/`,
       });
     },
-    async navigateToAdmin() {
+    async navigateToManagement() {
       return navigateTo({
-        path: `/admin`,
+        path: `/management`,
       });
     },
   },

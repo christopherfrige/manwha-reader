@@ -15,7 +15,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 .button {
   font-size: 16px;
   padding: 8px 30px;

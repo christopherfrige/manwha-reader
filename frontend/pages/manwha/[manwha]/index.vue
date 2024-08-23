@@ -17,7 +17,7 @@
         </v-col>
       </v-row>
     </v-container>
-    <LayoutPageFooter/>
+    <LayoutPageFooter />
   </div>
 </template>
 
@@ -76,10 +76,10 @@ export default {
 }
 
 .v-container {
-  padding-top: 0px!important;
+  padding-top: 0px !important;
 }
 
 .summary {
-  padding-top: 0px!important;
+  padding-top: 0px !important;
 }
 </style>

@@ -51,7 +51,7 @@
         </v-col>
       </v-row>
     </div>
-    <LayoutPageFooter/>
+    <LayoutPageFooter />
   </div>
 </template>
 

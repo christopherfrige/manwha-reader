@@ -25,7 +25,7 @@
       </v-row>
       <v-row no-gutters>
         <v-col>
-          <ChapterDatePostedLabel :postedAt="manwha.last_chapter_uploaded_at"/>
+          <ChapterDatePostedLabel :postedAt="manwha.last_chapter_uploaded_at" />
         </v-col>
       </v-row>
     </v-col>

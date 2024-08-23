@@ -280,12 +280,6 @@ export default {
   margin-left: auto;
 }
 
-/* @media (max-width: 960px) {
-  .container {
-    max-width: 960px;
-  }
-} */
-
 @media (max-width: 768px) {
   .container {
     max-width: 100% !important;

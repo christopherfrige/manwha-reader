@@ -27,8 +27,10 @@ export default {
         'Novembro',
         'Dezembro',
       ];
-      const brazilTimezonePaddingFromUtc = 3*60*60*1000
-      const postedDatetime = new Date(new Date(datetimeString).getTime() - brazilTimezonePaddingFromUtc);
+      const brazilTimezonePaddingFromUtc = 3 * 60 * 60 * 1000;
+      const postedDatetime = new Date(
+        new Date(datetimeString).getTime() - brazilTimezonePaddingFromUtc,
+      );
 
       const postedRecentlyLabel = this.postedRecentlyLabel(postedDatetime);
       if (postedRecentlyLabel) return postedRecentlyLabel;

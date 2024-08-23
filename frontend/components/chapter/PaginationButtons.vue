@@ -64,8 +64,6 @@ export default {
     async navigateToManwhaChapter(isNext) {
       const chapter = isNext ? this.nextChapter : this.previousChapter;
 
-      console.log(chapter);
-
       const chapterNumberNormalized = normalizeChapterNumber(chapter.chapter_number);
       return navigateTo({
         path: `/manwha/${this.manwhaNameNormalized}/capitulo-${chapterNumberNormalized}`,

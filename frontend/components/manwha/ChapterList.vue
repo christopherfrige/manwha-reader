@@ -38,8 +38,7 @@ export default {
   margin: 1px;
 }
 
-
-@media(max-width: 1028px) {
+@media (max-width: 1028px) {
   .date-posted {
     margin-top: 10px;
   }
@@ -47,5 +46,4 @@ export default {
     justify-content: center;
   }
 }
-
 </style>

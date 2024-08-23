@@ -30,7 +30,7 @@
         </v-col>
       </v-row>
     </div>
-    <LayoutPageFooter/>
+    <LayoutPageFooter />
   </div>
 </template>
 
@@ -70,8 +70,8 @@ export default {
   },
   computed: {
     hasManwhasToLoad() {
-      return this.pagination.next !== null
-    }
+      return this.pagination.next !== null;
+    },
   },
   mounted() {
     this.getManwhaInfo();

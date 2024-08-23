@@ -8,7 +8,7 @@
         <v-col cols="0" md="5" class="mt-2 d-none d-md-flex">
           <ul>
             <li @click="navigateToHome()">INÍCIO</li>
-            <li>MANWHAS</li>
+            <li @click="navigateToManagement()">GERENCIAR MANWHAS</li>
           </ul>
         </v-col>
         <v-col cols="2" md="4" class="mt-2">
@@ -30,6 +30,11 @@ export default {
     async navigateToHome() {
       return navigateTo({
         path: `/`,
+      });
+    },
+    async navigateToManagement() {
+      return navigateTo({
+        path: `/management`,
       });
     },
   },

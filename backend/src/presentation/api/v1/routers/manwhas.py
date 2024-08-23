@@ -1,14 +1,13 @@
 from fastapi import APIRouter, Depends
 
+from src.infrastructure.services.s3 import S3Service
 from src.infrastructure.persistence.unit_of_work import UnitOfWork
+from src.domain.use_cases.manwha.delete_manwha_chapters import DeleteManwhaChaptersUseCase
 from src.domain.use_cases.manwha.get_manwhas import GetManwhasUseCase
 from src.domain.use_cases.manwha.get_manwha import GetManwhaUseCase
-from src.domain.use_cases.manwha.create_manwha_to_scrape import CreateManwhaToScrapeUseCase
 from src.domain.schemas.manwha import (
-    CreateManwhaToScrapeResponse,
     GetManwhasResponse,
     GetManwhaResponse,
-    CreateManwhaToScrapeRequest,
 )
 
 router = APIRouter(prefix="/api/v1/manwhas", tags=["v1"])
@@ -29,6 +28,8 @@ async def get_manwha(manwha_id: int, db=Depends(UnitOfWork)):
     return GetManwhaUseCase().execute(db, manwha_id)
 
 
-@router.post("/", response_model=CreateManwhaToScrapeResponse, status_code=201)
-async def create_manwha_to_scrape(payload: CreateManwhaToScrapeRequest, db=Depends(UnitOfWork)):
-    return CreateManwhaToScrapeUseCase(db).execute(payload)
+@router.delete("/{manwha_id}/chapters", status_code=200)
+async def delete_manwha_chapters(
+    manwha_id: int, db=Depends(UnitOfWork), storage=Depends(S3Service)
+):
+    return DeleteManwhaChaptersUseCase(db, storage).execute(manwha_id)

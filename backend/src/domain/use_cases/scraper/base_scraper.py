@@ -44,9 +44,13 @@ class BaseScraperUseCase(ABC):
         logger.info(f"Starting scraping from reader_id {self.reader_id}")
 
         if self.scraper_manwha_id:
-            manwhas_to_scrape = self.scraper_manwha_repository.get("id", self.scraper_manwha_id)
+            manwhas_to_scrape = self.scraper_manwha_repository.get(
+                "id", self.scraper_manwha_id
+            ).all()
         else:
-            manwhas_to_scrape = self.scraper_manwha_repository.get("reader_id", self.reader_id)
+            manwhas_to_scrape = self.scraper_manwha_repository.get(
+                "reader_id", self.reader_id
+            ).all()
 
         with self.scraper as scraper:
             self.scraper = scraper

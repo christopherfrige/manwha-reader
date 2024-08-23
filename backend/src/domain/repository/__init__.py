@@ -1,6 +1,6 @@
 from abc import ABC
 from sqlalchemy.ext.declarative import DeclarativeMeta
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, Query
 from sqlalchemy import update
 
 
@@ -9,11 +9,11 @@ class BaseRepository(ABC):
         self.session = session
         self.model = model
 
-    def get(self, field: str, value: str | int | float | bool) -> list:
+    def get(self, field: str, value: str | int | float | bool) -> Query:
         field = getattr(self.model, field)
         if type(value) is not list:
             value = [value]
-        return self.session.query(self.model).where(field.in_(value)).all()
+        return self.session.query(self.model).where(field.in_(value))
 
     def get_all(self) -> list:
         return self.session.query(self.model).all()

@@ -35,7 +35,10 @@
     </v-row>
     <v-row no-gutters>
       <v-col
-        ><span><strong>URL de origem:</strong> {{ manwhaUrl }}</span></v-col
+        ><span
+          ><strong>URL de origem:</strong>
+          <a :href="manwhaUrl" class="manwha-origin-url" target="_blank">{{ manwhaUrl }}</a></span
+        ></v-col
       >
     </v-row>
     <v-row>
@@ -139,5 +142,13 @@ strong {
 
 span {
   font-size: 13px;
+}
+
+.manwha-origin-url {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  color: #fff;
 }
 </style>

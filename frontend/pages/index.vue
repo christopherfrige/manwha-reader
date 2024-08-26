@@ -13,19 +13,9 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col v-for="manwha in manwhas" :key="manwha.manwha_id" cols="6" lg="2" md="3">
+            <v-col v-for="manwha in manwhasToList" :key="manwha.manwha_id" cols="6" lg="2" md="3">
               <ManwhaUpdatesItem :manwha="manwha" />
             </v-col>
-          </v-row>
-          <v-row
-            class="justify-center py-4 more-updates"
-            @click="getMoreManwhaInfo()"
-            v-if="hasManwhasToLoad"
-          >
-            MAIS ATUALIZAÇÕES
-          </v-row>
-          <v-row class="justify-center py-4 more-updates" v-if="!hasManwhasToLoad">
-            VER TUDO
           </v-row>
         </v-col>
       </v-row>
@@ -49,7 +39,7 @@ export default {
     async getManwhaInfo(showMore = false) {
       const params = {
         page: this.pageCount,
-        per_page: 12,
+        per_page: 1000,
       };
       const response = await this.$request.get(`v1/manwhas/`, { params });
       const manwhas = response.data.records;
@@ -71,6 +61,11 @@ export default {
   computed: {
     hasManwhasToLoad() {
       return this.pagination.next !== null;
+    },
+    manwhasToList() {
+      return this.manwhas.length > 0
+        ? this.manwhas.filter((manwha) => manwha.last_chapter_downloaded === true)
+        : [];
     },
   },
   mounted() {

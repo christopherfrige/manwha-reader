@@ -1,7 +1,10 @@
+from src.domain.enums.core import OrdenationOrder
+from src.domain.enums.manwha import GetManwhasOrderEntity
 from src.domain.entities.alternative_name import AlternativeName
 from src.domain.entities.manwha import Manwha
 from src.domain.entities.chapter import Chapter
 from src.domain.schemas.manwha import (
+    GetManwhasRequestQueryParams,
     ManwhaPresentationData,
     GetManwhasResponse,
 )
@@ -13,7 +16,7 @@ from src.domain.use_cases.pagination.get_limit_offset import (
     GetLimitOffsetUseCase,
 )
 from sqlalchemy.sql import func
-from sqlalchemy import or_
+from sqlalchemy import or_, asc, desc
 
 
 class GetManwhasUseCase:
@@ -22,9 +25,9 @@ class GetManwhasUseCase:
         self.get_limit_offset = GetLimitOffsetUseCase().execute
         self.prepare_pagination = PreparePaginationUseCase().execute
 
-    def execute(self, search: str, page: int, per_page: int) -> GetManwhasResponse:
+    def execute(self, query_params: GetManwhasRequestQueryParams) -> GetManwhasResponse:
         with self.db.get_session() as session:
-            limit, offset = self.get_limit_offset(page, per_page)
+            limit, offset = self.get_limit_offset(query_params.page, query_params.per_page)
 
             subquery = (
                 session.query(Chapter.id)
@@ -42,26 +45,53 @@ class GetManwhasUseCase:
                     func.max(Chapter.id).label("last_chapter_id"),
                     func.max(Chapter.chapter_number).label("last_chapter_number"),
                     func.max(Chapter.created_at).label("last_chapter_uploaded_at"),
+                    Chapter.downloaded.label("last_chapter_downloaded"),
                 )
                 .join(Chapter, Chapter.manwha_id == Manwha.id, isouter=True)
                 .join(AlternativeName, AlternativeName.manwha_id == Manwha.id, isouter=True)
                 .filter(Chapter.id == subquery.scalar_subquery())
             )
 
-            if search:
-                search_terms = search.split(" ")
-                conditions = []
-                for term in search_terms:
-                    conditions.append(Manwha.name.ilike(f"%{term}%"))
-                    conditions.append(AlternativeName.name.ilike(f"%{term}%"))
-                query = query.filter(or_(*conditions))
+            if query_params.search:
+                search_conditions = self._get_search_conditions(query_params.search)
+                query = query.filter(or_(*search_conditions))
 
-            query = query.group_by(Manwha.id).order_by(func.max(Chapter.created_at).desc())
+            query = query.group_by(Manwha.id, Chapter.downloaded)
+
+            _order_by, _order = self._prepare_ordenation(
+                query_params.order_entity, query_params.order_by, query_params.order
+            )
+            query = query.order_by(_order(func.max(_order_by)))
+
             result = query.limit(limit).offset(offset)
 
             manwhas = [ManwhaPresentationData(**dict(row._mapping)) for row in result]
 
             return GetManwhasResponse(
                 records=manwhas,
-                pagination=self.prepare_pagination("/v1/manwhas", query, page, per_page),
+                pagination=self.prepare_pagination(
+                    "/v1/manwhas", query, query_params.page, query_params.per_page
+                ),
             )
+
+    def _get_search_conditions(self, search_input: str):
+        search_terms = search_input.split(" ")
+        conditions = []
+        for term in search_terms:
+            conditions.append(Manwha.name.ilike(f"%{term}%"))
+            conditions.append(AlternativeName.name.ilike(f"%{term}%"))
+        return conditions
+
+    def _prepare_ordenation(
+        self, order_entity: GetManwhasOrderEntity, order_by: str, order: OrdenationOrder
+    ):
+        match order_entity:
+            case GetManwhasOrderEntity.MANWHA:
+                prepared_order_entity = Manwha
+            case _:
+                prepared_order_entity = Chapter
+
+        prepared_order_by = getattr(prepared_order_entity, order_by)
+        prepared_order = asc if order == OrdenationOrder.ASC else desc
+
+        return prepared_order_by, prepared_order

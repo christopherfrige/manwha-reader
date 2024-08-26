@@ -6,6 +6,7 @@ from src.domain.use_cases.manwha.delete_manwha_chapters import DeleteManwhaChapt
 from src.domain.use_cases.manwha.get_manwhas import GetManwhasUseCase
 from src.domain.use_cases.manwha.get_manwha import GetManwhaUseCase
 from src.domain.schemas.manwha import (
+    GetManwhasRequestQueryParams,
     GetManwhasResponse,
     GetManwhaResponse,
 )
@@ -15,12 +16,10 @@ router = APIRouter(prefix="/api/v1/manwhas", tags=["v1"])
 
 @router.get("/", response_model=GetManwhasResponse, status_code=200)
 async def get_manwhas(
-    search: str = "",
-    page: int = 1,
-    per_page: int = 20,
+    query_params=Depends(GetManwhasRequestQueryParams),
     db=Depends(UnitOfWork),
 ):
-    return GetManwhasUseCase(db).execute(search, page, per_page)
+    return GetManwhasUseCase(db).execute(query_params)
 
 
 @router.get("/{manwha_id}", response_model=GetManwhaResponse, status_code=200)

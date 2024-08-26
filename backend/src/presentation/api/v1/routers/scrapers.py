@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, BackgroundTasks
+from src.domain.use_cases.scraper.scrape_hari_manwhas import ScrapeHariManwhasUseCase
 from src.domain.use_cases.scraper.update_scraper_manwha import UpdateScraperManwhaUseCase
 from src.domain.use_cases.scraper.create_manwha_to_scrape import CreateManwhaToScrapeUseCase
 from src.domain.schemas.scraper import (
@@ -44,6 +45,8 @@ async def scrape_manwha(
                 )
             case 5:
                 use_case = ScrapeMiauManwhasUseCase(session, storage, payload.scraper_manwha_id)
+            case 6:
+                use_case = ScrapeHariManwhasUseCase(session, storage, payload.scraper_manwha_id)
         background_tasks.add_task(use_case.execute)
     return {"message": "Scraping request received"}
 

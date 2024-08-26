@@ -1,7 +1,9 @@
+from src.domain.entities.scraper import Reader
 from src.domain.schemas.scraper import GetReadersResponse, ReaderData
 from src.domain.repository.scraper import ReaderRepository
 from src.domain.use_cases.pagination.prepare_pagination import PreparePaginationUseCase
 from src.infrastructure.persistence.unit_of_work import UnitOfWork
+from sqlalchemy import asc
 
 
 class GetReadersUseCase:
@@ -12,7 +14,7 @@ class GetReadersUseCase:
             self.prepare_pagination = PreparePaginationUseCase().execute
 
     def execute(self, page, per_page) -> GetReadersResponse:
-        readers = self.reader_repository.get_all()
+        readers = self.reader_repository.get().order_by(asc(Reader.name))
 
         records = [ReaderData(id=reader.id, name=reader.name) for reader in readers]
 

@@ -9,14 +9,15 @@ class BaseRepository(ABC):
         self.session = session
         self.model = model
 
-    def get(self, field: str, value: str | int | float | bool) -> Query:
-        field = getattr(self.model, field)
-        if type(value) is not list:
-            value = [value]
-        return self.session.query(self.model).where(field.in_(value))
-
-    def get_all(self) -> list:
-        return self.session.query(self.model).all()
+    def get(
+        self, field: str | None = None, value: str | int | float | bool | None = None
+    ) -> Query:
+        if field and value:
+            field = getattr(self.model, field)
+            if type(value) is not list:
+                value = [value]
+            return self.session.query(self.model).where(field.in_(value))
+        return self.session.query(self.model)
 
     def add(self, obj: object) -> int | None:
         self.session.add(obj)

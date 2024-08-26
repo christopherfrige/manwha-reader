@@ -1,4 +1,6 @@
 from pydantic import BaseModel
+from src.domain.enums.manwha import GetManwhasOrderEntity
+from src.domain.enums.core import OrdenationOrder
 from src.domain.schemas import Pagination
 from src.domain.schemas.artist import ArtistSchema
 from src.domain.schemas.author import AuthorSchema
@@ -22,6 +24,16 @@ class ManwhaPresentationData(BaseModel):
     last_chapter_id: int
     last_chapter_number: float
     last_chapter_uploaded_at: datetime
+    last_chapter_downloaded: bool
+
+
+class GetManwhasRequestQueryParams(BaseModel):
+    search: str = ""
+    page: int = 1
+    per_page: int = 20
+    order_entity: GetManwhasOrderEntity = GetManwhasOrderEntity.CHAPTER
+    order_by: str = "created_at"
+    order: OrdenationOrder = OrdenationOrder.DESC
 
 
 class GetManwhasResponse(BaseModel):

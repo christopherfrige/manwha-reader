@@ -93,6 +93,8 @@
                       :manwha="manwha"
                       :manwhaDetails="manwhasDetails[index]"
                       :manwhaScraperDetails="manwhasScraperDetails[index]"
+                      :deleteLoading="deleteLoading"
+                      :downloadLoading="downloadLoading"
                       @load-manwha-scraper-content="loadManwhaScraperContent(index)"
                       @load-manwha-content="loadManwhaContent(index)"
                       @delete-manwha-chapters="deleteManwhaChapters(index)"
@@ -134,6 +136,8 @@ export default {
       colorSnackBar: null,
       descriptionSnackBar: null,
       manwhasHavingChapters: true,
+      downloadLoading: false,
+      deleteLoading: false,
     };
   },
   methods: {
@@ -207,6 +211,7 @@ export default {
       this.manwhasDetails[index] = response.data;
     },
     async deleteManwhaChapters(index) {
+      this.deleteLoading = true;
       this.$request
         .delete(`v1/manwhas/${this.manwhas[index].manwha_id}/chapters`)
         .then(() => {
@@ -218,9 +223,11 @@ export default {
             'Ocorreu um problema ao deletar os capítulos desse manwha (╥﹏╥)',
             false,
           );
-        });
+        })
+        .finally(() => (this.deleteLoading = false));
     },
     async sendManwhaScrapingRequest(index) {
+      this.downloadLoading = true;
       const scrapePayload = {
         reader_id: this.manwhasScraperDetails[index].reader_id,
         scraper_manwha_id: this.manwhasScraperDetails[index].id,
@@ -234,7 +241,8 @@ export default {
         })
         .catch(() => {
           this.showSnackbar('Erro ao tentar baixar os capítulos do manwha (✖╭╮✖)', false);
-        });
+        })
+        .finally(() => (this.downloadLoading = false));
     },
     showSnackbar(description, success = true) {
       this.showSnackBar = true;
@@ -330,6 +338,7 @@ export default {
 .tab {
   text-align: center;
   padding: 10px 0 !important;
+  cursor: pointer;
 }
 
 .active-tab {

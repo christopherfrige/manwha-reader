@@ -1,5 +1,5 @@
 <template>
-  <button type="button" :disabled="disabled" class="button" :class="type">{{ text }}</button>
+  <v-btn :disabled="disabled" class="button" :class="type" :loading="loading">{{ text }}</v-btn>
 </template>
 <script>
 export default {
@@ -7,6 +7,7 @@ export default {
     type: String,
     text: String,
     disabled: Boolean,
+    loading: Boolean,
   },
   computed: {
     buttonStyle() {
@@ -18,8 +19,6 @@ export default {
 <style scoped>
 .button {
   font-size: 16px;
-  padding: 8px 30px;
-  border-radius: 10px;
   transition: background 0.3s ease;
 }
 .button:hover {

@@ -47,6 +47,7 @@
           class="mb-4"
           type="primary"
           text="Baixar Capítulos"
+          :loading="downloadLoading"
           @click="$emit('sendManwhaScrapingRequest')"
         />
       </v-col>
@@ -56,6 +57,7 @@
           type="error"
           text="Limpar Capítulos"
           :disabled="downloadedChaptersQuantity == 0"
+          :loading="deleteLoading"
           @click="$emit('deleteManwhaChapters')"
         />
       </v-col>
@@ -70,6 +72,8 @@ export default {
     manwha: Object,
     manwhaScraperDetails: Object,
     manwhaDetails: Object,
+    downloadLoading: Boolean,
+    deleteLoading: Boolean,
   },
   emits: [
     'loadManwhaContent',

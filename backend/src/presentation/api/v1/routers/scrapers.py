@@ -1,4 +1,7 @@
 from fastapi import APIRouter, Depends, BackgroundTasks
+from src.domain.enums.scraper import ReaderEnum
+from src.domain.exceptions.client import BadRequestException
+from src.domain.use_cases.scraper.base_scraper import BaseScraperUseCase
 from src.domain.use_cases.scraper.scrape_hari_manwhas import ScrapeHariManwhasUseCase
 from src.domain.use_cases.scraper.update_scraper_manwha import UpdateScraperManwhaUseCase
 from src.domain.use_cases.scraper.create_manwha_to_scrape import CreateManwhaToScrapeUseCase
@@ -32,23 +35,25 @@ async def scrape_manwha(
     storage=Depends(S3Service),
 ):
     with db.get_session() as session:
-        match payload.reader_id:
-            case 1:
-                use_case = ScrapeInariManwhasUseCase(session, storage, payload.scraper_manwha_id)
-            case 2:
-                use_case = ScrapeFlowerManwhasUseCase(session, storage, payload.scraper_manwha_id)
-            case 3:
-                use_case = ScrapeKunManwhasUseCase(session, storage, payload.scraper_manwha_id)
-            case 4:
-                use_case = ScrapeKingOfShojoManwhasUseCase(
-                    session, storage, payload.scraper_manwha_id
-                )
-            case 5:
-                use_case = ScrapeMiauManwhasUseCase(session, storage, payload.scraper_manwha_id)
-            case 6:
-                use_case = ScrapeHariManwhasUseCase(session, storage, payload.scraper_manwha_id)
-        background_tasks.add_task(use_case.execute)
-    return {"message": "Scraping request received"}
+        scrapers: dict[ReaderEnum, BaseScraperUseCase] = {
+            ReaderEnum.INARI.value: ScrapeInariManwhasUseCase,
+            ReaderEnum.FLOWER.value: ScrapeFlowerManwhasUseCase,
+            ReaderEnum.KUN.value: ScrapeKunManwhasUseCase,
+            ReaderEnum.KING_OF_SHOJO.value: ScrapeKingOfShojoManwhasUseCase,
+            ReaderEnum.MIAU.value: ScrapeMiauManwhasUseCase,
+            ReaderEnum.HARI.value: ScrapeHariManwhasUseCase,
+        }
+
+        selected_scraper = scrapers.get(payload.reader_id)
+        if selected_scraper:
+            scraper: BaseScraperUseCase = selected_scraper(session=session, storage=storage)
+
+            manwha_ids = scraper.execute_manhwhas(payload.scraper_manwha_id)
+            background_tasks.add_task(scraper.execute_chapters, manwha_ids)
+
+            return {"message": "Scraping request received sucessfully"}
+
+        raise BadRequestException("The provided reader_id is not valid.")
 
 
 @router.get("/manwha/{manwha_id}", response_model=ScraperManwhaSchema)

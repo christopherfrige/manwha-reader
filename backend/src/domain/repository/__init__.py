@@ -10,7 +10,7 @@ class BaseRepository(ABC):
         self.model = model
 
     def get(
-        self, field: str | None = None, value: str | int | float | bool | None = None
+        self, field: str | None = None, value: str | int | float | bool | list | None = None
     ) -> Query:
         if field and value:
             field = getattr(self.model, field)

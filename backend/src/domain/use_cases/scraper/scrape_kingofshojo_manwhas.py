@@ -1,4 +1,6 @@
+from fastapi import BackgroundTasks
 from sqlalchemy.orm import Session
+from src.domain.enums.scraper import ReaderEnum
 from src.domain.use_cases.scraper.base_scraper import BaseScraperUseCase
 from selenium.webdriver.common.by import By
 from src.infrastructure.config import SETTINGS
@@ -7,12 +9,15 @@ from selenium.common.exceptions import NoSuchElementException
 
 
 class ScrapeKingOfShojoManwhasUseCase(BaseScraperUseCase):
-    def __init__(self, session: Session, storage: S3Service, scraper_manwha_id: int | None):
-        self.reader_id = 4
-        self.referer = None
-        super().__init__(session, storage, scraper_manwha_id)
+    def __init__(
+        self,
+        session: Session,
+        storage: S3Service,
+    ):
+        self.reader_id = ReaderEnum.KING_OF_SHOJO.value
+        super().__init__(session, storage)
 
-    def scrape_manwha_data(self, manwha_url: str):
+    def scrape_manwha_main_page(self, manwha_url: str):
         self.scraper.get(manwha_url)
 
         manwha_attributes = self._get_manwha_attributes()
@@ -29,7 +34,7 @@ class ScrapeKingOfShojoManwhasUseCase(BaseScraperUseCase):
             "chapters": self._get_chapters_numbers_and_urls(),
         }
 
-    def scrape_manwha_chapter_images(self, chapter_url):
+    def scrape_manwha_chapter_pages(self, chapter_url):
         self.scraper.get(chapter_url)
 
         chapter_images = self.scraper.find_element(By.ID, "readerarea").find_elements(

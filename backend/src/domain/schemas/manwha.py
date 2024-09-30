@@ -32,7 +32,7 @@ class GetManwhasRequestQueryParams(BaseModel):
     page: int = 1
     per_page: int = 20
     order_entity: GetManwhasOrderEntity = GetManwhasOrderEntity.CHAPTER
-    order_by: str = "created_at"
+    order_by: str = "updated_at"
     order: OrdenationOrder = OrdenationOrder.DESC
 
 

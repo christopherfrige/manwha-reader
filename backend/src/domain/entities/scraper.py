@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, Text, TIMESTAMP, ForeignKey
+from sqlalchemy import Boolean, Column, Integer, Text, TIMESTAMP, ForeignKey
 from src.domain.entities import Base
 from sqlalchemy.sql.functions import now
 
@@ -34,5 +34,6 @@ class ScraperManwha(Base, ScraperSchema):
     )
     url = Column(Text, nullable=False)
     chapter_start = Column(Integer, nullable=False, default=0)
+    active = Column(Boolean, nullable=False, default=False)
     created_at = Column(TIMESTAMP, nullable=False, default=now())
     updated_at = Column(TIMESTAMP, default=now())

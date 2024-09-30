@@ -32,7 +32,7 @@
             </v-row>
             <v-row class="mx-2">
               <v-text-field
-                v-model="chapterStart"
+                v-model.number="chapterStart"
                 label="Baixar a partir de qual capítulo"
                 type="number"
                 :min="0"
@@ -40,14 +40,13 @@
               ></v-text-field>
             </v-row>
             <v-row class="justify-center mb-2">
-              <button
-                type="button"
-                class="register-button"
-                @click="registerManwha()"
+              <UiAppButton
+                type="primary"
+                text="Cadastrar Manwha"
                 :disabled="!formValid"
+                @click="registerManwha()"
               >
-                Cadastrar
-              </button>
+              </UiAppButton>
             </v-row>
           </v-form>
         </v-col>
@@ -160,11 +159,18 @@ export default {
             reader_id: this.selectedReader,
             scraper_manwha_id: scraperManwhaId,
           };
-          this.$request.post(`v1/scrapers/scrape`, scrapePayload);
 
           this.selectedReader = null;
           this.manwhaUrl = null;
           this.chapterStart = 0;
+
+          this.$request.post(`v1/scrapers/scrape`, scrapePayload).catch(() => {
+            this.showSnackbar(
+              'Manwha foi cadastrado com sucesso, porém não foi possível baixar os capítulos, baixe separadamente. (︶︹︺)',
+              false,
+            );
+            return;
+          });
 
           this.showSnackbar(
             'Manwha cadastrado com sucesso, os capítulos devem aparecer em breve (◑‿◐)',
@@ -174,7 +180,7 @@ export default {
           this.showSnackbar(`Erro ao cadastrar o manwha: ${error.response.data.message}`, false);
         });
     },
-    async getManwhas(showMore = false) {
+    async getManwhas() {
       const params = {
         page: this.pageCount,
         per_page: 1000,
@@ -185,12 +191,7 @@ export default {
       const response = await this.$request.get(`v1/manwhas/`, { params });
       const manwhas = response.data.records;
 
-      if (showMore) {
-        manwhas.map((manwha) => this.manwhas.push(manwha));
-      } else {
-        this.manwhas = manwhas;
-        this.trendingManwhas = manwhas;
-      }
+      this.manwhas = manwhas;
 
       this.pagination = response.data.pagination;
     },
@@ -214,8 +215,9 @@ export default {
       this.deleteLoading = true;
       this.$request
         .delete(`v1/manwhas/${this.manwhas[index].manwha_id}/chapters`)
-        .then(() => {
-          this.loadManwhaContent(index, true);
+        .then(async () => {
+          await this.getManwhas();
+          await this.loadManwhaContent(index, true);
           this.showSnackbar('Capítulos deletados com sucesso (◕‿‿◕｡)');
         })
         .catch(() => {
@@ -239,7 +241,14 @@ export default {
             'Solicitação recebida com sucesso! Os capítulos devem aparecer em breve (◕‿‿◕｡)',
           );
         })
-        .catch(() => {
+        .catch((error) => {
+          if (error.response) {
+            console.log(error.response);
+            if (error.response.status === 406) {
+              this.showSnackbar('Sem novos capítulos para baixar (✖╭╮✖)', false);
+              return;
+            }
+          }
           this.showSnackbar('Erro ao tentar baixar os capítulos do manwha (✖╭╮✖)', false);
         })
         .finally(() => (this.downloadLoading = false));
@@ -274,24 +283,6 @@ export default {
 };
 </script>
 <style scoped>
-.register-button {
-  font-size: 16px;
-  background-color: var(--button-bg-color);
-  padding: 8px 40px;
-  color: #000;
-  border-radius: 10px;
-  transition: background 0.3s ease;
-}
-.register-button:hover {
-  background: var(--button-hover-bg-color);
-  cursor: pointer;
-}
-.register-button:disabled {
-  background-color: rgb(105, 95, 39);
-  cursor: auto;
-  color: #262626;
-}
-
 .content {
   background-color: var(--container-bg-color);
   padding: -10px;

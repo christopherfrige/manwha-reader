@@ -12,10 +12,7 @@
   <v-expansion-panel-text>
     <v-row no-gutters>
       <v-col
-        ><span
-          ><strong>Quantidade de capítulos baixados:</strong>
-          {{ downloadedChaptersQuantity }}</span
-        ></v-col
+        ><span><strong>Capítulos baixados:</strong> {{ downloadedChaptersQuantity }}</span></v-col
       >
     </v-row>
     <v-row no-gutters>
@@ -35,16 +32,14 @@
     </v-row>
     <v-row no-gutters>
       <v-col
-        ><span
-          ><strong>URL de origem:</strong>
-          <a :href="manwhaUrl" class="manwha-origin-url" target="_blank">{{ manwhaUrl }}</a></span
-        ></v-col
+        ><span class="manwha-origin-url"
+          ><strong>URL original: </strong> <a :href="manwhaUrl" target="_blank">{{ manwhaUrl }}</a>
+        </span></v-col
       >
     </v-row>
     <v-row>
       <v-col cols="6">
         <UiAppButton
-          class="mb-4"
           type="primary"
           text="Baixar Capítulos"
           :loading="downloadLoading"
@@ -53,7 +48,6 @@
       </v-col>
       <v-col cols="6" class="text-end">
         <UiAppButton
-          class="mb-4"
           type="error"
           text="Limpar Capítulos"
           :disabled="downloadedChaptersQuantity == 0"
@@ -151,8 +145,11 @@ span {
 .manwha-origin-url {
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 1;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+}
+
+a {
   color: #fff;
 }
 </style>

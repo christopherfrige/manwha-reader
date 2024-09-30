@@ -18,16 +18,9 @@ export default {
 </script>
 <style scoped>
 .button {
-  font-size: 16px;
+  font-size: 14px;
   transition: background 0.3s ease;
 }
-.button:hover {
-  cursor: pointer;
-}
-.button:disabled {
-  cursor: not-allowed;
-}
-
 .error {
   background: var(--error-500);
   color: #000;

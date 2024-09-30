@@ -44,6 +44,7 @@
                 type="primary"
                 text="Cadastrar Manwha"
                 :disabled="!formValid"
+                :loading="registerLoading"
                 @click="registerManwha()"
               >
               </UiAppButton>
@@ -137,6 +138,7 @@ export default {
       manwhasHavingChapters: true,
       downloadLoading: false,
       deleteLoading: false,
+      registerLoading: false,
     };
   },
   methods: {
@@ -151,6 +153,7 @@ export default {
         url: this.manwhaUrl,
         chapter_start: Number(this.chapterStart),
       };
+      this.registerLoading = true;
       this.$request
         .post(`v1/scrapers/manwha`, registerPayload)
         .then((response) => {
@@ -164,17 +167,21 @@ export default {
           this.manwhaUrl = null;
           this.chapterStart = 0;
 
-          this.$request.post(`v1/scrapers/scrape`, scrapePayload).catch(() => {
-            this.showSnackbar(
-              'Manwha foi cadastrado com sucesso, porém não foi possível baixar os capítulos, baixe separadamente. (︶︹︺)',
-              false,
-            );
-            return;
-          });
-
-          this.showSnackbar(
-            'Manwha cadastrado com sucesso, os capítulos devem aparecer em breve (◑‿◐)',
-          );
+          this.$request
+            .post(`v1/scrapers/scrape`, scrapePayload)
+            .then(() => {
+              this.showSnackbar(
+                'Manwha cadastrado com sucesso, os capítulos devem aparecer em breve (◑‿◐)',
+              );
+            })
+            .catch(() => {
+              this.showSnackbar(
+                'Manwha foi cadastrado com sucesso, porém não foi possível baixar os capítulos, baixe separadamente. (︶︹︺)',
+                false,
+              );
+              return;
+            })
+            .finally(() => (this.registerLoading = false));
         })
         .catch((error) => {
           this.showSnackbar(`Erro ao cadastrar o manwha: ${error.response.data.message}`, false);

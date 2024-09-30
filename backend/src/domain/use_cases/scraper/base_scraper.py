@@ -1,9 +1,11 @@
 from abc import ABC, abstractmethod
+import shutil
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.common.exceptions import TimeoutException
 from sqlalchemy.orm import Session
+from src.domain.utils import normalize_string
 from src.domain.entities.scraper import ScraperManwha
 from src.domain.exceptions.client import BadRequestException, NotAcceptableException
 from src.domain.entities.chapter import Chapter
@@ -54,7 +56,7 @@ class BaseScraperUseCase(ABC):
         self.scraper.quit()
 
     def execute_manhwhas(self, scraper_manwha_id: int | None):
-        logger.info(f"Starting scraping from reader_id {self.reader_id}")
+        logger.info(f"Start scraping from reader_id {self.reader_id}")
 
         self._init_scraper()
 
@@ -88,17 +90,18 @@ class BaseScraperUseCase(ABC):
                     self.session.commit()
 
                 new_chapters = self.check_new_chapters.execute(manwha_id, manwha_data["chapters"])
-                if not new_chapters:
+                if new_chapters:
+                    manwha_ids_with_new_chapters.append(manwha_id)
+                else:
                     logger.info("No new chapters")
                     if scrape_just_one_manwha:
                         raise NotAcceptableException("No new chapters")
-                manwha_ids_with_new_chapters.append(scrape_manwha.manwha_id)
 
             except NotAcceptableException:
                 raise
             except TimeoutException:
                 logger.error(f"Timeout when scraping manwha from URL: {scrape_manwha.url}")
-                return BadGatewayException(
+                raise BadGatewayException(
                     "Timeout when acessing website to scrape. Try again later."
                 )
             except Exception:
@@ -124,7 +127,20 @@ class BaseScraperUseCase(ABC):
                 )
 
                 chapter_pages = self.scrape_manwha_chapter_pages(chapter.origin_url)
-                self.upload_chapter_pages.execute(chapter_pages, chapter.origin_url)
+
+                chapter_images_local_folder = f"/tmp/{normalize_string(chapter.origin_url)}"
+
+                for chapter_page in chapter_pages:
+                    self.download_image.execute(
+                        local_dir=chapter_images_local_folder,
+                        image_name=chapter_page["image_name"],
+                        image_type=chapter_page["image_type"],
+                        image_url=chapter_page["image_url"],
+                    )
+
+                self.upload_chapter_pages.execute(len(chapter_pages), chapter)
+
+                shutil.rmtree(chapter_images_local_folder)
 
                 self.session.commit()
             except TimeoutException:

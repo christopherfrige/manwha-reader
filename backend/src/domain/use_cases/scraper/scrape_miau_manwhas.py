@@ -32,23 +32,19 @@ class ScrapeMiauManwhasUseCase(BaseScraperUseCase):
     def scrape_manwha_chapter_pages(self, chapter_url):
         self.scraper.get(chapter_url)
 
-        elements = self.scraper.find_elements(By.CLASS_NAME, "ts-main-image")
+        chapter_pages = self.scraper.find_elements(By.CLASS_NAME, "ts-main-image")
 
-        chapter_pages = 0
-        for image_position, html_tag in enumerate(elements):
+        pages = []
+        for image_position, html_tag in enumerate(chapter_pages):
             image_url = html_tag.get_attribute("src")
             image_name = str(image_position).rjust(3, "0")
             image_type = image_url.split(".")[-1]
 
-            self.download_image.execute(
-                local_dir=SETTINGS.chapter_images_local_folder,
-                image_name=image_name,
-                image_type=image_type,
-                image_url=image_url,
+            pages.append(
+                {"image_url": image_url, "image_name": image_name, "image_type": image_type}
             )
-            chapter_pages += 1
 
-        return chapter_pages
+        return pages
 
     def _get_manwha_name(self) -> str:
         manwha_name = self.scraper.find_element(By.CLASS_NAME, "entry-title").get_attribute(

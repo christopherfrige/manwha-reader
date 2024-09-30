@@ -56,11 +56,10 @@ class GetManwhasUseCase:
                 search_conditions = self._get_search_conditions(query_params.search)
                 query = query.filter(or_(*search_conditions))
 
-            query = query.group_by(Manwha.id, Chapter.downloaded)
-
             _order_by, _order = self._prepare_ordenation(
                 query_params.order_entity, query_params.order_by, query_params.order
             )
+            query = query.group_by(Manwha.id, Chapter.downloaded)
             query = query.order_by(_order(func.max(_order_by)))
 
             result = query.limit(limit).offset(offset)

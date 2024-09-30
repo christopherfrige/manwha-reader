@@ -73,8 +73,10 @@ class ManageManwhaUseCase:
         image_name = "thumbnail"
         image_type = image_url.split(".")[-1]
 
+        thumbnail_local_folder = f"/tmp/{self.manwha_data['manwha_name']}"
+
         self.download_image.execute(
-            local_dir=SETTINGS.thumbnail_local_folder,
+            local_dir=thumbnail_local_folder,
             image_name=image_name,
             image_type=image_type,
             image_url=image_url,
@@ -83,7 +85,7 @@ class ManageManwhaUseCase:
         storage_path = f"manwha/{self.manwha_id}/{image_name}.{image_type}"
 
         self.storage.upload_object(
-            local_path=f"{SETTINGS.thumbnail_local_folder}/{image_name}.{image_type}",
+            local_path=f"{thumbnail_local_folder}/{image_name}.{image_type}",
             storage_path=storage_path,
         )
 
@@ -93,7 +95,7 @@ class ManageManwhaUseCase:
             {"thumbnail": f"{self.storage.bucket_url}/{storage_path}"},
         )
 
-        shutil.rmtree(SETTINGS.thumbnail_local_folder)
+        shutil.rmtree(thumbnail_local_folder)
 
     def manage_genres(self):
         for genre_name in self.manwha_data["genres"]:

@@ -18,9 +18,6 @@ class _Settings(BaseSettings):
     aws_bucket_name: str = "your_bucket_name"
     aws_region: str = "sa-east-1"
 
-    chapter_images_local_folder: str = "/tmp/chapter_images"
-    thumbnail_local_folder: str = "/tmp/thumbnail"
-
     model_config = SettingsConfigDict(env_file=".env")
 
 

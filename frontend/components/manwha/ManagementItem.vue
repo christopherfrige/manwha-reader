@@ -1,5 +1,5 @@
 <template>
-  <v-expansion-panel-title @click="$emit('loadManwhaContent'), $emit('loadManwhaScraperContent')">
+  <v-expansion-panel-title @click="$emit('loadManwhaManagementContent')">
     <v-row no-gutters>
       <v-col cols="2">
         <img :title="manwha.manwha_name" :src="manwha.thumbnail" class="thumbnail" />
@@ -9,7 +9,20 @@
       </v-col>
     </v-row>
   </v-expansion-panel-title>
-  <v-expansion-panel-text>
+  <v-expansion-panel-text v-if="manwhaLoading">
+    <v-row>
+      <v-skeleton-loader class="w-100" type="text@5" />
+    </v-row>
+    <v-row>
+      <v-col>
+        <v-skeleton-loader class="w-100" type="button" />
+      </v-col>
+      <v-col>
+        <v-skeleton-loader class="justify-end" type="button" />
+      </v-col>
+    </v-row>
+  </v-expansion-panel-text>
+  <v-expansion-panel-text v-else>
     <v-row no-gutters>
       <v-col
         ><span><strong>Capítulos baixados:</strong> {{ downloadedChaptersQuantity }}</span></v-col
@@ -37,7 +50,7 @@
         </span></v-col
       >
     </v-row>
-    <v-row>
+    <v-row class="mb-0">
       <v-col cols="6">
         <UiAppButton
           type="primary"
@@ -68,13 +81,9 @@ export default {
     manwhaDetails: Object,
     downloadLoading: Boolean,
     deleteLoading: Boolean,
+    manwhaLoading: Boolean,
   },
-  emits: [
-    'loadManwhaContent',
-    'loadManwhaScraperContent',
-    'deleteManwhaChapters',
-    'sendManwhaScrapingRequest',
-  ],
+  emits: ['loadManwhaManagementContent', 'deleteManwhaChapters', 'sendManwhaScrapingRequest'],
   computed: {
     manwhaChapterStart() {
       return this.manwhaScraperDetails ? this.manwhaScraperDetails.chapter_start : '';

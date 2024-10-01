@@ -4,6 +4,9 @@ import * as directives from 'vuetify/directives';
 
 export default defineNuxtPlugin((nuxtApp) => {
   const vuetify = createVuetify({
+    theme: {
+      defaultTheme: 'dark',
+    },
     ssr: true,
     components,
     directives,

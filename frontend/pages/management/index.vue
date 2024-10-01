@@ -63,7 +63,20 @@
           </v-row>
           <v-row>
             <v-col>
-              <v-row no-gutters>
+              <div v-if="managementManwhasLoading">
+                <v-row>
+                  <v-col class="pr-0">
+                    <v-skeleton-loader type="heading" />
+                  </v-col>
+                  <v-col class="pl-0">
+                    <v-skeleton-loader type="heading" />
+                  </v-col>
+                </v-row>
+                <v-row v-for="i in 4" v-if="true" no-gutters>
+                  <v-skeleton-loader class="w-100" type="list-item-avatar" />
+                </v-row>
+              </div>
+              <v-row no-gutters v-show="!managementManwhasLoading">
                 <v-col
                   cols="6"
                   @click="showManwhasWithChapters()"
@@ -88,15 +101,15 @@
                   v-for="(manwha, index) in manwhas"
                   :key="manwha.manwha_id"
                 >
-                  <div v-show="manwha.last_chapter_downloaded === manwhasHavingChapters">
+                  <div v-show="manwha.has_chapters_downloaded === manwhasHavingChapters">
                     <ManwhaManagementItem
                       :manwha="manwha"
                       :manwhaDetails="manwhasDetails[index]"
                       :manwhaScraperDetails="manwhasScraperDetails[index]"
                       :deleteLoading="deleteLoading"
                       :downloadLoading="downloadLoading"
-                      @load-manwha-scraper-content="loadManwhaScraperContent(index)"
-                      @load-manwha-content="loadManwhaContent(index)"
+                      :manwhaLoading="manwhaLoading"
+                      @load-manwha-management-content="loadManwhaManagementContent(index)"
                       @delete-manwha-chapters="deleteManwhaChapters(index)"
                       @send-manwha-scraping-request="sendManwhaScrapingRequest(index)"
                     />
@@ -139,6 +152,8 @@ export default {
       downloadLoading: false,
       deleteLoading: false,
       registerLoading: false,
+      managementManwhasLoading: true,
+      manwhaLoading: false,
     };
   },
   methods: {
@@ -201,22 +216,26 @@ export default {
       this.manwhas = manwhas;
 
       this.pagination = response.data.pagination;
+
+      this.managementManwhasLoading = false;
     },
-    async loadManwhaScraperContent(index) {
-      if (this.manwhasScraperDetails[index]) {
+    async loadManwhaManagementContent(index, force = false) {
+      if (this.manwhasScraperDetails[index] && this.manwhasDetails[index] && !force) {
         return;
       }
-      const response = await this.$request.get(
+      this.manwhaLoading = true;
+
+      const responseScraperManwha = await this.$request.get(
         `v1/scrapers/manwha/${this.manwhas[index].manwha_id}`,
       );
-      this.manwhasScraperDetails[index] = response.data;
-    },
-    async loadManwhaContent(index, force = false) {
-      if (this.manwhasDetails[index] && !force) {
-        return;
-      }
-      const response = await this.$request.get(`v1/manwhas/${this.manwhas[index].manwha_id}`);
-      this.manwhasDetails[index] = response.data;
+      this.manwhasScraperDetails[index] = responseScraperManwha.data;
+
+      const responseManwha = await this.$request.get(
+        `v1/manwhas/${this.manwhas[index].manwha_id}`,
+      );
+      this.manwhasDetails[index] = responseManwha.data;
+
+      this.manwhaLoading = false;
     },
     async deleteManwhaChapters(index) {
       this.deleteLoading = true;
@@ -224,7 +243,7 @@ export default {
         .delete(`v1/manwhas/${this.manwhas[index].manwha_id}/chapters`)
         .then(async () => {
           await this.getManwhas();
-          await this.loadManwhaContent(index, true);
+          await this.loadManwhaManagementContent(index, true);
           this.showSnackbar('Capítulos deletados com sucesso (◕‿‿◕｡)');
         })
         .catch(() => {

@@ -50,7 +50,7 @@ class BaseScraperUseCase(ABC):
             service=Service(executable_path="/var/www/manwha-reader/chromedriver"),
             options=self._driver_options(),
         )
-        self.scraper.set_page_load_timeout(30)
+        self.scraper.set_page_load_timeout(45)
 
     def _close_scraper(self):
         self.scraper.quit()
@@ -68,7 +68,7 @@ class BaseScraperUseCase(ABC):
         else:
             manwhas_to_scrape: list[ScraperManwha] = (
                 self.scraper_manwha_repository.get("reader_id", self.reader_id)
-                .where(ScraperManwha.active)
+                .filter(ScraperManwha.active)
                 .all()
             )
 
@@ -83,11 +83,15 @@ class BaseScraperUseCase(ABC):
                 manwha_data = self.scrape_manwha_main_page(scrape_manwha.url)
                 manwha_id = self.manage_manwha.execute(manwha_data)
 
-                if not scrape_manwha.manwha_id or not scrape_manwha.active:
+                if not scrape_manwha.manwha_id:
                     self.scraper_manwha_repository.update(
-                        "id", scrape_manwha.id, {"manwha_id": manwha_id, "active": True}
+                        "id", scrape_manwha.id, {"manwha_id": manwha_id}
                     )
-                    self.session.commit()
+
+                if not scrape_manwha.active:
+                    self.scraper_manwha_repository.update("id", scrape_manwha.id, {"active": True})
+
+                self.session.commit()
 
                 new_chapters = self.check_new_chapters.execute(manwha_id, manwha_data["chapters"])
                 if new_chapters:
@@ -97,16 +101,19 @@ class BaseScraperUseCase(ABC):
                     if scrape_just_one_manwha:
                         raise NotAcceptableException("No new chapters")
 
-            except NotAcceptableException:
-                raise
             except TimeoutException:
                 logger.error(f"Timeout when scraping manwha from URL: {scrape_manwha.url}")
-                raise BadGatewayException(
-                    "Timeout when acessing website to scrape. Try again later."
-                )
+                if scrape_just_one_manwha:
+                    self._close_scraper()
+                    raise BadGatewayException(
+                        "Timeout when acessing website to scrape. Try again later."
+                    )
             except Exception:
                 self.session.rollback()
                 logger.exception("Error when scraping manwha")
+                if scrape_just_one_manwha:
+                    self._close_scraper()
+                    raise
 
         logger.info(f"End of scraping from reader_id {self.reader_id}")
         return manwha_ids_with_new_chapters
@@ -144,10 +151,7 @@ class BaseScraperUseCase(ABC):
 
                 self.session.commit()
             except TimeoutException:
-                logger.error(
-                    f"Timeout when scraping chapter {chapter.chapter_number}, finishing the scrape job"
-                )
-                continue
+                logger.error(f"Timeout when scraping chapter {chapter.chapter_number}")
             except Exception:
                 self.session.rollback()
                 logger.exception(f"Error when scraping chapter {chapter.chapter_number}")

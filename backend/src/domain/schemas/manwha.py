@@ -24,7 +24,7 @@ class ManwhaPresentationData(BaseModel):
     last_chapter_id: int
     last_chapter_number: float
     last_chapter_uploaded_at: datetime
-    last_chapter_downloaded: bool
+    has_chapters_downloaded: bool
 
 
 class GetManwhasRequestQueryParams(BaseModel):

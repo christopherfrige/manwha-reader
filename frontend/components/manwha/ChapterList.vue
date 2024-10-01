@@ -7,7 +7,7 @@
           :chapterNumber="chapter.chapter_number"
           :manwhaName="manwha.name"
         />
-        <ChapterDatePostedLabel class="date-posted" :postedAt="chapter.created_at" />
+        <ChapterDatePostedLabel class="date-posted" :postedAt="chapter.updated_at" />
       </v-row>
     </v-col>
   </v-row>

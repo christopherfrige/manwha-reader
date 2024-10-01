@@ -16,7 +16,7 @@ from src.domain.use_cases.pagination.get_limit_offset import (
     GetLimitOffsetUseCase,
 )
 from sqlalchemy.sql import func
-from sqlalchemy import or_, asc, desc
+from sqlalchemy import case, or_, asc, desc
 
 
 class GetManwhasUseCase:
@@ -37,6 +37,13 @@ class GetManwhasUseCase:
                 .correlate(Manwha)
             )
 
+            downloaded_subquery = (
+                session.query(func.count(Chapter.id))
+                .filter(Chapter.manwha_id == Manwha.id)
+                .filter(Chapter.downloaded == True)
+                .correlate(Manwha)
+            )
+
             query = (
                 session.query(
                     func.max(Manwha.id).label("manwha_id"),
@@ -45,7 +52,9 @@ class GetManwhasUseCase:
                     func.max(Chapter.id).label("last_chapter_id"),
                     func.max(Chapter.chapter_number).label("last_chapter_number"),
                     func.max(Chapter.updated_at).label("last_chapter_uploaded_at"),
-                    Chapter.downloaded.label("last_chapter_downloaded"),
+                    case((downloaded_subquery.exists(), True), else_=False).label(
+                        "has_chapters_downloaded"
+                    ),
                 )
                 .join(Chapter, Chapter.manwha_id == Manwha.id, isouter=True)
                 .join(AlternativeName, AlternativeName.manwha_id == Manwha.id, isouter=True)

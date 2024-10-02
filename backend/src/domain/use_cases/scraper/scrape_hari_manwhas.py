@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 from src.domain.use_cases.scraper.base_scraper import BaseScraperUseCase
 from selenium.webdriver.common.by import By
-from src.infrastructure.config import SETTINGS
 from src.infrastructure.services.s3 import S3Service
 from selenium.common.exceptions import NoSuchElementException
 from src.domain.enums.scraper import ReaderEnum

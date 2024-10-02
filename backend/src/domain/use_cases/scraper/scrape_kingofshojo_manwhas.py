@@ -1,9 +1,7 @@
-from fastapi import BackgroundTasks
 from sqlalchemy.orm import Session
 from src.domain.enums.scraper import ReaderEnum
 from src.domain.use_cases.scraper.base_scraper import BaseScraperUseCase
 from selenium.webdriver.common.by import By
-from src.infrastructure.config import SETTINGS
 from src.infrastructure.services.s3 import S3Service
 from selenium.common.exceptions import NoSuchElementException
 

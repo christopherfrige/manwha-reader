@@ -1,3 +1,4 @@
+from src.domain.exceptions.client import BadRequestException
 from src.infrastructure.services.s3 import S3Service
 from src.infrastructure.persistence.unit_of_work import UnitOfWork
 from src.domain.repository.chapter import ChapterRepository
@@ -19,3 +20,6 @@ class DeleteManwhaChaptersUseCase:
             self.chapter_repository.update("manwha_id", manwha_id, {"downloaded": False})
             self.scraper_manwha_repository.update("manwha_id", manwha_id, {"active": False})
             self.session.commit()
+            return
+
+        raise BadRequestException("Chapters was not deleted.")

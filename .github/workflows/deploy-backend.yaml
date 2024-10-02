@@ -43,6 +43,8 @@ jobs:
               AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }}
               AWS_REGION=${{ secrets.AWS_REGION }}
               AWS_BUCKET_NAME=${{ secrets.AWS_BUCKET_NAME }}
+              DISCORD_WEBHOOK_URL=${{ secrets.DISCORD_WEBHOOK_URL }}
+              MANWHA_READER_URL=${{ secrets.MANWHA_READER_URL }}
             " >> ../backend/.env
 
             docker compose build api

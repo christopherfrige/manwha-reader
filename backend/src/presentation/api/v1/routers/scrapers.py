@@ -48,8 +48,9 @@ async def scrape_manwha(
         if selected_scraper:
             scraper: BaseScraperUseCase = selected_scraper(session=session, storage=storage)
 
-            manwha_ids = scraper.execute_manhwhas(payload.scraper_manwha_id)
-            background_tasks.add_task(scraper.execute_chapters, manwha_ids)
+            chapter_ids = scraper.execute_manhwhas(payload.scraper_manwha_id)
+            if chapter_ids:
+                background_tasks.add_task(scraper.execute_chapters, chapter_ids)
 
             return {"message": "Scraping request received sucessfully"}
 

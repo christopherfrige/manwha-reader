@@ -36,9 +36,15 @@ class S3Service(AWS):
             delete_keys = [{"Key": obj.key} for obj in objects]
 
             if delete_keys:
-                self.s3.Bucket(self.bucket_name).delete_objects(
-                    Delete={"Objects": delete_keys}, Bucket=self.bucket_name
-                )
+                batch_size = 500
+                offset = 0
+                while len(delete_keys) > offset:
+                    limit = offset + batch_size
+                    delete_keys_batch = delete_keys[offset:limit]
+                    self.s3.Bucket(self.bucket_name).delete_objects(
+                        Delete={"Objects": delete_keys_batch}, Bucket=self.bucket_name
+                    )
+                    offset += batch_size
                 logger.info(f"Deleted objects from S3 with prefix: {path}")
                 return True
             else:

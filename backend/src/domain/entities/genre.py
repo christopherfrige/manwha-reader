@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Integer, Text, TIMESTAMP
-from src.domain.entities import Base
+from sqlalchemy import TIMESTAMP, Column, Integer, Text
 from sqlalchemy.sql.functions import now
+
+from src.domain.entities import Base
 
 
 class GenreSchema:

@@ -1,7 +1,7 @@
 import requests
 
-from src.domain.utils import normalize_string
 from src.domain.entities.manwha import Manwha
+from src.domain.utils import normalize_string
 from src.infrastructure.config import SETTINGS
 
 

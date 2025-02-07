@@ -1,6 +1,6 @@
 from src.domain.exceptions.client import NotFoundException
-from src.domain.schemas.scraper import GetReadersResponse, ScraperManwhaSchema
 from src.domain.repository.scraper import ScraperManwhaRepository
+from src.domain.schemas.scraper import GetReadersResponse, ScraperManwhaSchema
 from src.infrastructure.persistence.unit_of_work import UnitOfWork
 
 

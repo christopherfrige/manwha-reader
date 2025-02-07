@@ -1,6 +1,7 @@
-from src.domain.repository import BaseRepository
-from src.domain.entities.author import Author
 from sqlalchemy.orm import Session
+
+from src.domain.entities.author import Author
+from src.domain.repository import BaseRepository
 
 
 class AuthorRepository(BaseRepository):

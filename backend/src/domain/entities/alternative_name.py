@@ -1,6 +1,7 @@
-from sqlalchemy import Column, ForeignKey, Integer, TIMESTAMP, Text
-from src.domain.entities import Base
+from sqlalchemy import TIMESTAMP, Column, ForeignKey, Integer, Text
 from sqlalchemy.sql.functions import now
+
+from src.domain.entities import Base
 
 
 class AlternativeNameSchema:

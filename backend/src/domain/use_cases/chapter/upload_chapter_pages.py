@@ -1,10 +1,11 @@
-from src.domain.utils import normalize_string
-from src.domain.repository.chapter import ChapterRepository
-from src.domain.entities.chapter import Chapter
-from src.infrastructure.services.s3 import S3Service
-from sqlalchemy.orm import Session
-from src.infrastructure.config import SETTINGS
 import os
+
+from sqlalchemy.orm import Session
+
+from src.domain.entities.chapter import Chapter
+from src.domain.repository.chapter import ChapterRepository
+from src.domain.utils import normalize_string
+from src.infrastructure.services.s3 import S3Service
 
 
 class UploadChapterPagesUseCase:

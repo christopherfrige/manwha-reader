@@ -1,23 +1,23 @@
+from sqlalchemy import String, cast
+
+from src.domain.entities.alternative_name import AlternativeName
+from src.domain.entities.artist import Artist
+from src.domain.entities.author import Author
+from src.domain.entities.chapter import Chapter
+from src.domain.entities.genre import Genre
 from src.domain.entities.manwha import (
     Manwha,
     ManwhaArtist,
     ManwhaAuthor,
     ManwhaGenre,
 )
-from src.domain.entities.chapter import Chapter
-from src.domain.entities.author import Author
-from src.domain.entities.artist import Artist
-from src.domain.entities.genre import Genre
-from src.domain.entities.alternative_name import AlternativeName
-from src.domain.schemas.manwha import GetManwhaResponse
+from src.domain.schemas.alternative_name import AlternativeNameSchema
 from src.domain.schemas.artist import ArtistSchema
 from src.domain.schemas.author import AuthorSchema
-from src.domain.schemas.genre import GenreSchema
-from src.domain.schemas.alternative_name import AlternativeNameSchema
 from src.domain.schemas.chapter import ChapterSchema
+from src.domain.schemas.genre import GenreSchema
+from src.domain.schemas.manwha import GetManwhaResponse
 from src.infrastructure.persistence.unit_of_work import UnitOfWork
-
-from sqlalchemy import cast, String
 
 
 class GetManwhaUseCase:
@@ -38,9 +38,7 @@ class GetManwhaUseCase:
                 artists=self._additional_data(
                     Artist, ManwhaArtist, ManwhaArtist.artist_id, ArtistSchema
                 ),
-                genres=self._additional_data(
-                    Genre, ManwhaGenre, ManwhaGenre.genre_id, GenreSchema
-                ),
+                genres=self._additional_data(Genre, ManwhaGenre, ManwhaGenre.genre_id, GenreSchema),
                 alternative_names=self._alternative_names(),
             )
 

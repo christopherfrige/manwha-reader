@@ -1,4 +1,5 @@
 import pytest
+
 from src.domain.use_cases.pagination.get_limit_offset import (
     GetLimitOffsetUseCase,
 )

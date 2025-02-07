@@ -1,6 +1,15 @@
-from sqlalchemy import Boolean, Column, Integer, ForeignKey, TIMESTAMP, Float, Text
-from src.domain.entities import Base
+from sqlalchemy import (
+    TIMESTAMP,
+    Boolean,
+    Column,
+    Float,
+    ForeignKey,
+    Integer,
+    Text,
+)
 from sqlalchemy.sql.functions import now
+
+from src.domain.entities import Base
 
 
 class ChapterSchema:

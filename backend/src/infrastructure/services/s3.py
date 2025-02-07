@@ -1,6 +1,6 @@
-from src.infrastructure.services.aws import AWS
 from src.infrastructure.config import SETTINGS
 from src.infrastructure.log import logger
+from src.infrastructure.services.aws import AWS
 
 
 class S3Service(AWS):
@@ -42,7 +42,8 @@ class S3Service(AWS):
                     limit = offset + batch_size
                     delete_keys_batch = delete_keys[offset:limit]
                     self.s3.Bucket(self.bucket_name).delete_objects(
-                        Delete={"Objects": delete_keys_batch}, Bucket=self.bucket_name
+                        Delete={"Objects": delete_keys_batch},
+                        Bucket=self.bucket_name,
                     )
                     offset += batch_size
                 logger.info(f"Deleted objects from S3 with prefix: {path}")

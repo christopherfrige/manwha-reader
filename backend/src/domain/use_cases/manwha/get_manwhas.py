@@ -1,22 +1,23 @@
+from sqlalchemy import asc, case, desc, or_
+from sqlalchemy.sql import func
+
+from src.domain.entities.alternative_name import AlternativeName
+from src.domain.entities.chapter import Chapter
+from src.domain.entities.manwha import Manwha
 from src.domain.enums.core import OrdenationOrder
 from src.domain.enums.manwha import GetManwhasOrderEntity
-from src.domain.entities.alternative_name import AlternativeName
-from src.domain.entities.manwha import Manwha
-from src.domain.entities.chapter import Chapter
 from src.domain.schemas.manwha import (
     GetManwhasRequestQueryParams,
-    ManwhaPresentationData,
     GetManwhasResponse,
-)
-from src.infrastructure.persistence.unit_of_work import UnitOfWork
-from src.domain.use_cases.pagination.prepare_pagination import (
-    PreparePaginationUseCase,
+    ManwhaPresentationData,
 )
 from src.domain.use_cases.pagination.get_limit_offset import (
     GetLimitOffsetUseCase,
 )
-from sqlalchemy.sql import func
-from sqlalchemy import case, or_, asc, desc
+from src.domain.use_cases.pagination.prepare_pagination import (
+    PreparePaginationUseCase,
+)
+from src.infrastructure.persistence.unit_of_work import UnitOfWork
 
 
 class GetManwhasUseCase:
@@ -57,7 +58,11 @@ class GetManwhasUseCase:
                     ),
                 )
                 .join(Chapter, Chapter.manwha_id == Manwha.id, isouter=True)
-                .join(AlternativeName, AlternativeName.manwha_id == Manwha.id, isouter=True)
+                .join(
+                    AlternativeName,
+                    AlternativeName.manwha_id == Manwha.id,
+                    isouter=True,
+                )
                 .filter(Chapter.id == subquery.scalar_subquery())
             )
 
@@ -66,7 +71,9 @@ class GetManwhasUseCase:
                 query = query.filter(or_(*search_conditions))
 
             _order_by, _order = self._prepare_ordenation(
-                query_params.order_entity, query_params.order_by, query_params.order
+                query_params.order_entity,
+                query_params.order_by,
+                query_params.order,
             )
             query = query.group_by(Manwha.id, Chapter.downloaded)
             query = query.order_by(_order(func.max(_order_by)))
@@ -78,7 +85,10 @@ class GetManwhasUseCase:
             return GetManwhasResponse(
                 records=manwhas,
                 pagination=self.prepare_pagination(
-                    "/v1/manwhas", query, query_params.page, query_params.per_page
+                    "/v1/manwhas",
+                    query,
+                    query_params.page,
+                    query_params.per_page,
                 ),
             )
 
@@ -91,7 +101,10 @@ class GetManwhasUseCase:
         return conditions
 
     def _prepare_ordenation(
-        self, order_entity: GetManwhasOrderEntity, order_by: str, order: OrdenationOrder
+        self,
+        order_entity: GetManwhasOrderEntity,
+        order_by: str,
+        order: OrdenationOrder,
     ):
         match order_entity:
             case GetManwhasOrderEntity.MANWHA:

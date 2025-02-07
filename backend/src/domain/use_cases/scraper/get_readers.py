@@ -1,9 +1,12 @@
-from src.domain.entities.scraper import Reader
-from src.domain.schemas.scraper import GetReadersResponse, ReaderData
-from src.domain.repository.scraper import ReaderRepository
-from src.domain.use_cases.pagination.prepare_pagination import PreparePaginationUseCase
-from src.infrastructure.persistence.unit_of_work import UnitOfWork
 from sqlalchemy import asc
+
+from src.domain.entities.scraper import Reader
+from src.domain.repository.scraper import ReaderRepository
+from src.domain.schemas.scraper import GetReadersResponse, ReaderData
+from src.domain.use_cases.pagination.prepare_pagination import (
+    PreparePaginationUseCase,
+)
+from src.infrastructure.persistence.unit_of_work import UnitOfWork
 
 
 class GetReadersUseCase:

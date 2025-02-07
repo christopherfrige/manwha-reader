@@ -1,10 +1,7 @@
-from fastapi import APIRouter, Depends, BackgroundTasks
+from fastapi import APIRouter, BackgroundTasks, Depends
+
 from src.domain.enums.scraper import ReaderEnum
 from src.domain.exceptions.client import BadRequestException
-from src.domain.use_cases.scraper.base_scraper import BaseScraperUseCase
-from src.domain.use_cases.scraper.scrape_hari_manwhas import ScrapeHariManwhasUseCase
-from src.domain.use_cases.scraper.update_scraper_manwha import UpdateScraperManwhaUseCase
-from src.domain.use_cases.scraper.create_manwha_to_scrape import CreateManwhaToScrapeUseCase
 from src.domain.schemas.scraper import (
     CreateManwhaToScrapeRequest,
     CreateManwhaToScrapeResponse,
@@ -12,17 +9,36 @@ from src.domain.schemas.scraper import (
     ScraperManwhaSchema,
     UpdateScraperManwhaRequest,
 )
-from src.infrastructure.persistence.unit_of_work import UnitOfWork
-from src.infrastructure.services.s3 import S3Service
-from src.domain.use_cases.scraper.get_scraper_manwha import GetScraperManwhaUseCase
-from src.domain.use_cases.scraper.scrape_inari_manwhas import ScrapeInariManwhasUseCase
+from src.domain.use_cases.scraper.base_scraper import BaseScraperUseCase
+from src.domain.use_cases.scraper.create_manwha_to_scrape import (
+    CreateManwhaToScrapeUseCase,
+)
+from src.domain.use_cases.scraper.get_scraper_manwha import (
+    GetScraperManwhaUseCase,
+)
 from src.domain.use_cases.scraper.scrape_flower_manwhas import (
     ScrapeFlowerManwhasUseCase,
 )
-from src.domain.use_cases.scraper.scrape_kingofshojo_manwhas import ScrapeKingOfShojoManwhasUseCase
-from src.domain.use_cases.scraper.scrape_kun_manwhas import ScrapeKunManwhasUseCase
-from src.domain.use_cases.scraper.scrape_miau_manwhas import ScrapeMiauManwhasUseCase
-
+from src.domain.use_cases.scraper.scrape_hari_manwhas import (
+    ScrapeHariManwhasUseCase,
+)
+from src.domain.use_cases.scraper.scrape_inari_manwhas import (
+    ScrapeInariManwhasUseCase,
+)
+from src.domain.use_cases.scraper.scrape_kingofshojo_manwhas import (
+    ScrapeKingOfShojoManwhasUseCase,
+)
+from src.domain.use_cases.scraper.scrape_kun_manwhas import (
+    ScrapeKunManwhasUseCase,
+)
+from src.domain.use_cases.scraper.scrape_miau_manwhas import (
+    ScrapeMiauManwhasUseCase,
+)
+from src.domain.use_cases.scraper.update_scraper_manwha import (
+    UpdateScraperManwhaUseCase,
+)
+from src.infrastructure.persistence.unit_of_work import UnitOfWork
+from src.infrastructure.services.s3 import S3Service
 
 router = APIRouter(prefix="/api/v1/scrapers", tags=["v1"])
 

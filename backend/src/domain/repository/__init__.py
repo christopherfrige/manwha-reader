@@ -1,7 +1,8 @@
 from abc import ABC
-from sqlalchemy.ext.declarative import DeclarativeMeta
-from sqlalchemy.orm import Session, Query
+
 from sqlalchemy import update
+from sqlalchemy.ext.declarative import DeclarativeMeta
+from sqlalchemy.orm import Query, Session
 
 
 class BaseRepository(ABC):
@@ -10,7 +11,9 @@ class BaseRepository(ABC):
         self.model = model
 
     def get(
-        self, field: str | None = None, value: str | int | float | bool | list | None = None
+        self,
+        field: str | None = None,
+        value: str | int | float | bool | list | None = None,
     ) -> Query:
         if field and value:
             field = getattr(self.model, field)

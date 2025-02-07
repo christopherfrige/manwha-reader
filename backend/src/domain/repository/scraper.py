@@ -1,6 +1,7 @@
-from src.domain.repository import BaseRepository
-from src.domain.entities.scraper import ScraperManwha, Reader
 from sqlalchemy.orm import Session
+
+from src.domain.entities.scraper import Reader, ScraperManwha
+from src.domain.repository import BaseRepository
 
 
 class ScraperManwhaRepository(BaseRepository):

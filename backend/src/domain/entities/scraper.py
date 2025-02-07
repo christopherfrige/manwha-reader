@@ -1,6 +1,7 @@
-from sqlalchemy import Boolean, Column, Integer, Text, TIMESTAMP, ForeignKey
-from src.domain.entities import Base
+from sqlalchemy import TIMESTAMP, Boolean, Column, ForeignKey, Integer, Text
 from sqlalchemy.sql.functions import now
+
+from src.domain.entities import Base
 
 
 class ScraperSchema:

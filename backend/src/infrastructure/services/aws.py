@@ -1,4 +1,5 @@
 import boto3
+
 from src.infrastructure.config import SETTINGS
 
 

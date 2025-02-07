@@ -1,9 +1,10 @@
-from sqlalchemy.orm import Session
-from src.domain.use_cases.scraper.base_scraper import BaseScraperUseCase
-from selenium.webdriver.common.by import By
-from src.infrastructure.services.s3 import S3Service
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.by import By
+from sqlalchemy.orm import Session
+
 from src.domain.enums.scraper import ReaderEnum
+from src.domain.use_cases.scraper.base_scraper import BaseScraperUseCase
+from src.infrastructure.services.s3 import S3Service
 
 
 class ScrapeHariManwhasUseCase(BaseScraperUseCase):
@@ -40,7 +41,11 @@ class ScrapeHariManwhasUseCase(BaseScraperUseCase):
             image_type = image_url.split(".")[-1]
 
             pages.append(
-                {"image_url": image_url, "image_name": image_name, "image_type": image_type}
+                {
+                    "image_url": image_url,
+                    "image_name": image_name,
+                    "image_type": image_type,
+                }
             )
 
         return pages

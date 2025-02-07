@@ -1,11 +1,12 @@
-from src.domain.repository import BaseRepository
+from sqlalchemy.orm import Session
+
 from src.domain.entities.manwha import (
     Manwha,
-    ManwhaAuthor,
     ManwhaArtist,
+    ManwhaAuthor,
     ManwhaGenre,
 )
-from sqlalchemy.orm import Session
+from src.domain.repository import BaseRepository
 
 
 class ManwhaRepository(BaseRepository):

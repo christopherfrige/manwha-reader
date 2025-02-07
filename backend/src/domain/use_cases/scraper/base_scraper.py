@@ -1,25 +1,33 @@
-from abc import ABC, abstractmethod
 import shutil
+from abc import ABC, abstractmethod
 
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.chrome.service import Service
 from sqlalchemy.orm import Session
-from src.domain.repository.manwha import ManwhaRepository
-from src.infrastructure.services.notifier import Notifier
-from src.domain.utils import normalize_string
-from src.domain.entities.scraper import ScraperManwha
-from src.domain.exceptions.client import BadRequestException, NotAcceptableException
+
 from src.domain.entities.chapter import Chapter
-from src.domain.repository.chapter import ChapterRepository
+from src.domain.entities.scraper import ScraperManwha
+from src.domain.exceptions.client import (
+    BadRequestException,
+    NotAcceptableException,
+)
 from src.domain.exceptions.server import BadGatewayException
-from src.domain.use_cases.manwha.manage_manwha import ManageManwhaUseCase
-from src.domain.use_cases.chapter.check_new_chapters import CheckNewChaptersUseCase
-from src.domain.use_cases.chapter.upload_chapter_pages import UploadChapterPagesUseCase
-from src.domain.use_cases.common.download_image import DownloadImageUseCase
+from src.domain.repository.chapter import ChapterRepository
+from src.domain.repository.manwha import ManwhaRepository
 from src.domain.repository.scraper import ScraperManwhaRepository
-from src.infrastructure.services.s3 import S3Service
+from src.domain.use_cases.chapter.check_new_chapters import (
+    CheckNewChaptersUseCase,
+)
+from src.domain.use_cases.chapter.upload_chapter_pages import (
+    UploadChapterPagesUseCase,
+)
+from src.domain.use_cases.common.download_image import DownloadImageUseCase
+from src.domain.use_cases.manwha.manage_manwha import ManageManwhaUseCase
+from src.domain.utils import normalize_string
 from src.infrastructure.log import logger
+from src.infrastructure.services.notifier import Notifier
+from src.infrastructure.services.s3 import S3Service
 
 
 class BaseScraperUseCase(ABC):

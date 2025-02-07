@@ -1,6 +1,7 @@
-from src.domain.repository import BaseRepository
-from src.domain.entities.genre import Genre
 from sqlalchemy.orm import Session
+
+from src.domain.entities.genre import Genre
+from src.domain.repository import BaseRepository
 
 
 class GenreRepository(BaseRepository):

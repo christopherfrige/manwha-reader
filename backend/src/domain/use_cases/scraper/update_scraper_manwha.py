@@ -1,10 +1,10 @@
 from src.domain.exceptions.client import BadRequestException, NotFoundException
+from src.domain.repository.scraper import ScraperManwhaRepository
 from src.domain.schemas.scraper import (
     GetReadersResponse,
     ScraperManwhaSchema,
     UpdateScraperManwhaRequest,
 )
-from src.domain.repository.scraper import ScraperManwhaRepository
 from src.infrastructure.persistence.unit_of_work import UnitOfWork
 
 

@@ -1,8 +1,8 @@
 from src.domain.exceptions.client import BadRequestException
-from src.infrastructure.services.s3 import S3Service
-from src.infrastructure.persistence.unit_of_work import UnitOfWork
 from src.domain.repository.chapter import ChapterRepository
 from src.domain.repository.scraper import ScraperManwhaRepository
+from src.infrastructure.persistence.unit_of_work import UnitOfWork
+from src.infrastructure.services.s3 import S3Service
 
 
 class DeleteManwhaChaptersUseCase:

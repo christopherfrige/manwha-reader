@@ -1,6 +1,7 @@
-from src.domain.repository import BaseRepository
-from src.domain.entities.chapter import Chapter
 from sqlalchemy.orm import Session
+
+from src.domain.entities.chapter import Chapter
+from src.domain.repository import BaseRepository
 
 
 class ChapterRepository(BaseRepository):

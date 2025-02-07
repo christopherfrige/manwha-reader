@@ -2,7 +2,14 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from src.domain.exceptions.client import (
+    BadRequestException,
+    ConflictException,
+    NotAcceptableException,
+    NotFoundException,
+)
 from src.domain.exceptions.server import BadGatewayException
+from src.infrastructure.config import SETTINGS
 from src.presentation.api.exception_handlers import (
     bad_gateway_exception_handler,
     bad_request_exception_handler,
@@ -11,17 +18,10 @@ from src.presentation.api.exception_handlers import (
     not_acceptable_exception_handler,
     not_found_exception_handler,
 )
-from src.domain.exceptions.client import (
-    BadRequestException,
-    ConflictException,
-    NotAcceptableException,
-    NotFoundException,
-)
-from src.presentation.api.v1.routers.manwhas import router as v1_manwhas
 from src.presentation.api.v1.routers.chapters import router as v1_chapters
-from src.presentation.api.v1.routers.scrapers import router as v1_scrapers
+from src.presentation.api.v1.routers.manwhas import router as v1_manwhas
 from src.presentation.api.v1.routers.readers import router as v1_readers
-from src.infrastructure.config import SETTINGS
+from src.presentation.api.v1.routers.scrapers import router as v1_scrapers
 
 app = FastAPI()
 

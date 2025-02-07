@@ -1,6 +1,7 @@
-from src.domain.repository import BaseRepository
-from src.domain.entities.alternative_name import AlternativeName
 from sqlalchemy.orm import Session
+
+from src.domain.entities.alternative_name import AlternativeName
+from src.domain.repository import BaseRepository
 
 
 class AlternativeNameRepository(BaseRepository):

@@ -1,7 +1,8 @@
 from math import ceil
 
-from src.domain.schemas import Pagination
 from sqlalchemy.orm.query import RowReturningQuery
+
+from src.domain.schemas import Pagination
 
 
 class PreparePaginationUseCase:

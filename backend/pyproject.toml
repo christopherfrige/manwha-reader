@@ -4,6 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["christopherfrige <chrisfrige@gmail.com>"]
 readme = "README.md"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -21,14 +22,26 @@ webdriver-manager = "^4.0.1"
 requests = "^2.31.0"
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.11.0"
-flake8 = "^6.1.0"
 pytest = "^8.1.1"
+ruff = "^0.9.5"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.black]
-line-length = 99
-target-version = ['py311']
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint.per-file-ignores]
+"*.py" = ["E712"]
+"__init__.py" = ["F403", "F401"] # https://www.flake8rules.com/rules/F403.html
+"conftest.py" = ["F401"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.ruff.lint]
+extend-select = ["I"]

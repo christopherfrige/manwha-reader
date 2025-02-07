@@ -1,14 +1,15 @@
+from datetime import datetime
+
 from pydantic import BaseModel
-from src.domain.enums.manwha import GetManwhasOrderEntity
+
 from src.domain.enums.core import OrdenationOrder
+from src.domain.enums.manwha import GetManwhasOrderEntity
 from src.domain.schemas import Pagination
+from src.domain.schemas.alternative_name import AlternativeNameSchema
 from src.domain.schemas.artist import ArtistSchema
 from src.domain.schemas.author import AuthorSchema
-from src.domain.schemas.genre import GenreSchema
-from src.domain.schemas.alternative_name import AlternativeNameSchema
 from src.domain.schemas.chapter import ChapterSchema
-
-from datetime import datetime
+from src.domain.schemas.genre import GenreSchema
 
 
 class ManwhaSchema(BaseModel):

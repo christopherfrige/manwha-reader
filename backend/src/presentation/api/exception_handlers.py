@@ -1,13 +1,13 @@
 from fastapi import Request
 from fastapi.responses import JSONResponse
 
-from src.domain.exceptions.server import BadGatewayException
 from src.domain.exceptions.client import (
     BadRequestException,
     ConflictException,
     NotAcceptableException,
     NotFoundException,
 )
+from src.domain.exceptions.server import BadGatewayException
 from src.infrastructure.log import logger
 
 

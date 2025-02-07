@@ -1,6 +1,6 @@
-from src.domain.entities.manwha import Manwha
 from src.domain.entities.chapter import Chapter
-from src.domain.schemas.chapter import GetChapterPagesResponse, ChapterPage
+from src.domain.entities.manwha import Manwha
+from src.domain.schemas.chapter import ChapterPage, GetChapterPagesResponse
 from src.infrastructure.persistence.unit_of_work import UnitOfWork
 from src.infrastructure.services.s3 import S3Service
 
@@ -34,7 +34,5 @@ class GetChapterPagesUseCase:
             )
 
     def prepare_chapter_pages(self, manwha_id: int, chapter_id: int) -> list[ChapterPage]:
-        chapter_pages = self.storage.list_objects(
-            path=f"manwha/{manwha_id}/chapters/{chapter_id}/"
-        )
+        chapter_pages = self.storage.list_objects(path=f"manwha/{manwha_id}/chapters/{chapter_id}/")
         return [ChapterPage(url=f"{self.storage.bucket_url}/{page}") for page in chapter_pages]

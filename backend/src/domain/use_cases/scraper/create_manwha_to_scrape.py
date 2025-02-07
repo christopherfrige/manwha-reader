@@ -1,8 +1,14 @@
-from src.infrastructure.persistence.unit_of_work import UnitOfWork
-from src.domain.repository.scraper import ReaderRepository, ScraperManwhaRepository
 from src.domain.entities.scraper import ScraperManwha
 from src.domain.exceptions.client import BadRequestException, ConflictException
-from src.domain.schemas.scraper import CreateManwhaToScrapeRequest, CreateManwhaToScrapeResponse
+from src.domain.repository.scraper import (
+    ReaderRepository,
+    ScraperManwhaRepository,
+)
+from src.domain.schemas.scraper import (
+    CreateManwhaToScrapeRequest,
+    CreateManwhaToScrapeResponse,
+)
+from src.infrastructure.persistence.unit_of_work import UnitOfWork
 
 
 class CreateManwhaToScrapeUseCase:
@@ -23,12 +29,15 @@ class CreateManwhaToScrapeUseCase:
 
         scraper_manwha_id = self.scraper_manwha_repository.add(
             ScraperManwha(
-                reader_id=payload.reader_id, url=payload.url, chapter_start=payload.chapter_start
+                reader_id=payload.reader_id,
+                url=payload.url,
+                chapter_start=payload.chapter_start,
             )
         )
 
         self.session.commit()
 
         return CreateManwhaToScrapeResponse(
-            message="Manwha created and ready to be scraped", scraper_manwha_id=scraper_manwha_id
+            message="Manwha created and ready to be scraped",
+            scraper_manwha_id=scraper_manwha_id,
         )

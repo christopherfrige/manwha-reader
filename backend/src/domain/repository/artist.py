@@ -1,6 +1,7 @@
-from src.domain.repository import BaseRepository
-from src.domain.entities.artist import Artist
 from sqlalchemy.orm import Session
+
+from src.domain.entities.artist import Artist
+from src.domain.repository import BaseRepository
 
 
 class ArtistRepository(BaseRepository):

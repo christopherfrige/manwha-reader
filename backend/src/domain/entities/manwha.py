@@ -1,5 +1,6 @@
-from sqlalchemy import Column, Integer, Text, TIMESTAMP, ForeignKey
+from sqlalchemy import TIMESTAMP, Column, ForeignKey, Integer, Text
 from sqlalchemy.sql.functions import now
+
 from src.domain.entities import Base
 
 

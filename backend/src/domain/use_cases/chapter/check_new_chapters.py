@@ -1,8 +1,9 @@
+from sqlalchemy import select
+from sqlalchemy.orm import Session
+
+from src.domain.entities.chapter import Chapter
 from src.domain.repository.chapter import ChapterRepository
 from src.domain.repository.scraper import ScraperManwhaRepository
-from src.domain.entities.chapter import Chapter
-from sqlalchemy.orm import Session
-from sqlalchemy import select
 
 
 class CheckNewChaptersUseCase:

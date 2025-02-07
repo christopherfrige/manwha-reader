@@ -47,5 +47,5 @@ jobs:
               MANWHA_READER_URL=${{ secrets.MANWHA_READER_URL }}
             " >> ../backend/.env
 
-            docker compose build api
+            docker compose build api --no-cache
             docker compose up api -d

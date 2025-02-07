@@ -8,9 +8,9 @@ from src.domain.enums.scraper import ReaderEnum
 
 class ScrapeFlowerManwhasUseCase(BaseScraperUseCase):
     def __init__(self, session: Session, storage: S3Service):
-        super().__init__(session, storage)
-        self.reader_id = ReaderEnum.FLOWER.value
         self.referer = "https://flowermangas.com/"
+        self.reader_id = ReaderEnum.FLOWER.value
+        super().__init__(session, storage, self.referer)
 
     def scrape_manwha_main_page(self, manwha_url: str):
         self.scraper.get(manwha_url)

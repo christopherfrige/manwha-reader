@@ -26,7 +26,7 @@ import shutil
 
 
 class ManageManwhaUseCase:
-    def __init__(self, session: Session, storage: S3Service):
+    def __init__(self, session: Session, storage: S3Service, referer: str | None):
         self.manwha_repository = ManwhaRepository(session)
         self.genre_repository = GenreRepository(session)
         self.artist_repository = ArtistRepository(session)
@@ -35,7 +35,7 @@ class ManageManwhaUseCase:
         self.manwha_genre_repository = ManwhaGenreRepository(session)
         self.manwha_artist_repository = ManwhaArtistRepository(session)
         self.manwha_author_repository = ManwhaAuthorRepository(session)
-        self.download_image = DownloadImageUseCase()
+        self.download_image = DownloadImageUseCase(referer)
         self.storage = storage
 
     def execute(self, manwha_data) -> int:

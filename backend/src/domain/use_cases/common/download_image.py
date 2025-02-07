@@ -3,7 +3,7 @@ import os
 
 
 class DownloadImageUseCase:
-    def __init__(self, referer=None):
+    def __init__(self, referer: str | None):
         self.headers = {}
         if referer:
             self.headers = {

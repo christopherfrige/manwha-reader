@@ -23,23 +23,17 @@ from src.infrastructure.log import logger
 
 
 class BaseScraperUseCase(ABC):
-    def __init__(
-        self,
-        session: Session,
-        storage: S3Service,
-    ):
-        self.referer = None
-
+    def __init__(self, session: Session, storage: S3Service, referer: str | None):
         self.session = session
 
         self.manwha_repository = ManwhaRepository(session)
         self.scraper_manwha_repository = ScraperManwhaRepository(session)
         self.chapter_repository = ChapterRepository(session)
 
-        self.manage_manwha = ManageManwhaUseCase(session, storage)
+        self.manage_manwha = ManageManwhaUseCase(session, storage, referer)
         self.upload_chapter_pages = UploadChapterPagesUseCase(session, storage)
         self.check_new_chapters = CheckNewChaptersUseCase(session)
-        self.download_image = DownloadImageUseCase(self.referer)
+        self.download_image = DownloadImageUseCase(referer)
 
     def _driver_options(self):
         options = webdriver.ChromeOptions()

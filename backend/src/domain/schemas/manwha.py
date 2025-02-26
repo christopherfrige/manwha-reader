@@ -23,7 +23,7 @@ class ManwhaPresentationData(BaseModel):
     manwha_name: str
     thumbnail: str | None
     last_chapter_id: int
-    last_chapter_number: float
+    last_chapter_number: float | None
     last_chapter_uploaded_at: datetime
     has_chapters_downloaded: bool
 
@@ -35,6 +35,7 @@ class GetManwhasRequestQueryParams(BaseModel):
     order_entity: GetManwhasOrderEntity = GetManwhasOrderEntity.CHAPTER
     order_by: str = "updated_at"
     order: OrdenationOrder = OrdenationOrder.DESC
+    with_chapters_downloaded: bool = False
 
 
 class GetManwhasResponse(BaseModel):

@@ -31,7 +31,7 @@ from src.infrastructure.services.s3 import S3Service
 
 
 class BaseScraperUseCase(ABC):
-    def __init__(self, session: Session, storage: S3Service, referer: str | None):
+    def __init__(self, session: Session, storage: S3Service, referer: str | None = None):
         self.session = session
 
         self.manwha_repository = ManwhaRepository(session)

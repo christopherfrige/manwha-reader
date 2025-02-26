@@ -30,13 +30,10 @@ class GetManwhasUseCase:
         with self.db.get_session() as session:
             limit, offset = self.get_limit_offset(query_params.page, query_params.per_page)
 
-            subquery = (
-                session.query(Chapter.id)
-                .filter(Manwha.id == Chapter.manwha_id)
-                .order_by(Chapter.chapter_number.desc())
-                .limit(1)
-                .correlate(Manwha)
-            )
+            subquery = session.query(Chapter.id).filter(Manwha.id == Chapter.manwha_id)
+            if query_params.with_chapters_downloaded:
+                subquery = subquery.filter(Chapter.downloaded == True)
+            subquery = subquery.order_by(Chapter.chapter_number.desc()).limit(1).correlate(Manwha)
 
             downloaded_subquery = (
                 session.query(func.count(Chapter.id))

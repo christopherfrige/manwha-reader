@@ -16,7 +16,7 @@
             <v-col v-for="i in 6" v-if="loading" cols="6" lg="2" md="3">
               <v-skeleton-loader type="image, list-item-two-line" />
             </v-col>
-            <v-col v-for="manwha in manwhasToList" :key="manwha.manwha_id" cols="6" lg="2" md="3">
+            <v-col v-for="manwha in manwhas" :key="manwha.manwha_id" cols="6" lg="2" md="3">
               <ManwhaUpdatesItem :manwha="manwha" />
             </v-col>
           </v-row>
@@ -45,6 +45,7 @@ export default {
       const params = {
         page: this.pageCount,
         per_page: 1000,
+        with_chapters_downloaded: true,
       };
       const response = await this.$request.get(`v1/manwhas/`, { params });
       this.loading = false;
@@ -67,11 +68,6 @@ export default {
   computed: {
     hasManwhasToLoad() {
       return this.pagination.next !== null;
-    },
-    manwhasToList() {
-      return this.manwhas.length > 0
-        ? this.manwhas.filter((manwha) => manwha.has_chapters_downloaded === true)
-        : [];
     },
   },
   mounted() {

@@ -33,7 +33,6 @@ export default {
   background-color: #ffffff0a;
   align-items: center;
   justify-content: space-between;
-  border-radius: 10px;
   padding: 15px;
   margin: 1px;
 }

@@ -109,7 +109,7 @@ li:after {
   top: 100%;
   width: 0%;
   height: 3px;
-  background-color: rgb(212, 186, 37);
+  background-color: var(--primary-500);
   transition: all 0.3s ease-in-out;
   transform: translateX(-50%);
 }
@@ -117,6 +117,6 @@ li:hover:after {
   width: 100%;
 }
 li:hover {
-  color: rgb(212, 186, 37);
+  color: var(--primary-500);
 }
 </style>

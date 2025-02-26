@@ -9,7 +9,7 @@
         <v-col class="content">
           <v-row class="section-title">
             <v-col>
-              <h2><v-icon icon="mdi-fire"></v-icon> Últimos lançamentos</h2>
+              <h2><v-icon icon="mdi-bookshelf"></v-icon> Manwhas</h2>
             </v-col>
           </v-row>
           <v-row>
@@ -82,8 +82,8 @@ export default {
 }
 
 .section-title {
-  font-size: 14px;
-  background-color: var(--container-title-bg-color);
+  font-size: 15px;
+  background-color: var(--nav-bg-color);
 }
 
 .more-updates {
@@ -128,6 +128,6 @@ export default {
 }
 
 .v-icon {
-  padding-bottom: 5px;
+  padding-bottom: 3px;
 }
 </style>

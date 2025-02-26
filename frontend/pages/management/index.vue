@@ -315,8 +315,7 @@ export default {
 }
 
 .section-title {
-  font-size: 14px;
-  background-color: var(--container-title-bg-color);
+  font-size: 15px;
 }
 
 .more-updates {

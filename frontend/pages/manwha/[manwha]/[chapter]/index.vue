@@ -4,54 +4,96 @@
       <Title>Manwha Reader - {{ manwhaName }} - Capítulo {{ chapterNumber }}</Title>
     </Head>
     <LayoutNavbarHeader />
-    <div class="container mt-4" v-if="chapterData && manwhaData">
-      <v-row>
+    <div class="container mt-4">
+      <v-row v-if="isLoading">
         <v-col>
-          <h2>
-            {{ chapterData.manwha_name }} - Capítulo
-            {{ chapterData.chapter_number }}
-          </h2>
+          <v-row>
+            <v-skeleton-loader type="heading" class="skeleton-title" />
+          </v-row>
+
+          <v-row>
+            <v-col cols="12" md="6">
+              <v-row>
+                <v-skeleton-loader type="button" width="300px" class="skeleton-button" />
+              </v-row>
+            </v-col>
+            <v-col cols="12" md="6" class="pagination-skeleton">
+              <v-row>
+                <v-skeleton-loader type="button" width="49%" class="skeleton-button" />
+                <v-skeleton-loader type="button" width="50%" class="skeleton-button" />
+              </v-row>
+            </v-col>
+          </v-row>
+
+          <v-row class="reading-content">
+            <v-col>
+              <v-skeleton-loader type="image" class="skeleton-image" />
+            </v-col>
+          </v-row>
+
+          <v-row class="justify-end">
+            <v-col cols="12" md="6" class="pagination-skeleton">
+              <v-row>
+                <v-skeleton-loader type="button" width="49%" class="skeleton-button" />
+                <v-skeleton-loader type="button" width="50%" class="skeleton-button" />
+              </v-row>
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
-      <v-row class="mb-6">
-        <v-col cols="12" md="6">
-          <ChapterSelectButton
-            :chapters="manwhaData.chapters"
-            :initialSelectedChapter="{
-              id: chapterId,
-              number: chapterData.chapter_number,
-            }"
-          />
-        </v-col>
-        <v-col cols="12" md="6" class="text-end">
-          <ChapterPaginationButtons
-            :chapters="manwhaData.chapters"
-            :currentChapterId="Number(this.chapterId)"
-            :manwhaId="this.chapterData.manwha_id"
-          />
-        </v-col>
-      </v-row>
-      <v-row
-        v-for="page in chapterData.pages"
-        :key="page.url"
-        no-gutters
-        class="reading-content text-center"
-      >
-        <v-col>
-          <img :src="page.url" />
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col class="my-5 text-end">
-          <ChapterPaginationButtons
-            :chapters="manwhaData.chapters"
-            :currentChapterId="Number(this.chapterId)"
-            :manwhaId="this.chapterData.manwha_id"
-          />
-        </v-col>
-      </v-row>
+
+      <div v-if="!isLoading">
+        <v-row>
+          <v-col>
+            <h2>
+              {{ chapterData.manwha_name }} - Capítulo
+              {{ chapterData.chapter_number }}
+            </h2>
+          </v-col>
+        </v-row>
+        <v-row class="mb-6">
+          <v-col cols="12" md="6">
+            <ChapterSelectButton
+              :chapters="manwhaData.chapters"
+              :initialSelectedChapter="{
+                id: chapterId,
+                number: chapterData.chapter_number,
+              }"
+            />
+          </v-col>
+          <v-col cols="12" md="6" class="text-end">
+            <ChapterPaginationButtons
+              :chapters="manwhaData.chapters"
+              :currentChapterId="Number(this.chapterId)"
+              :manwhaId="this.chapterData.manwha_id"
+            />
+          </v-col>
+        </v-row>
+
+        <v-row
+          v-for="page in chapterData.pages"
+          :key="page.url"
+          no-gutters
+          class="reading-content text-center"
+        >
+          <v-col>
+            <img :src="page.url" />
+          </v-col>
+        </v-row>
+
+        <v-row>
+          <v-col class="my-5 text-end">
+            <ChapterPaginationButtons
+              :chapters="manwhaData.chapters"
+              :currentChapterId="Number(this.chapterId)"
+              :manwhaId="this.chapterData.manwha_id"
+            />
+          </v-col>
+        </v-row>
+      </div>
+
+      <LayoutPageFooter />
     </div>
-    <LayoutPageFooter />
   </div>
 </template>
 
@@ -84,6 +126,11 @@ export default {
       this.manwhaName = this.manwhaData.name;
     },
   },
+  computed: {
+    isLoading() {
+      return !(this.manwhaData && this.chapterData);
+    },
+  },
   mounted() {
     this.initializeData();
   },
@@ -114,5 +161,35 @@ img {
   .container {
     max-width: 1140px;
   }
+}
+
+.skeleton-title {
+  width: 800px;
+}
+
+.skeleton-image {
+  width: 100%;
+  margin-bottom: 16px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 768px) {
+  .skeleton-image {
+    width: 768px;
+  }
+}
+
+::v-deep(.v-skeleton-loader__image) {
+  height: 70vh;
+}
+
+::v-deep(.v-skeleton-loader__heading) {
+  height: 30px;
+}
+
+::v-deep(.v-skeleton-loader__button) {
+  max-width: 100%;
+  height: 45px;
 }
 </style>

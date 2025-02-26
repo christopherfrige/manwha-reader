@@ -54,12 +54,10 @@ export default {
 
 <style scoped>
 .thumbnail {
-  max-width: 100%;
-  max-height: 210px;
-  height: auto;
+  width: 100%;
+  aspect-ratio: 7/10;
   object-fit: cover;
-  transition: filter 0.3s ease;
-  border-radius: 10px;
+  transition: filter 0.2s ease;
 }
 
 .thumbnail:hover {
@@ -71,9 +69,9 @@ export default {
   font-size: 16px;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
-  color: #ccc;
+  color: var(--text-main);
   transition: color 0.3s ease;
 }
 

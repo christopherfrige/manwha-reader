@@ -45,11 +45,11 @@ export default {
 }
 
 .thumbnail {
-  max-width: 250px;
-  height: auto;
-  border-radius: 25px;
+  max-height: 400px;
+  aspect-ratio: 7/10;
+  object-fit: cover;
   padding: 15px;
-  background: #ffffff0a;
+  background: var(--container-bg-color);
 }
 
 @media (max-width: 960px) {
@@ -61,8 +61,7 @@ export default {
 }
 
 .content {
-  background-color: #ffffff0a;
-  border-radius: 15px;
+  background-color: var(--container-bg-color);
 }
 
 h1 {

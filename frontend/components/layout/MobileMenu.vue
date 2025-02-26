@@ -52,7 +52,7 @@ export default {
   font-size: 2rem;
 }
 .menu {
-  background-color: #181828;
+  background-color: var(--container-bg-color);
   color: #ccc;
 }
 </style>

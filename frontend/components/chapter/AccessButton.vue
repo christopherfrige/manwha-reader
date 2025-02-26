@@ -33,7 +33,6 @@ export default {
 .chapter {
   background-color: var(--button-bg-color);
   padding: 5px 10px;
-  border-radius: 10px 0 10px 0;
   cursor: pointer;
   color: #000;
   font-size: 14px;

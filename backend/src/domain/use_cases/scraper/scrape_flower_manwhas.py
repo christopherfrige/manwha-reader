@@ -9,7 +9,7 @@ from src.infrastructure.services.s3 import S3Service
 
 class ScrapeFlowerManwhasUseCase(BaseScraperUseCase):
     def __init__(self, session: Session, storage: S3Service):
-        self.referer = "https://flowermangas.com/"
+        self.referer = "https://flowermanga.net/"
         self.reader_id = ReaderEnum.FLOWER.value
         super().__init__(session, storage, self.referer)
 

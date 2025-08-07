@@ -10,7 +10,7 @@ RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd6
 RUN apt-get install -y ./google-chrome-stable_current_amd64.deb
 
 # install chromedriver
-ENV CHROMEDRIVER_VERSION=133.0.6943.53
+ENV CHROMEDRIVER_VERSION=139.0.7258.66
 RUN wget https://storage.googleapis.com/chrome-for-testing-public/$CHROMEDRIVER_VERSION/linux64/chromedriver-linux64.zip \
   && unzip chromedriver-linux64.zip \
   && rm -rf chromedriver-linux64.zip \
